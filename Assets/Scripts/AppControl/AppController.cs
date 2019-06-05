@@ -8,8 +8,9 @@ namespace PopBlast.AppControl
     {
         #region MEMBERS
         [Header("Create level values")]
+        [Range(5, 20)]
         [SerializeField] private int row = 0;
-        [Range(5, 10)]
+        [Range(5, 20)]
         [SerializeField] private int col = 0;
         [SerializeField] private float waitTimeForCreation = 0.5f;
 
@@ -30,6 +31,7 @@ namespace PopBlast.AppControl
         // Start is called before the first frame update
         void Start()
         {
+            FindObjectOfType<GridGenerator>().Init(col,row);
             generator.Init(col, row);
             StartCoroutine(CreateItemsCoroutine());
         }
