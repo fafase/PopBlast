@@ -57,39 +57,24 @@ namespace PopBlast.AppControl
                     obj.SetActive(false);
                 }
             }
-            for (int i = 0; i < col; i++)
-            {
-                for (int j = 0; j < row; j++)
-                {
-                    Item left = null, right = null, top = null, bottom = null;
-                    if (i > 0)
-                    {
-                        left = grid[i - 1, j];
-                    }
-                    if (i < col - 1)
-                    {
-                        right = grid[i + 1, j];
-                    }
-                    if (j > 0)
-                    {
-                        bottom = grid[i, j - 1];
-                    }
-                    if (j < row - 1)
-                    {
-                        top = grid[i, j + 1];
-                    }
-                    grid[i, j].SetNeighbors(left, right, top, bottom);
-                }
-            }
+            SetGrid();
             StartCoroutine(EnableItemCoroutine(onCompletion));
         }
     
-        public void CheckItemNeighbours(GameObject go)
+        public void CheckItemNeighbours(GameObject go, Action onCompletion)
         {
             Item item = go.GetComponent<Item>();
-            if(item == null) { return; }
+            if(item == null)
+            {
+                onCompletion?.Invoke();
+                return;
+            }
             Item[] results = item.GetSameAdjacentItem();
-            if(results.Length == 0) { return; }
+            if(results.Length == 0)
+            {
+                onCompletion?.Invoke();
+                return;
+            }
             HashSet<Item> toRemove = new HashSet<Item>();
             toRemove.Add(item);
             Queue<Item> queue = new Queue<Item>();
@@ -111,9 +96,11 @@ namespace PopBlast.AppControl
             }
             foreach (Item i in toRemove)
             {
+                ExplosionAnimate();
                 DestroyImmediate(i.gameObject);
             }
             // Reset position and grid
+
             for (int i = 0; i < width; i++)
             {
                 int empty = 0;
@@ -135,11 +122,36 @@ namespace PopBlast.AppControl
                             }
                         }
                     }
-                }              
+                }
             }
-        }     
+            StartCoroutine(CreateNewItem(onCompletion));
+        }
 
         #endregion
+
+        private IEnumerator CreateNewItem(Action onCompletion)
+        {
+            for (int i = 0; i < height; i++)
+            {
+                for(int j = 0; j < width; j++)
+                {
+                    if (grid[j, i] == null)
+                    {
+                        Transform spawnTr = spawns[j];
+                        int rand = UnityEngine.Random.Range(0, items.Length);
+                        GameObject obj = Instantiate<GameObject>(items[rand], spawnTr);
+                        obj.transform.position = spawnTr.position;
+                        Item item = obj.GetComponent<Item>();
+                        item.SetGrid(j, i);
+                        grid[j, i] = item;
+                        item.StartMovement();
+                    }
+                }
+                yield return new WaitForSeconds(waitTimeForCreation);
+            }
+            SetGrid();
+            onCompletion?.Invoke();
+        }
 
         private IEnumerator EnableItemCoroutine(Action onCompletion)
         {
@@ -154,6 +166,38 @@ namespace PopBlast.AppControl
                 }
             }
             onCompletion?.Invoke();
+        }
+
+        private void ExplosionAnimate()
+        {
+
+        }
+        private void SetGrid()
+        {
+            for (int i = 0; i < width; i++)
+            {
+                for (int j = 0; j < height; j++)
+                {
+                    Item left = null, right = null, top = null, bottom = null;
+                    if (i > 0)
+                    {
+                        left = grid[i - 1, j];
+                    }
+                    if (i < width - 1)
+                    {
+                        right = grid[i + 1, j];
+                    }
+                    if (j > 0)
+                    {
+                        bottom = grid[i, j - 1];
+                    }
+                    if (j < height - 1)
+                    {
+                        top = grid[i, j + 1];
+                    }
+                    grid[i, j].SetNeighbors(left, right, top, bottom);
+                }
+            }
         }
     }
 }

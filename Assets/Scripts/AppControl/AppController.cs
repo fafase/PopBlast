@@ -53,7 +53,11 @@ namespace PopBlast.AppControl
 
         private void Input_RaiseItemTapped(GameObject obj)
         {
-            generator.CheckItemNeighbours(obj);
+            input.enabled = false;
+            generator.CheckItemNeighbours(obj, ()=> 
+            {
+                input.enabled = true;
+            });
         }
 
         #endregion
