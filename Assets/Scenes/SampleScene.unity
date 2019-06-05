@@ -338,8 +338,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81e86cd86ce7feb4482e050d1a1f4af8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minX: -2.5
-  maxX: 2.5
+  waitTimeForCreation: 0.1
   items:
   - {fileID: 7471438814375694069, guid: 77f1c4cb728fcc143b6d7fe09a13e1c7, type: 3}
   - {fileID: 7471438814375694069, guid: 58ff47e3d01f0ba458a8611f14f47ab1, type: 3}
@@ -590,9 +589,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb51929a843343a44a919d9f64396999, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  row: 16
-  col: 9
-  waitTimeForCreation: 0.05
+  row: 6
+  col: 5
 --- !u!114 &1683318750
 MonoBehaviour:
   m_ObjectHideFlags: 0

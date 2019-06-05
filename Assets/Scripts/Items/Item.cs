@@ -13,6 +13,8 @@ namespace PopBlast.Items
         [SerializeField] private float seconds = 1f;
         private float col;
         private float row;
+        public int Col { get { return (int)col; } }
+        public int Row { get { return (int)row; } }
 
         private Item left, right, top, bottom;
 
@@ -22,11 +24,11 @@ namespace PopBlast.Items
 
         #region PUBLIC_METHODS
 
-        public void SetGrid(int newRow, int newCol)
+        public void SetGrid(int newCol, int newRow)
         {
-            row = (float)newRow;
             col = (float)newCol;
-            if(moveCoroutine != null)
+            row = (float)newRow;
+            if (moveCoroutine != null)
             {
                 return;
             }
@@ -41,46 +43,46 @@ namespace PopBlast.Items
             top = newTop;
             bottom = newBottom;
         }
-
-        public override bool Equals(object other)
-        {
-            if(other == null) { return false; }
-            Item item = other as Item;
-            if(item == null) { return false; }
-            return item == this;
+        public void StartMovement()
+        {        
+            moveCoroutine = MoveToPositionCoroutine();
+            StartCoroutine(moveCoroutine);
         }
 
-        public override int GetHashCode()
+        public Item[] GetSameAdjacentItem()
         {
-            return base.GetHashCode();
-        }
-
-        public static bool operator ==(Item a, Item b)
-        {
-            return a.type == b.type;
-        }
-
-        public static bool operator !=(Item a, Item b)
-        {
-            return a.type != b.type;
+            List<Item> list = new List<Item>();
+            CheckNeighbor(left, list);
+            CheckNeighbor(right, list);
+            CheckNeighbor(top, list);
+            CheckNeighbor(bottom, list);
+            return list.ToArray();
         }
 
         #endregion
 
         #region PRIVATE_METHODS
 
+        private void CheckNeighbor(Item item, List<Item> list)
+        {
+            if (item != null && item.type == type)
+            {
+                list.Add(item);
+            }
+        }
         private IEnumerator MoveToPositionCoroutine()
         {
             float timeSinceStarted = 0f;
-           
-            while (Mathf.Approximately(transform.position.y, row) == false)
+            float target = row + 0.5f;
+            while (Mathf.Approximately(transform.position.y, target) == false)
             {
                 timeSinceStarted += Time.deltaTime;
                 Vector3 pos = transform.position;
-                pos.y = Mathf.Lerp(pos.y, row, timeSinceStarted / seconds);
+                pos.y = Mathf.Lerp(pos.y, target, timeSinceStarted / seconds);
                 transform.position = pos;
                 yield return null;
             }
+            moveCoroutine = null;
         }
 
         #endregion

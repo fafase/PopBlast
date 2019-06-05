@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,14 +7,15 @@ namespace PopBlast.InputSystem
 {
     public class InputController : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
-        {
+        #region MEMBERS
 
-        }
+        public event Action<GameObject> RaiseItemTapped;
 
-        // Update is called once per frame
-        void Update()
+        #endregion
+
+        #region UNITY_LIFECYCLE
+
+        private void Update()
         {
             if (Input.GetMouseButtonUp(0))
             {
@@ -23,9 +25,10 @@ namespace PopBlast.InputSystem
                 {
                     return;
                 }
-                Debug.Log(hit.collider.gameObject.name);
-
+                RaiseItemTapped?.Invoke(hit.collider.gameObject);
             }
         }
+
+        #endregion
     }
 }

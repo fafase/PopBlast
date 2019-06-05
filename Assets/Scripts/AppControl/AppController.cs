@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PopBlast.InputSystem;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,9 +13,10 @@ namespace PopBlast.AppControl
         [SerializeField] private int row = 0;
         [Range(5, 20)]
         [SerializeField] private int col = 0;
-        [SerializeField] private float waitTimeForCreation = 0.5f;
+
 
         private ItemGenerator generator = null;
+        private InputController input = null;
 
         #endregion
 
@@ -27,29 +29,31 @@ namespace PopBlast.AppControl
             {
                 throw new System.Exception("Missing ItemGenerator component");
             }
+            input = FindObjectOfType<InputController>();
+            if (input == null)
+            {
+                throw new System.Exception("Missing InputController component");
+            }
         }
         // Start is called before the first frame update
         void Start()
         {
+            input.enabled = false;
             FindObjectOfType<GridGenerator>().Init(col,row);
-            generator.Init(col, row);
-            StartCoroutine(CreateItemsCoroutine());
+            generator.Init(col, row, ()=> 
+            {
+                input.enabled = true;
+            });
+            input.RaiseItemTapped += Input_RaiseItemTapped;
         }
 
         #endregion
 
         #region PRIVATE_METHODS
 
-        private IEnumerator CreateItemsCoroutine ()
+        private void Input_RaiseItemTapped(GameObject obj)
         {
-            for (int i = 0; i < row; i++)
-            {
-                for (int j = 0; j < col; j++)
-                {
-                    generator.GenerateItemAtIndex(i, j);
-                    yield return new WaitForSeconds(waitTimeForCreation);
-                } 
-            }
+            generator.CheckItemNeighbours(obj);
         }
 
         #endregion

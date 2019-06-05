@@ -29,16 +29,15 @@ namespace PopBlast.AppControl
         {
             Camera.main.transform.position = new Vector3(posX, height / 2f, -10);
             float margin = 1f;
-            float screenRatio = Screen.width / Screen.height;
+            float screenRatio = (float)Screen.width / (float)Screen.height;
             float gridRatio = width / height;
             float size = (gridRatio >= screenRatio) ? width : height / 2f + margin;
             Camera.main.orthographicSize = size;
         }
 
-
         private void SetBackground(float posX, float width, float height)
         {
-            background.position = new Vector3(posX, height / 2f - 0.5f, 0f);
+            background.position = new Vector3(posX, height / 2f, 0f);
             background.localScale = new Vector3(width, height, 1f);
         }
 
