@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5726766518426567086}
   - component: {fileID: -3091319378494149852}
   m_Layer: 0
-  m_Name: Icecream
+  m_Name: Lollipop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -94,6 +94,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 389f58fee4e6adc49a40bb29dd8eb256, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  explosion: {fileID: 8892935919385640111, guid: 01786f033acc7174196c11c21fbc822a,
+    type: 3}
   type: 4
   seconds: 1
 --- !u!61 &-3091319378494149852

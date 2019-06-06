@@ -5,24 +5,25 @@ using UnityEngine;
 
 namespace PopBlast.Items
 {
-    public class Item : MonoBehaviour
+    public class Item : MonoBehaviour , IItem
     {
         #region MEMBERS
-
+        [SerializeField] private GameObject explosion;
         [SerializeField] private ItemType type = ItemType.None;
         [SerializeField] private float seconds = 1f;
         private float col;
         private float row;
-        public int Col { get { return (int)col; } }
+        public int Column { get { return (int)col; } }
         public int Row { get { return (int)row; } }
 
-        private Item left, right, top, bottom;
+        private IItem left, right, top, bottom;
 
         private IEnumerator moveCoroutine = null;
 
         #endregion
 
         #region PUBLIC_METHODS
+        public GameObject GameObject { get { return gameObject; } }
 
         public void SetGrid(int newCol, int newRow)
         {
@@ -36,7 +37,7 @@ namespace PopBlast.Items
             StartCoroutine(moveCoroutine);
         }
 
-        public void SetNeighbors(Item newleft, Item newRight, Item newTop, Item newBottom)
+        public void SetNeighbors(IItem newleft, IItem newRight, IItem newTop, IItem newBottom)
         {
             left = newleft;
             right = newRight;
@@ -49,9 +50,9 @@ namespace PopBlast.Items
             StartCoroutine(moveCoroutine);
         }
 
-        public Item[] GetSameAdjacentItem()
+        public IItem[] GetSameAdjacentItems()
         {
-            List<Item> list = new List<Item>();
+            List<IItem> list = new List<IItem>();
             CheckNeighbor(left, list);
             CheckNeighbor(right, list);
             CheckNeighbor(top, list);
@@ -59,13 +60,24 @@ namespace PopBlast.Items
             return list.ToArray();
         }
 
+        public void DestroyItem()
+        {
+            ExplosionAnimate();
+        }
+
         #endregion
 
         #region PRIVATE_METHODS
 
-        private void CheckNeighbor(Item item, List<Item> list)
+        private void ExplosionAnimate()
         {
-            if (item != null && item.type == type)
+            Instantiate<GameObject>(this.explosion, transform.position, transform.rotation);           
+            Destroy(gameObject);
+        }
+
+        private void CheckNeighbor(IItem item, List<IItem> list)
+        {
+            if (item != null && ((Item)item).type == type)
             {
                 list.Add(item);
             }
@@ -90,5 +102,20 @@ namespace PopBlast.Items
     public enum ItemType : byte
     {
         None, CakeFull, CakePiece, Candybar, Lollipop, Icecream, Heart
+    }
+
+    /// <summary>
+    /// Item object interface
+    /// </summary>
+    public interface IItem
+    {
+        int Row { get; }
+        int Column { get; }
+        IItem[] GetSameAdjacentItems();
+        void StartMovement();
+        void SetNeighbors(IItem newleft, IItem newRight, IItem newTop, IItem newBottom);
+        void SetGrid(int newCol, int newRow);
+        GameObject GameObject { get; }
+        void DestroyItem();
     }
 }

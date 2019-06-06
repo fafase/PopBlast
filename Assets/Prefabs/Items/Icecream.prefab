@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 746680352675436489}
   - component: {fileID: -5845628087918474375}
   m_Layer: 0
-  m_Name: Candybar
+  m_Name: Icecream
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -94,6 +94,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 389f58fee4e6adc49a40bb29dd8eb256, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  explosion: {fileID: 8892935919385640111, guid: 01786f033acc7174196c11c21fbc822a,
+    type: 3}
   type: 5
   seconds: 1
 --- !u!61 &-5845628087918474375
