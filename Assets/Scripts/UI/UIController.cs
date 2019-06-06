@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 namespace PopBlast.UI
 {
+    /// <summary>
+    /// Controls the view of the level
+    /// </summary>
     public class UIController : MonoBehaviour
     {
         #region MEMBERS
@@ -18,17 +21,19 @@ namespace PopBlast.UI
         [Header("Feedback")]
         [Space()]
         [SerializeField] private float feedbackTimer = 1f;
-        [SerializeField] private KeyValue[] keyValues;
+        [Tooltip("For each key value, provide an amount and a message. Amount is how many item destroyed in one tap")]
+        [SerializeField] private FeedbackKeyValue[] keyValues;
 
-        public event Action RaiseNewGame;
-
-        
+        /// <summary>
+        /// Event triggered when a new game is started
+        /// </summary>
+        public event Action RaiseNewGame;  
 
         #endregion
 
         #region UNITY_LIFECYCLE
 
-        private void Awake()
+        protected virtual void Awake()
         {
             restartBtn.onClick.AddListener(() =>
             {
@@ -43,6 +48,10 @@ namespace PopBlast.UI
 
         #region PUBLIC_METHODS
 
+        /// <summary>
+        /// Set the restart panel active
+        /// </summary>
+        /// <param name="active"></param>
         public void SetRestartPanel(bool active)
         {
             restartBtn.gameObject.SetActive(active);
@@ -80,17 +89,20 @@ namespace PopBlast.UI
         /// <param name="amount"></param>
         public void SetFeedback(int amount)
         {
+            // if amount is lower than first item, nothing happens
             if (amount < keyValues[0].amount)
             {
                 return;
             }
             string message = null;
+            // if amount is greater than last item, use last item
             if (amount > keyValues[keyValues.Length - 1].amount)
             {
                 message = keyValues[keyValues.Length - 1].message;
             }
             else
             {
+                // Find index and use message
                 int index = Array.FindIndex(keyValues, (o) => { return o.amount == amount; });
                 message = message = keyValues[index].message;
             }
@@ -114,9 +126,15 @@ namespace PopBlast.UI
         #region DATA_TYPES
         
         [Serializable]
-        public struct KeyValue
+        public struct FeedbackKeyValue
         {
+            /// <summary>
+            /// Amount of item to be destroyed in single tap
+            /// </summary>
             public int amount;
+            /// <summary>
+            /// Feedback message
+            /// </summary>
             public string message;
         }
         #endregion

@@ -5,38 +5,66 @@ using UnityEngine;
 
 namespace PopBlast.Items
 {
+    /// <summary>
+    /// Base class for the Item object
+    /// Implements IItem to minimize the autocompletion list
+    /// </summary>
     public class Item : MonoBehaviour , IItem
     {
         #region MEMBERS
+
+        [Tooltip("Explosion prefab for this item")]
         [SerializeField] private GameObject explosion;
+        [Tooltip("Type of the item")]
         [SerializeField] private ItemType type = ItemType.None;
-        [SerializeField] private float seconds = 1f;
+        [Tooltip("Period for item movement")]
+        [SerializeField] private float movementSeconds = 1f;
+
         private float col;
         private float row;
+
+        /// <summary>
+        /// Get the current column
+        /// </summary>
         public int Column { get { return (int)col; } }
+        /// <summary>
+        /// Get the current row
+        /// </summary>
         public int Row { get { return (int)row; } }
 
         private IItem left, right, top, bottom;
 
-        private IEnumerator moveCoroutine = null;
-
         #endregion
 
         #region PUBLIC_METHODS
-        public GameObject GameObject { get { return gameObject; } }
 
+        /// <summary>
+        /// Get the game object for this IItem
+        /// </summary>
+        public GameObject GameObject
+        {
+            get { return gameObject; }
+        }
+
+        /// <summary>
+        /// Set the item with a new grid value
+        /// </summary>
+        /// <param name="newCol"></param>
+        /// <param name="newRow"></param>
         public void SetGrid(int newCol, int newRow)
         {
             col = (float)newCol;
             row = (float)newRow;
-            if (moveCoroutine != null)
-            {
-                return;
-            }
-            moveCoroutine = MoveToPositionCoroutine();
-            StartCoroutine(moveCoroutine);
+            StartCoroutine(MoveToPositionCoroutine(null));
         }
 
+        /// <summary>
+        /// Set the item with new neighbours
+        /// </summary>
+        /// <param name="newleft"></param>
+        /// <param name="newRight"></param>
+        /// <param name="newTop"></param>
+        /// <param name="newBottom"></param>
         public void SetNeighbors(IItem newleft, IItem newRight, IItem newTop, IItem newBottom)
         {
             left = newleft;
@@ -44,13 +72,20 @@ namespace PopBlast.Items
             top = newTop;
             bottom = newBottom;
         }
-        public void StartMovement()
+
+        /// <summary>
+        /// Start the movement for this item
+        /// </summary>
+        public void StartMovement(Action onCompletion)
         {        
-            moveCoroutine = MoveToPositionCoroutine();
-            StartCoroutine(moveCoroutine);
+            StartCoroutine(MoveToPositionCoroutine(onCompletion));
         }
 
-        public IItem[] GetSameAdjacentItems()
+        /// <summary>
+        /// Get a collection of neighbours with same type
+        /// </summary>
+        /// <returns></returns>
+        public IItem[] GetSameTypeNeighbours()
         {
             List<IItem> list = new List<IItem>();
             CheckNeighbor(left, list);
@@ -60,6 +95,9 @@ namespace PopBlast.Items
             return list.ToArray();
         }
 
+        /// <summary>
+        /// Destroy the item with explosion effect
+        /// </summary>
         public void DestroyItem()
         {
             ExplosionAnimate();
@@ -82,7 +120,8 @@ namespace PopBlast.Items
                 list.Add(item);
             }
         }
-        private IEnumerator MoveToPositionCoroutine()
+
+        private IEnumerator MoveToPositionCoroutine(Action onCompletion)
         {
             float timeSinceStarted = 0f;
             float target = row + 0.5f;
@@ -90,11 +129,11 @@ namespace PopBlast.Items
             {
                 timeSinceStarted += Time.deltaTime;
                 Vector3 pos = transform.position;
-                pos.y = Mathf.Lerp(pos.y, target, timeSinceStarted / seconds);
+                pos.y = Mathf.Lerp(pos.y, target, timeSinceStarted / movementSeconds);
                 transform.position = pos;
                 yield return null;
             }
-            moveCoroutine = null;
+            onCompletion?.Invoke();
         }
 
         #endregion
@@ -111,8 +150,8 @@ namespace PopBlast.Items
     {
         int Row { get; }
         int Column { get; }
-        IItem[] GetSameAdjacentItems();
-        void StartMovement();
+        IItem[] GetSameTypeNeighbours();
+        void StartMovement(Action onCompletion);
         void SetNeighbors(IItem newleft, IItem newRight, IItem newTop, IItem newBottom);
         void SetGrid(int newCol, int newRow);
         GameObject GameObject { get; }

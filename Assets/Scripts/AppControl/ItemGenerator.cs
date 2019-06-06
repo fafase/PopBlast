@@ -8,6 +8,7 @@ namespace PopBlast.AppControl
 {
     /// <summary>
     /// Component controlling the grid of items
+    /// Main business logic of the system
     /// </summary>
     public class ItemGenerator : MonoBehaviour
     {
@@ -23,6 +24,9 @@ namespace PopBlast.AppControl
 
         private int width, height;
 
+        /// <summary>
+        /// Event triggered when no more moves are possible
+        /// </summary>
         public event Action RaiseEndOfGame;
 
         /// <summary>
@@ -72,7 +76,7 @@ namespace PopBlast.AppControl
                     grid[i, j] = item;
                 }
             }
-            SetGrid();
+            SetNeighboursGrid();
             StartCoroutine(EnableItemCoroutine(onCompletion));
         }
         
@@ -89,7 +93,7 @@ namespace PopBlast.AppControl
                 onCompletion?.Invoke();
                 return;
             }
-            IItem[] results = item.GetSameAdjacentItems();
+            IItem[] results = item.GetSameTypeNeighbours();
             if(results.Length == 0)
             {
                 onCompletion?.Invoke();
@@ -99,7 +103,7 @@ namespace PopBlast.AppControl
             CheckForEmptySpaces();
             StartCoroutine(CreateNewItem(()=> 
             {
-                SetGrid();
+                SetNeighboursGrid();
                 if (CheckForRemainingMovement() == false)
                 {
                     RaiseEndOfGame?.Invoke();
@@ -112,17 +116,26 @@ namespace PopBlast.AppControl
 
         private void ProcessItemToRemove(Item item)
         {
+            // Using hashset to avoid duplicate
             HashSet<IItem> toRemove = new HashSet<IItem>();
+            // Add first item, the one that got tapped on
             toRemove.Add(item);
             Queue<IItem> queue = new Queue<IItem>();
+            // Enqueue item for tree search
             queue.Enqueue(item);
 
             while (queue.Count > 0)
             {
+                // Get oldest item
                 IItem current = queue.Dequeue();
-                IItem[] items = current.GetSameAdjacentItems();
+                // Get all neighbours with same type
+                // Continue if none
+                IItem[] items = current.GetSameTypeNeighbours();
                 if (items.Length == 0) { continue; }
 
+                // For each of the neighbours, add to the queue
+                // Using hashset, if a neighbour is already in the list, it is not added to the queue
+                // It was either already processed or already added to the list
                 foreach (IItem it in items)
                 {
                     if (toRemove.Add(it))
@@ -131,7 +144,10 @@ namespace PopBlast.AppControl
                     }
                 }
             }
+            // Forward how many items were found
+            // Used for score and feedback
             RaiseItemPop?.Invoke(toRemove.Count);
+            // Destroy item and set grid position to null
             foreach (IItem i in toRemove)
             {
                 grid[i.Column, i.Row] = null;
@@ -139,24 +155,32 @@ namespace PopBlast.AppControl
             }
         }
 
+        // Check for empty space in a column
+        //Iterate from bottom to top
+        // When a free space is found, it searches for next item in the column and assign its new grid position
         private void CheckForEmptySpaces()
         {
             for (int i = 0; i < width; i++)
             {
-                int empty = 0;
                 for (int j = 0; j < height; j++)
                 {
                     IItem temp = grid[i, j];
+
+                    // if empty spot
                     if (temp == null)
-                    {
-                        empty++;
+                    { 
+                        // iterate above for item
                         for (int w = j; w < height; w++)
                         {
                             IItem t = grid[i, w];
+                            // if item is found
                             if (t != null)
                             {
+                                // Assign item with empty spot location
                                 t.SetGrid(i, j);
+                                // Update grid
                                 grid[i, j] = t;
+                                // Set old item grid spot to null
                                 grid[i, w] = null;
                                 break;
                             }
@@ -166,6 +190,7 @@ namespace PopBlast.AppControl
             }
         }
 
+        //Iterate the whole grid and search for an item with same neighbours indicating a possible move
         private bool CheckForRemainingMovement()
         {
             for (int i = 0; i < width; i++)
@@ -173,36 +198,53 @@ namespace PopBlast.AppControl
                 for (int j = 0; j < height; j++)
                 {
                     IItem item = grid[i, j];
-                    if (item.GetSameAdjacentItems().Length > 0)
+                    // If the item has a neighbour with same type, there is a possible move
+                    if (item.GetSameTypeNeighbours().Length > 0)
                     {
                         return true;
                     }
                 }
             }
+            // No possible move left
             return false;
         }
-
+        
+        // Create new item and assign their grid position
+        // Coroutine to allow items not to stack on top of each other
         private IEnumerator CreateNewItem(Action onCompletion)
         {
+            int runningItem = 0;
             for (int i = 0; i < height; i++)
             {
                 for(int j = 0; j < width; j++)
                 {
                     if (grid[j, i] == null)
                     {
+                        // Get the spawn point
                         Transform spawnTr = spawns[j];
+                        // Create new item with random value
                         int rand = UnityEngine.Random.Range(0, items.Length);
                         GameObject obj = Instantiate<GameObject>(items[rand], spawnTr);
+                        // Set position at spawn
                         obj.transform.position = spawnTr.position;
+                        // Populate the IItem values
                         IItem item = obj.GetComponent<IItem>();
                         item.SetGrid(j, i);
+                        runningItem++;
+                        item.StartMovement(()=> 
+                        {
+                            if (--runningItem == 0)
+                            {
+                                onCompletion?.Invoke();
+                            }
+                        });
+                        // Set the grid with new IItem
                         grid[j, i] = item;
-                        item.StartMovement();
                     }
                 }
                 yield return new WaitForSeconds(waitTimeForCreation);
             }
-            onCompletion?.Invoke();
+           // onCompletion?.Invoke();
         }
 
         private IEnumerator EnableItemCoroutine(Action onCompletion)
@@ -213,20 +255,22 @@ namespace PopBlast.AppControl
                 {
                     IItem item = grid[j, i];
                     item.GameObject.SetActive(true);
-                    item.StartMovement();
+                    item.StartMovement(null);
                     yield return new WaitForSeconds(waitTimeForCreation);
                 }
             }
             onCompletion?.Invoke();
         }
 
-        private void SetGrid()
+        // Set all four neighbours for the items of the grid
+        private void SetNeighboursGrid()
         {
             for (int i = 0; i < width; i++)
             {
                 for (int j = 0; j < height; j++)
                 {
                     IItem left = null, right = null, top = null, bottom = null;
+                    // for each item, checking if it is not on the edge to avoid out of bounds exception
                     if (i > 0)
                     {
                         left = grid[i - 1, j];

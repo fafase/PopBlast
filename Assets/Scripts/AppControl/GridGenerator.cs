@@ -4,10 +4,13 @@ using UnityEngine;
 
 namespace PopBlast.AppControl
 {
+    /// <summary>
+    /// Generate the grid based on width and height
+    /// </summary>
     public class GridGenerator : MonoBehaviour
     {
         #region MEMBERS
-
+        [Tooltip("Background image")]
         [SerializeField] private Transform background = null;
 
         #endregion

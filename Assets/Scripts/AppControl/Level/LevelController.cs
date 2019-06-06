@@ -7,9 +7,13 @@ using UnityEngine.SceneManagement;
 
 namespace PopBlast.AppControl.Level
 {
+    /// <summary>
+    /// Class connecting all items in the level
+    /// </summary>
     public class LevelController : MonoBehaviour
     {
         #region MEMBERS
+
         [Header("Create level values")]
         [Range(5, 20)]
         [SerializeField] private int row = 0;
@@ -26,7 +30,7 @@ namespace PopBlast.AppControl.Level
 
         #region UNITY_LIFECYCLE
 
-        private void Awake()
+        protected virtual void Awake()
         {
             generator = FindObjectOfType<ItemGenerator>();
             if (generator == null)
@@ -44,8 +48,8 @@ namespace PopBlast.AppControl.Level
                 throw new System.Exception("Missing UIController component");
             }
         }
-        // Start is called before the first frame update
-        void Start()
+
+        protected virtual void Start()
         {
             input.enabled = false;
             FindObjectOfType<GridGenerator>().Init(col, row);
@@ -62,18 +66,20 @@ namespace PopBlast.AppControl.Level
             input.RaiseItemTapped += Input_RaiseItemTapped;
         }
 
-
-
         #endregion
 
         #region PRIVATE_METHODS
 
+        // Event call when new game is required
+        // Loads a new scene
         private void UiCtrl_RaiseNewGame()
         {
-            TopScore.SetHiScore(score);
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
+        // event triggered when Input reports a tap on an item
+        // Forward the game object to the generator
+        // Set input on/off
         private void Input_RaiseItemTapped(GameObject obj)
         {
             input.enabled = false;
@@ -83,11 +89,13 @@ namespace PopBlast.AppControl.Level
             });
         }
 
+        // Event triggered when Generator reports no more possible move
         private void Generator_RaiseEndOfGame()
         {
             uiCtrl.SetRestartPanel(true);
         }
 
+        // Update score with new amount
         private void UpdateScore(int amount)
         {
             if (amount <= 0) { return; }
