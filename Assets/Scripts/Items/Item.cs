@@ -85,13 +85,16 @@ namespace PopBlast.Items
         /// Get a collection of neighbours with same type
         /// </summary>
         /// <returns></returns>
-        public IItem[] GetSameTypeNeighbours()
+        public IItem [] GetSameTypeNeighbours()
         {
             List<IItem> list = new List<IItem>();
+            // Check all four neighbours if same type
+            // Stores in list if same
             CheckNeighbor(left, list);
             CheckNeighbor(right, list);
             CheckNeighbor(top, list);
             CheckNeighbor(bottom, list);
+            // return list as array
             return list.ToArray();
         }
 
@@ -113,14 +116,17 @@ namespace PopBlast.Items
             Destroy(gameObject);
         }
 
-        private void CheckNeighbor(IItem item, List<IItem> list)
+        private void CheckNeighbor(IItem neighbours, List<IItem> list)
         {
-            if (item != null && ((Item)item).type == type)
+            // if the neighbours is not null (current item is on edge) and same type as current item
+            // add to list
+            if (neighbours != null && ((Item)neighbours).type == type)
             {
-                list.Add(item);
+                list.Add(neighbours);
             }
         }
 
+        // Interpolation movement based on time
         private IEnumerator MoveToPositionCoroutine(Action onCompletion)
         {
             float timeSinceStarted = 0f;

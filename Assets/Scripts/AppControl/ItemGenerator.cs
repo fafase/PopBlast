@@ -82,6 +82,8 @@ namespace PopBlast.AppControl
         
         /// <summary>
         /// Checks the neighbours of the given game object 
+        /// Process a tree search to find all consecutive similar neighbours
+        /// Clears them all from screen and loads new ones
         /// </summary>
         /// <param name="go"></param>
         /// <param name="onCompletion"></param>
@@ -99,9 +101,9 @@ namespace PopBlast.AppControl
                 onCompletion?.Invoke();
                 return;
             }
-            ProcessItemToRemove(item);
+            int amount = ProcessItemToRemove(item);
             CheckForEmptySpaces();
-            StartCoroutine(CreateNewItem(()=> 
+            StartCoroutine(CreateNewItemsCoroutine(amount, ()=> 
             {
                 SetNeighboursGrid();
                 if (CheckForRemainingMovement() == false)
@@ -114,7 +116,7 @@ namespace PopBlast.AppControl
 
         #endregion
 
-        private void ProcessItemToRemove(Item item)
+        private int ProcessItemToRemove(Item item)
         {
             // Using hashset to avoid duplicate
             HashSet<IItem> toRemove = new HashSet<IItem>();
@@ -147,12 +149,14 @@ namespace PopBlast.AppControl
             // Forward how many items were found
             // Used for score and feedback
             RaiseItemPop?.Invoke(toRemove.Count);
+            int amount = toRemove.Count;
             // Destroy item and set grid position to null
             foreach (IItem i in toRemove)
             {
                 grid[i.Column, i.Row] = null;
                 i.DestroyItem();
             }
+            return amount;
         }
 
         // Check for empty space in a column
@@ -211,9 +215,8 @@ namespace PopBlast.AppControl
         
         // Create new item and assign their grid position
         // Coroutine to allow items not to stack on top of each other
-        private IEnumerator CreateNewItem(Action onCompletion)
+        private IEnumerator CreateNewItemsCoroutine(int amount, Action onCompletion)
         {
-            int runningItem = 0;
             for (int i = 0; i < height; i++)
             {
                 for(int j = 0; j < width; j++)
@@ -230,10 +233,12 @@ namespace PopBlast.AppControl
                         // Populate the IItem values
                         IItem item = obj.GetComponent<IItem>();
                         item.SetGrid(j, i);
-                        runningItem++;
+                       
+                        // Sart the movement with callback
                         item.StartMovement(()=> 
                         {
-                            if (--runningItem == 0)
+                            // Decrease amount and check if all are done
+                            if (--amount == 0)
                             {
                                 onCompletion?.Invoke();
                             }

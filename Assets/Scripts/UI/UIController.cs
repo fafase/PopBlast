@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace PopBlast.UI
@@ -14,6 +15,7 @@ namespace PopBlast.UI
         #region MEMBERS
 
         [SerializeField] private Button restartBtn = null;
+        [SerializeField] private Button quitBtn = null;
         [SerializeField] private Text scoreTxt = null;
         [SerializeField] private Text hiScoreTxt = null;
         [SerializeField] private Text feedbackTxt = null;
@@ -27,7 +29,7 @@ namespace PopBlast.UI
         /// <summary>
         /// Event triggered when a new game is started
         /// </summary>
-        public event Action RaiseNewGame;  
+        public event Action RaiseNewGame;
 
         #endregion
 
@@ -38,6 +40,10 @@ namespace PopBlast.UI
             restartBtn.onClick.AddListener(() =>
             {
                 RaiseNewGame?.Invoke();
+            });
+            quitBtn.onClick.AddListener(()=> 
+            {
+                SceneManager.LoadScene(0);
             });
             SetRestartPanel(false);
             UpdateScore(0.ToString());
@@ -67,7 +73,7 @@ namespace PopBlast.UI
             {
                 return;
             }
-            scoreTxt.text = $"Score : {score}";
+            scoreTxt.text = $"Pts : {score}";
         }
 
         /// <summary>

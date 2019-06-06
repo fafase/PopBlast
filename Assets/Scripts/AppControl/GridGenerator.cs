@@ -19,18 +19,19 @@ namespace PopBlast.AppControl
 
         public void Init(int width, int height)
         {
-            float posX = (float)width / 2f;
-            SetCamera(posX, width, height);
-            SetBackground(posX, width, height);
+            SetCamera(width, height);
+            SetBackground(width, height);
         }
 
         #endregion
 
         #region PRIVATE_METHODS
 
-        private void SetCamera(float posX, float width, float height)
+        // Set the camera position and size based on width and height
+        private void SetCamera(float width, float height)
         {
-            Camera.main.transform.position = new Vector3(posX, height / 2f, -10);
+            // Set new position based on width and height
+            Camera.main.transform.position = new Vector3(width / 2f, height / 2f, -10);
             float margin = 1f;
             float screenRatio = (float)Screen.width / (float)Screen.height;
             float gridRatio = width / height;
@@ -38,9 +39,9 @@ namespace PopBlast.AppControl
             Camera.main.orthographicSize = size;
         }
 
-        private void SetBackground(float posX, float width, float height)
+        private void SetBackground( float width, float height)
         {
-            background.position = new Vector3(posX, height / 2f, 0f);
+            background.position = new Vector3(width / 2f, height / 2f, 0f);
             background.localScale = new Vector3(width, height, 1f);
         }
 

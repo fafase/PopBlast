@@ -52,6 +52,9 @@ namespace PopBlast.AppControl.Level
         protected virtual void Start()
         {
             input.enabled = false;
+
+            CheckForSettings();
+
             FindObjectOfType<GridGenerator>().Init(col, row);
             generator.Init(col, row, () =>
             {
@@ -77,7 +80,7 @@ namespace PopBlast.AppControl.Level
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
-        // event triggered when Input reports a tap on an item
+        // Event triggered when Input reports a tap on an item
         // Forward the game object to the generator
         // Set input on/off
         private void Input_RaiseItemTapped(GameObject obj)
@@ -98,14 +101,30 @@ namespace PopBlast.AppControl.Level
         // Update score with new amount
         private void UpdateScore(int amount)
         {
+            // If only one item tapped, nothing
             if (amount <= 0) { return; }
+            // Based on amount, set feedback to user
             uiCtrl.SetFeedback(amount);
+            // Exponential increase based on power of two
             score += Mathf.FloorToInt(Mathf.Pow(2, amount));
+            // Update the visual of the score
             uiCtrl.UpdateScore(score.ToString());
+            // Update the hi score if higher
             if (TopScore.SetHiScore(score))
             {
+                // Update the visual of hiscore if needed
                 uiCtrl.UpdateHiScore(TopScore.GetHiScore().ToString());
             }         
+        }
+
+        private void CheckForSettings()
+        {
+            // If came from start level, values should exist
+            col = PlayerPrefs.GetInt("Width", col);
+            row = PlayerPrefs.GetInt("Height", row);
+            // Delete values so editor can start from Game scene
+            PlayerPrefs.DeleteKey("Width");
+            PlayerPrefs.DeleteKey("Height");
         }
 
         #endregion

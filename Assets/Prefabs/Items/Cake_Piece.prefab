@@ -97,7 +97,7 @@ MonoBehaviour:
   explosion: {fileID: 8892935919385640111, guid: 01786f033acc7174196c11c21fbc822a,
     type: 3}
   type: 2
-  seconds: 1
+  movementSeconds: 1
 --- !u!61 &-2632020186899653285
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -186,6 +186,11 @@ PrefabInstance:
     - target: {fileID: 4087432113522194, guid: 7c6fb501b8bef47a995cfc3559b25f7a, type: 3}
       propertyPath: m_LocalScale.y
       value: 0.27
+      objectReference: {fileID: 0}
+    - target: {fileID: 212720677686130706, guid: 7c6fb501b8bef47a995cfc3559b25f7a,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7c6fb501b8bef47a995cfc3559b25f7a, type: 3}
