@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Tools;
+using Zenject;
 
 namespace PopBlast.AppControl.Level
 {
@@ -18,6 +20,8 @@ namespace PopBlast.AppControl.Level
         [SerializeField] private Button mediumBtn = null;
         [SerializeField] private Button hardBtn = null;
 
+        [Inject] private IPopupManager m_popupManager;
+
         #endregion
 
         #region UNITY_LIFECYCLE
@@ -27,7 +31,8 @@ namespace PopBlast.AppControl.Level
             // 4 levels of difficulties
             superEasyBtn.onClick.AddListener(()=> 
             {
-                SetLevelSettings(10,10);              
+                m_popupManager.Show<BasicPopup>();
+                //SetLevelSettings(10,10);              
             });
             easyBtn.onClick.AddListener(() => 
             {
