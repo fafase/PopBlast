@@ -34,11 +34,11 @@ namespace Tools
         public event Action InitStart;
         public event Action<List<InitializationResult>> InitComplete;
 
-        private InitializerProces m_init;
+        private InitializerProcess m_init;
         void Awake()
         {
             // Fire and Forget process
-            m_init = new InitializerProces();
+            m_init = new InitializerProcess();
             m_init.Init(this).Forget();
         }
 
@@ -48,7 +48,7 @@ namespace Tools
             m_init.Cancel();
         }
     }
-    public class InitializerProces
+    public class InitializerProcess
     {
         private CancellationTokenSource m_source;
         private IInitializer m_initializer;
@@ -71,14 +71,7 @@ namespace Tools
                 {
                     if(obj is IInit init) 
                     {
-                        if (init.ShouldWaitForCompletion)
-                        {
-                            tasks.Add(init.InitAsync());
-                        }
-                        else
-                        {
-                            results.Add(init.Init());
-                        }
+                        tasks.Add(init.InitAsync());
                     }
                 }
                 InitializationResult[] rs = await UniTask.WhenAll(tasks).AttachExternalCancellation(m_source.Token);
@@ -91,16 +84,18 @@ namespace Tools
             catch (Exception)
             {
                 // Propagate with null
+                Debug.LogError("[Initilization] Process was cancelled");
                 m_initializer.OnComplete(null);
                 return null;
             }
             finally 
             {
                 m_source?.Dispose();
+                m_initializer.IsInit = true;
             }
 
             m_initializer.OnComplete(results);
-            m_initializer.IsInit = true;
+            
             return results;
         }
         public void Cancel()
@@ -133,8 +128,6 @@ namespace Tools
     public interface IInit
     {
         UniTask<InitializationResult> InitAsync();
-        InitializationResult Init();
-        bool ShouldWaitForCompletion { get; }
         bool IsInit { get; }
     }
     public class InitializationResult

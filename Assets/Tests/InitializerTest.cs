@@ -21,8 +21,7 @@ public class InitializerTest
         m_initializer.InitObjects.Returns(new List<UnityEngine.Object>()
         {
             new GameObject("Go").AddComponent<TestClassA>(),
-            new GameObject("Go").AddComponent<TestClassB>(),
-            new GameObject("Go").AddComponent<TestClassC>()
+            new GameObject("Go").AddComponent<TestClassB>()
         });
     }
     [SetUp]
@@ -33,7 +32,7 @@ public class InitializerTest
     [UnityTest]
     public IEnumerator InitializerTestSimplePasses()
     {        
-        UniTask<List<InitializationResult>> asyncOperation = new InitializerProces().Init(m_initializer);
+        UniTask<List<InitializationResult>> asyncOperation = new InitializerProcess().Init(m_initializer);
         
         while (!asyncOperation.Status.IsCompleted())
         {
@@ -43,25 +42,24 @@ public class InitializerTest
 
         Assert.IsNotNull(results.Find((r) => r.Message.Equals("TestClassA")));
         Assert.IsNotNull(results.Find((r) => r.Message.Equals("TestClassB")));
-        Assert.IsNotNull(results.Find((r) => r.Message.Equals("TestClassC")));
     }
 
     [UnityTest]
     public IEnumerator InitializerTestMultiplePasses()
     {
-        var asyncOperation = new InitializerProces().Init(m_initializer);
+        var asyncOperation = new InitializerProcess().Init(m_initializer);
         while (!asyncOperation.Status.IsCompleted())
         {
             yield return null;
         }
         List<InitializationResult> results = asyncOperation.GetAwaiter().GetResult();
-        Assert.AreEqual(3, results.Count);
+        Assert.AreEqual(2, results.Count);
     }
 
     [UnityTest]
     public IEnumerator InitializerTestMultipleFailPasses()
     {
-        UniTask<List<InitializationResult>> asyncOperation = new InitializerProces().Init(m_initializer);
+        UniTask<List<InitializationResult>> asyncOperation = new InitializerProcess().Init(m_initializer);
 
         while (!asyncOperation.Status.IsCompleted())
         {
@@ -76,7 +74,7 @@ public class InitializerTest
     [UnityTest]
     public IEnumerator InitializerTestMultipleNoWaitPasses()
     {
-        InitializerProces process = new InitializerProces();
+        InitializerProcess process = new InitializerProcess();
         UniTask<List<InitializationResult>> asyncOperation = process.Init(m_initializer);
 
         while (!asyncOperation.Status.IsCompleted())
@@ -84,6 +82,8 @@ public class InitializerTest
             process.Cancel();
             yield return null;
         }
+        // This is not working !!?? Wont pass...
+        LogAssert.Expect(LogType.Exception, "[Error] [Initilization] Process was cancelled");
         List<InitializationResult> results = asyncOperation.GetAwaiter().GetResult();
         Assert.IsNull(results);
     }
@@ -92,64 +92,21 @@ public class InitializerTest
     public class TestClassA : MonoBehaviour, IInit
     {
         public bool IsInit { get; private set; }
-        public bool ShouldWaitForCompletion => true;
 
         public async UniTask<InitializationResult> InitAsync()
         {
             await Task.Delay(500);
             return  new InitializationResult(true, "TestClassA");
         }
-
-        public InitializationResult Init()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Reset()
-        {
-
-        }
     }
     public class TestClassB : MonoBehaviour, IInit
     {
         public bool IsInit { get; private set; }
-        public bool ShouldWaitForCompletion => true;
 
         public async UniTask<InitializationResult> InitAsync()
         {
             await Task.Delay(500);
             return new InitializationResult(false, "TestClassB");
-        }
-
-        public InitializationResult Init()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Reset()
-        {
-
-        }
-    }
-
-    public class TestClassC : MonoBehaviour, IInit
-    {
-        public bool IsInit { get;private set; }
-        public bool ShouldWaitForCompletion => false;
-
-        public InitializationResult Init()
-        {
-            return new InitializationResult(true, "TestClassC");
-        }
-
-        public UniTask<InitializationResult> InitAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Reset()
-        {
-
         }
     }
 }
