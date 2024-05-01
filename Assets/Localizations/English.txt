@@ -4,7 +4,9 @@
     "appName": "GameName",
     "GENERIC": {
         "settings": "Settings",
-        "loading": "Loading"
+        "loading": "Loading",
+        "play" : "Play",
+        "level" : "Level {level}"
     },
     "EVENTS": {
         "eventName": "EventName",

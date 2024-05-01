@@ -28,8 +28,6 @@ namespace Tools
         private JObject m_jsonLocalization;
         public string[] Localizations => m_localizations.Select(loc => loc.name).ToArray();
 
-        public bool ShouldWaitForCompletion => false;
-
         public InitializationResult Init()
         {
             m_init = true;
@@ -45,7 +43,17 @@ namespace Tools
 
         public UniTask<InitializationResult> InitAsync()
         {
-            throw new System.NotImplementedException();
+            m_init = true;
+            SetDefault();
+            string locale = PlayerPrefs.GetString("PPLocale", null);
+            if (string.IsNullOrEmpty(locale))
+            {
+                locale = Application.systemLanguage.ToString();
+            }
+            SetWithLocale(locale);
+            var utcs = new UniTaskCompletionSource<InitializationResult>();
+            utcs.TrySetResult(new InitializationResult(true, GetType().Name));
+            return utcs.Task; 
         }
         public void InitLocalizer() 
         {

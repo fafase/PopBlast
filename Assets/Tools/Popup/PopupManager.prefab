@@ -114,6 +114,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b4dc26f3daae20438acaf812790e501, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_canvas: {fileID: 0}
   m_popups:
   - {fileID: 6270570918343796487, guid: e27544fd250ff284f812657eacaf8a55, type: 3}
+  - {fileID: 5209414215779532465, guid: 0a3bd6e5a97663e4db03d75a8f664877, type: 3}
