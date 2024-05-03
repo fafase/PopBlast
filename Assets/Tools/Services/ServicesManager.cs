@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.Services.RemoteConfig;
 using UnityEngine;
 using Unity.Services.CloudSave;
+using Unity.Services.Authentication;
 
 namespace Tools
 {

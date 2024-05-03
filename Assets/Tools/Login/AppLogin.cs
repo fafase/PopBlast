@@ -54,6 +54,7 @@ namespace Tools
                 Debug.LogError($"Sign in anonymously failed with error code: {errorResponse.ErrorCode}");
             };
             RemoteConfigService.Instance.FetchCompleted += ApplyRemoteConfig;
+
             try
             {
                 await AuthenticationService.Instance.SignInAnonymouslyAsync();

@@ -39,6 +39,7 @@ namespace Tools
                 instance.Init(this);
                 return instance;
             }
+            Debug.LogError("[PopupManager] Popup was not found in manager list");
             return null;
         }
 
