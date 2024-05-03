@@ -41,7 +41,7 @@ namespace Tools
             return new InitializationResult(true, GetType().Name);
         }
 
-        public UniTask<InitializationResult> InitAsync()
+        public async UniTask<InitializationResult> InitAsync()
         {
             m_init = true;
             SetDefault();
@@ -51,14 +51,15 @@ namespace Tools
                 locale = Application.systemLanguage.ToString();
             }
             SetWithLocale(locale);
-            var utcs = new UniTaskCompletionSource<InitializationResult>();
-            utcs.TrySetResult(new InitializationResult(true, GetType().Name));
-            return utcs.Task; 
+            await UniTask.Yield();
+            return new InitializationResult(true, GetType().ToString()); 
         }
+
         public void InitLocalizer() 
         {
             Init();
         }
+
         public void SetDefault() 
         {
             if (m_defaultLocalization == null)

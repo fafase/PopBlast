@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 469c24fdb3bd6431b92cc1465bd9166b, type: 3}
+  m_Name: RemoteConfigDataStoreAsset
+  m_EditorClassIdentifier: 
+  _rsKeyList: "[\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"c81a4a5c-7430-49f4-b75c-20bf14ff4403\"\r\n   
+    },\r\n    \"rs\": {\r\n      \"key\": \"nameGenerator\",\r\n      \"type\": \"json\",\r\n     
+    \"schemaId\": null,\r\n      \"value\": {\r\n        \"title\": \"nameGenerator\",\r\n       
+    \"language\": \"English\",\r\n        \"playerNames\": [\r\n          \"BlastMaster\",\r\n         
+    \"PopPilot\",\r\n          \"BoomBuster\",\r\n          \"PopFury\",\r\n         
+    \"BlastChampion\",\r\n          \"PopStorm\",\r\n          \"BlitzPopper\",\r\n         
+    \"BlastLegend\",\r\n          \"PopWarrior\",\r\n          \"PopNova\",\r\n         
+    \"BlastSavant\",\r\n          \"PopCraze\",\r\n          \"BoomStriker\",\r\n         
+    \"PopBlaze\",\r\n          \"BlastWhiz\",\r\n          \"Popinator\",\r\n         
+    \"PopProdigy\",\r\n          \"BlastBolt\",\r\n          \"PopMaverick\",\r\n         
+    \"PopFusion\"\r\n        ],\r\n        \"forbidden\": []\r\n      }\r\n    }\r\n 
+    }\r\n]"
+  _rsLastCachedKeyList: "[\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"c81a4a5c-7430-49f4-b75c-20bf14ff4403\"\r\n   
+    },\r\n    \"rs\": {\r\n      \"key\": \"nameGenerator\",\r\n      \"type\": \"json\",\r\n     
+    \"schemaId\": null,\r\n      \"value\": {\r\n        \"title\": \"nameGenerator\",\r\n       
+    \"language\": \"English\",\r\n        \"playerNames\": [\r\n          \"BlastMaster\",\r\n         
+    \"PopPilot\",\r\n          \"BoomBuster\",\r\n          \"PopFury\",\r\n         
+    \"BlastChampion\",\r\n          \"PopStorm\",\r\n          \"BlitzPopper\",\r\n         
+    \"BlastLegend\",\r\n          \"PopWarrior\",\r\n          \"PopNova\",\r\n         
+    \"BlastSavant\",\r\n          \"PopCraze\",\r\n          \"BoomStriker\",\r\n         
+    \"PopBlaze\",\r\n          \"BlastWhiz\",\r\n          \"Popinator\",\r\n         
+    \"PopProdigy\",\r\n          \"BlastBolt\",\r\n          \"PopMaverick\",\r\n         
+    \"PopFusion\"\r\n        ],\r\n        \"forbidden\": []\r\n      }\r\n    }\r\n 
+    }\r\n]"
+  _environments: "[\r\n  {\r\n    \"projectId\": \"8d3f0bbd-b7bc-4e2d-bdaa-386d3a0c30b9\",\r\n   
+    \"name\": \"production\",\r\n    \"id\": \"d117899c-c0f7-4975-8123-7f40b58e467a\",\r\n   
+    \"isDefault\": true,\r\n    \"createdAt\": \"2024-05-03T11:11:17Z\",\r\n    \"updatedAt\":
+    \"2024-05-03T11:11:17Z\"\r\n  },\r\n  {\r\n    \"projectId\": \"8d3f0bbd-b7bc-4e2d-bdaa-386d3a0c30b9\",\r\n   
+    \"name\": \"dev\",\r\n    \"id\": \"afec5326-7260-45a5-b813-ad663e076dfe\",\r\n   
+    \"isDefault\": false,\r\n    \"createdAt\": \"2024-05-03T12:54:13Z\",\r\n   
+    \"updatedAt\": \"2024-05-03T12:54:13Z\"\r\n  }\r\n]"

@@ -89,10 +89,10 @@ namespace Tools
                     results.ForEach((result) => Debug.Log(result));
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 // Propagate with null
-                Debug.LogError("[Initilization] Process was cancelled");
+                Debug.LogError($"[Initilization] Process was cancelled {e.Message}");
                 m_initializer.OnComplete(null);
                 return null;
             }

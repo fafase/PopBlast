@@ -6,7 +6,10 @@
         "settings": "Settings",
         "loading": "Loading",
         "play" : "Play",
-        "level" : "Level {level}"
+        "level" : "Level {level}",
+        "newName" : "Choose name",
+        "next" : "Next",
+        "nameGenerator" : "Your name is:"
     },
     "EVENTS": {
         "eventName": "EventName",

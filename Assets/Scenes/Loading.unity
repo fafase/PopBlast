@@ -135,8 +135,9 @@ GameObject:
   - component: {fileID: 306442475}
   - component: {fileID: 306442473}
   - component: {fileID: 306442472}
+  - component: {fileID: 306442476}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Loader
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -168,6 +169,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_initObjects:
   - {fileID: 11400000, guid: ceab107f696f3c54fbe946c4d22cd82b, type: 2}
+  - {fileID: 306442476}
   m_showDebug: 1
   m_onStart:
     m_PersistentCalls:
@@ -212,6 +214,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ffdb4acf2c1a1d34aac402c627710476, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &306442476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 306442471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 461f171d56aa95947acc8ef54cf6de6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &534028047
@@ -688,7 +702,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 187.2
+  m_fontSize: 161.95
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1

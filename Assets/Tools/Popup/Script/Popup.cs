@@ -20,13 +20,15 @@ namespace Tools
 
         public event Action<IPopup> OnClose;
         public event Action <IPopup> OnOpen;
-        
+        public bool IsOpen => m_state == State.Opening || m_state == State.Idle;
         public void Init(IPopupManager popupManager)
         {
             m_popupManager = popupManager;
             transform.SetParent(m_popupManager.Container, false);
-            m_closeBtn.onClick.AddListener(() =>  Close());
-
+            if (m_closeBtn != null)
+            {
+                m_closeBtn.onClick.AddListener(() => Close());
+            }
             m_animation = GetComponent<Animation>();
             m_animation.wrapMode = WrapMode.Once;
             m_animation.AddClip(m_openAnimation, m_openAnimation.name);
@@ -87,6 +89,8 @@ namespace Tools
         void Init(IPopupManager popupManager);
         void AddToClose(Action<IPopup> action);
         void RemoveToClose(Action<IPopup> action);
+
+        bool IsOpen { get; }
         public enum State
         {
             Idle, Opening, Closing

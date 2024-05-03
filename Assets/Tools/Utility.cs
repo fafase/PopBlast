@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -81,6 +82,16 @@ namespace Tools
             Vector2 pos = a + (b * t) + (c * t * t) + (d * t * t * t);
 
             return pos;
+        }
+    }
+
+    public static class UniTaskUtility
+    {
+        public static UniTask<InitializationResult> GetUniTaskCompletion(bool result, object obj)
+        {
+            var ucts = new UniTaskCompletionSource<InitializationResult>();
+            ucts.TrySetResult(new InitializationResult(result, obj.GetType().ToString()));
+            return ucts.Task;
         }
     }
 }
