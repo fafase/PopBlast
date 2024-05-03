@@ -37,15 +37,23 @@ namespace Tools
         private InitializerProcess m_init;
         void Awake()
         {
-            // Fire and Forget process
-            m_init = new InitializerProcess();
-            m_init.Init(this).Forget();
+            Signal.Connect<LoginSignalData>(OnLoginDone);
+        }
+
+        private void OnLoginDone(LoginSignalData data) 
+        {
+            Debug.Log(data.State);
+            if (data.State == Unity.Services.Core.ServicesInitializationState.Initialized)
+            {
+                m_init = new InitializerProcess();
+                m_init.Init(this).Forget();
+            }
         }
 
         void OnDestroy()
         {
             if (IsInit) { return; }
-            m_init.Cancel();
+            m_init?.Cancel();
         }
     }
     public class InitializerProcess
@@ -81,10 +89,10 @@ namespace Tools
                     results.ForEach((result) => Debug.Log(result));
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 // Propagate with null
-                Debug.LogError("[Initilization] Process was cancelled");
+                Debug.LogError($"[Initilization] Process was cancelled {e.Message}");
                 m_initializer.OnComplete(null);
                 return null;
             }
