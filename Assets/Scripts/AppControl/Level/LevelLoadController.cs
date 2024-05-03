@@ -15,10 +15,7 @@ namespace PopBlast.AppControl.Level
     {
         #region MEMBERS
 
-        [SerializeField] private Button superEasyBtn = null;
-        [SerializeField] private Button easyBtn = null;
-        [SerializeField] private Button mediumBtn = null;
-        [SerializeField] private Button hardBtn = null;
+        [SerializeField] private Button m_playBtn;
 
         [Inject] private IPopupManager m_popupManager;
 
@@ -29,39 +26,10 @@ namespace PopBlast.AppControl.Level
         private void Awake()
         {
             // 4 levels of difficulties
-            superEasyBtn.onClick.AddListener(()=> 
+            m_playBtn.onClick.AddListener(()=> 
             {
-                m_popupManager.Show<BasicPopup>();
-                //SetLevelSettings(10,10);              
+                m_popupManager.Show<PlayPopup>();            
             });
-            easyBtn.onClick.AddListener(() => 
-            {
-                SetLevelSettings(10, 6);
-            });
-            mediumBtn.onClick.AddListener(() => 
-            {
-                SetLevelSettings(8, 6);
-            });
-            hardBtn.onClick.AddListener(() => 
-            {
-                SetLevelSettings(5, 5);
-            });
-        }
-
-        #endregion
-
-        #region PRIVATE_METHODS
-
-        // Clamp value [5, 20], stores it in PF, loads next scene
-        private void SetLevelSettings(int width, int height)
-        {
-            width = Mathf.Clamp(width, 5, 20);
-            height = Mathf.Clamp(height, 5 , 20);
-
-            PlayerPrefs.SetInt("Width", width);
-            PlayerPrefs.SetInt("Height", height);
-
-            SceneManager.LoadScene(1);
         }
 
         #endregion

@@ -21,8 +21,16 @@ namespace Tools
         }
         public void SetLocalizedText()
         {
-            text = m_localizer.GetLocalization(m_localizationKey, m_arguments);
-            ForceMeshUpdate();
+            SetArguments(m_arguments);
+        }
+        public void SetArgument(LocArgument arg)
+        {
+            SetArguments(new List<LocArgument>() { arg });
+        }
+
+        public void SetArguments(List<LocArgument> arg) 
+        {
+            text = m_localizer.GetLocalization(m_localizationKey, arg);
         }
     }
 }
