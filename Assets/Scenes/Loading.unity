@@ -167,7 +167,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_initObjects:
   - {fileID: 11400000, guid: ceab107f696f3c54fbe946c4d22cd82b, type: 2}
-  m_showDebug: 0
+  m_showDebug: 1
   m_onStart:
     m_PersistentCalls:
       m_Calls: []
