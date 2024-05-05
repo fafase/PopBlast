@@ -33,10 +33,17 @@ namespace Tools
         {
             SetArguments(new List<LocArgument>() { arg });
         }
-
-        public void SetArguments(List<LocArgument> arg) 
+        public void SetArguments(List<LocArgument> args) 
         {
-            string t = m_localizer.GetLocalization(m_localizationKey, arg);
+            foreach(LocArgument arg in args) 
+            {
+                int index = m_arguments.FindIndex(a => a.name.Equals(arg.name));
+                if (index > 1)
+                {
+                    m_arguments.Insert(index, arg);
+                }
+            }
+            string t = m_localizer.GetLocalization(m_localizationKey, args);
             text = t;
         }
     }

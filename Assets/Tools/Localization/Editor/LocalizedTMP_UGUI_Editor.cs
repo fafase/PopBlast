@@ -44,6 +44,7 @@ namespace Tools
                 m_languageIndex = languageIndex; 
             }
             EditorGUILayout.PropertyField(m_localizationKey);
+            EditorGUI.BeginChangeCheck();
             EditorGUILayout.PropertyField(m_arguments);
             if(EditorGUI.EndChangeCheck())
             {
