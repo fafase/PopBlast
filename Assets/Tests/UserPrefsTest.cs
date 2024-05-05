@@ -3,18 +3,19 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using Tools;
-using UnityEditor;
-using UnityEngine;
+using Zenject;
 
 public class UserPrefsTest
 {
     private IUserPrefs m_userPrefs;
     private DateTime m_date = new DateTime(2020, 10, 1, 0, 0, 0 );
+
     [OneTimeSetUp]
     public void OneTimeSetUp() 
     {
         m_userPrefs = new UserPrefs();
-        m_userPrefs.Init();
+        IInitializable init = m_userPrefs as IInitializable;
+        init.Initialize();
     }
 
     [SetUp]

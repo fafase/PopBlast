@@ -57,6 +57,20 @@ namespace Tools
 
             return (T)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(guids[0]), typeof(T));
         }
+        public static TextAsset LoadTextAsset(string name)
+        {
+            string[] guids = AssetDatabase.FindAssets($"t:{nameof(TextAsset)} {name}");
+            if (guids.Length == 0)
+            {
+                Debug.LogWarning($"No {nameof(Localization)} found named {name}");
+                return null;
+            }
+
+            if (guids.Length > 1)
+                Debug.LogWarning($"More than one {nameof(Localization)} found named {name}, taking first one");
+
+            return (TextAsset)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(guids[0]), typeof(TextAsset));
+        }
     }
     public static class MathUtility 
     {
