@@ -1,11 +1,13 @@
+using Cysharp.Threading.Tasks;
 using System;
 using System.Threading;
 using Unity.Plastic.Newtonsoft.Json.Linq;
 using UnityEngine;
+using Zenject;
 
 namespace Tools
 {
-    public class UserPrefs: IUserPrefs 
+    public class UserPrefs : IUserPrefs, IInitializable
     {
         private const string UserPrefsKey = "UserPrefsKey";
         private JObject m_jsonObject;
@@ -13,7 +15,8 @@ namespace Tools
         public bool IsInit { get; private set; }
         public string Json => m_jsonObject.ToString();
 
-        public void Init() 
+        public event Func<UniTask> OnUpdate;
+        public void Initialize()
         {
             string pp = PlayerPrefs.GetString(UserPrefsKey, "{}");
             m_jsonObject = JObject.Parse(pp);
@@ -110,6 +113,7 @@ namespace Tools
             }
             m_jsonObject[key] = JToken.FromObject(value);
             SaveLocal();
+            OnUpdate?.Invoke();
         }
 
         public bool RemoveKey(string key) => m_jsonObject.Remove(key);
@@ -172,11 +176,6 @@ namespace Tools
         bool IsDirty { get; set; }
 
         /// <summary>
-        /// Initializes the UserPrefs object from local storage
-        /// </summary>
-        void Init();
-
-        /// <summary>
         /// Try and get the value matching the key. If the key exists, returns true and stored value is placed in value out parameter.
         /// If the key does not exists, returns false and defaultValue is placed in value out parameter
         /// </summary>
@@ -229,5 +228,13 @@ namespace Tools
         /// Json string of the UserPrefs object
         /// </summary>
         string Json { get; }
+
+        event Func<UniTask> OnUpdate;
+    }
+
+    public class UserPrefsUpdate : SignalData 
+    {
+        public string json;
+        public UserPrefsUpdate(string json) => this.json = json;
     }
 }

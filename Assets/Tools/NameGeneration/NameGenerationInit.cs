@@ -9,28 +9,34 @@ namespace Tools
 {
     public class NameGenerationInit : MonoBehaviour, IInit, INameGenerationInit
     {
-        [Inject] private IServicesManager m_servicesManager;
+        [Inject] private IUserPrefs m_userPrefs;
         [Inject] private IPopupManager m_popupManager;
+        [Inject] private IServicesManager m_servicesManager;
+
         public bool IsInit { get; private set; }
         private NameConfig m_config;
-
+        private const string DISPLAY_NAME = "displayName";
+        private const string NAME_GENERATOR = "nameGenerator";
         public async UniTask<InitializationResult> InitAsync()
         {
-            if (m_servicesManager == null || m_servicesManager.AppConfig == null)
+            if (m_userPrefs == null)
             {
                 return new InitializationResult(false, GetType().ToString());
             }
-            IPlayerData playerData = m_servicesManager.PlayerData;
-            if (playerData == null)
-            {
-                Debug.Log("[NameGenerationInit] No player data found");
-                return new InitializationResult(false, GetType().ToString());
-            }
-            if (!string.IsNullOrEmpty(playerData.DisplayName))
+            //IPlayerData playerData = m_servicesManager.PlayerData;
+            //if (playerData == null)
+            //{
+            //    Debug.Log("[NameGenerationInit] No player data found");
+            //    return new InitializationResult(false, GetType().ToString());
+            //}
+            m_userPrefs.TryGetObject<string>(DISPLAY_NAME, out string displayName);
+            if (!string.IsNullOrEmpty(displayName))
             {
                 return new InitializationResult(true, GetType().ToString());
             }
-            string json = m_servicesManager.AppConfig.GetJson("nameGenerator");
+
+            string json = m_servicesManager.AppConfig.GetJson(NAME_GENERATOR);
+            
             if (string.IsNullOrEmpty(json))
             {
                 Debug.Log("[NameGenerationInit] No name generator config found");
@@ -44,7 +50,8 @@ namespace Tools
                 string name = popup.Name;
                 if (!string.IsNullOrEmpty(name)) 
                 {
-                    m_servicesManager.SetPlayerName(name);
+                    m_userPrefs.SetValue(DISPLAY_NAME, name);
+                    //m_servicesManager.SetPlayerName(name);
                 }
             });
             while (popup.IsOpen) 

@@ -76,5 +76,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_popupManager: {fileID: 3167489094908483523, guid: 3b0b6d54bc06f1e4b9835b68e8759718,
     type: 3}
-  m_servicesManager: {fileID: 8382525495222493859, guid: cbd1b2a070b576347a8891be699708cb,
-    type: 3}
+  m_localization: {fileID: 11400000, guid: ceab107f696f3c54fbe946c4d22cd82b, type: 2}
