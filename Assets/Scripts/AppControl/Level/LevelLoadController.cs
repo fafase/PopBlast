@@ -13,11 +13,14 @@ namespace PopBlast.AppControl.Level
     /// </summary>
     public class LevelLoadController : MonoBehaviour
     {
-        #region MEMBERS
 
+
+        #region MEMBERS
+        [SerializeField] private Button m_settings;
         [SerializeField] private Button m_playBtn;
 
         [Inject] private IPopupManager m_popupManager;
+        [Inject] private IServicesManager m_servicesManager;
 
         #endregion
 
@@ -30,8 +33,15 @@ namespace PopBlast.AppControl.Level
             {
                 m_popupManager.Show<PlayPopup>();            
             });
+
+            m_settings.onClick.AddListener(() => OpenSettings());
         }
 
         #endregion
+
+        private void OpenSettings() 
+        {
+            m_popupManager.Show<SettingsPopup>();
+        }
     }
 }

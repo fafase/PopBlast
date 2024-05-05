@@ -11,6 +11,12 @@
         "next" : "Next",
         "nameGenerator" : "Your name is:"
     },
+    "SETTINGS": {
+        "credits" : "Credits",
+        "customer": "Customer ID: {id}",
+        "reset" : "Reset",
+        "version" : "Version: {version}"
+    },
     "EVENTS": {
         "eventName": "EventName",
         "description": "Here is the description of the event",

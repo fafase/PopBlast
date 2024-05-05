@@ -14,23 +14,37 @@ namespace Tools
         public IReadOnlyList<LocArgument> Arguments => m_arguments;
         public string LocalizationKey => m_localizationKey;
 
-        protected override void Start()
+        protected override void Awake()
         {
-            base.Start();
+            base.Awake();
             text = m_localizer.GetLocalization(m_localizationKey, m_arguments);
         }
+
         public void SetLocalizedText()
         {
             SetArguments(m_arguments);
+        }
+
+        public void SetArgument(string key, string value)
+        {
+            SetArgument(new LocArgument(key, value));
         }
         public void SetArgument(LocArgument arg)
         {
             SetArguments(new List<LocArgument>() { arg });
         }
-
-        public void SetArguments(List<LocArgument> arg) 
+        public void SetArguments(List<LocArgument> args) 
         {
-            text = m_localizer.GetLocalization(m_localizationKey, arg);
+            foreach(LocArgument arg in args) 
+            {
+                int index = m_arguments.FindIndex(a => a.name.Equals(arg.name));
+                if (index > 1)
+                {
+                    m_arguments.Insert(index, arg);
+                }
+            }
+            string t = m_localizer.GetLocalization(m_localizationKey, args);
+            text = t;
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Tools
         public event Action<IPopup> OnClose;
         public event Action <IPopup> OnOpen;
         public bool IsOpen => m_state == State.Opening || m_state == State.Idle;
-        public void Init(IPopupManager popupManager)
+        public virtual void Init(IPopupManager popupManager)
         {
             m_popupManager = popupManager;
             transform.SetParent(m_popupManager.Container, false);
