@@ -2,16 +2,14 @@ using System;
 
 namespace Tools 
 {
-    [Serializable]
-    public class PlayerData :  IPlayerData
-    {
-        public string DisplayName { get; set; } = "";
-        public string Id { get; set; } = "";
-    }
+    //[Serializable]
+    //public class PlayerData :  IPlayerData
+    //{
+    //    public string UserPrefs { get; set; } = null;
+    //}
 
-    public interface IPlayerData 
-    {
-        string DisplayName { get; set; }
-        public string Id { get; set; }
-    }
+    //public interface IPlayerData 
+    //{
+    //    string UserPrefs { get; set; }
+    //}
 }

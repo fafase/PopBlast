@@ -1,19 +1,16 @@
+using Cysharp.Threading.Tasks;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
-using Unity.Services.CloudSave;
 using Unity.Services.RemoteConfig;
-
 using UnityEngine;
-using System.Collections.Generic;
-using System;
-using System.Threading.Tasks;
-using Cysharp.Threading.Tasks;
+using Zenject;
 
 namespace Tools
 {
     public class AppLogin : MonoBehaviour
     {
-        private const string PlayerData = "playerData";
+        [Inject] private IServicesManager m_servicesManager;
+
         void Start()
         {
             InitAsync().Forget();
@@ -58,13 +55,9 @@ namespace Tools
             try
             {
                 await AuthenticationService.Instance.SignInAnonymouslyAsync();
+                await m_servicesManager.InitServices();
 
-                // TODO => move to service manager
-                IPlayerData playerData = await GetPlayerData();
- 
-                await RemoteConfigService.Instance.FetchConfigsAsync(new userAttributes(), new appAttributes());
-
-                Signal.Send(new LoginSignalData(UnityServices.State, RemoteConfigService.Instance.appConfig, playerData));
+                Signal.Send(new LoginSignalData(UnityServices.State));
             }
             catch (RequestFailedException ex)
             {
@@ -72,43 +65,6 @@ namespace Tools
             }
         } 
 
-
-        private async UniTask<IPlayerData> GetPlayerData() 
-        {
-            Dictionary<string, Unity.Services.CloudSave.Models.Item> playerData = await CloudSaveService.Instance.Data.Player.LoadAsync(new HashSet<string> { PlayerData });
-            if(playerData.Count == 0) 
-            {
-                PlayerData newData = new PlayerData();
-                await CloudSaveService.Instance.Data.Player.SaveAsync(new Dictionary<string, object> 
-                {
-                    { PlayerData, newData }
-                });
-                return newData;
-            }
-            else 
-            {
-                if (playerData.TryGetValue(PlayerData, out var item))
-                {
-                    return item.Value.GetAs<PlayerData>();
-                }
-            }
-
-            return null;
-        }
-
-        public struct userAttributes
-        {
-            // Optionally declare variables for any custom user attributes:
-            public bool expansionFlag;
-        }
-
-        public struct appAttributes
-        {
-            // Optionally declare variables for any custom app attributes:
-            public int level;
-            public int score;
-            public string appVersion;
-        }
         private void ApplyRemoteConfig(ConfigResponse response)
         {
             switch (response.requestOrigin)
@@ -129,15 +85,10 @@ namespace Tools
     public class LoginSignalData :SignalData
     {
         public ServicesInitializationState State { get; }
-        public RuntimeConfig AppConfig { get; }
 
-        public IPlayerData PlayerData { get; }
-
-        public LoginSignalData(ServicesInitializationState state, RuntimeConfig appConfig, IPlayerData playerData)
+        public LoginSignalData(ServicesInitializationState state)
         {
-            State = state;
-            AppConfig = appConfig;
-            PlayerData = playerData;    
+            State = state;    
         }
     }
 }
