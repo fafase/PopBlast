@@ -1,24 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
-using NUnit.Framework;
-using UnityEngine;
-using UnityEngine.TestTools;
-using Tools;
-using UnityEditor;
-using System;
 using Newtonsoft.Json.Linq;
-using JetBrains.Annotations;
+using NUnit.Framework;
 using NUnit.Framework.Internal;
+using System;
+using System.Collections.Generic;
+using Tools;
+using UnityEngine;
 
 public class LocalizationTest
 {
     private ILocalization m_localization;
+
     [OneTimeSetUp]
     public void OneTimeSetUp() 
     {
-        m_localization = Tools.EditorUtility.LoadScriptableObject<Localization>();
+        m_localization = ScriptableObject.CreateInstance<Localization>();
+        TextAsset en = EditorUtility.LoadTextAsset("English");
+        TextAsset fr = EditorUtility.LoadTextAsset("French");
+
+        m_localization.LocalizationTextAsset = new List<TextAsset>() { en, fr};
+        m_localization.DefaultTextAsset = en;
         m_localization.IsInit = true;
     }
+
+    [OneTimeTearDown]
+    public void OneTimeTearDown() 
+    {
+        PlayerPrefs.SetString("PPLocale", "English");
+    }
+
     [Test]
     public void LocalizationTestMissingDefaultPass()
     {
@@ -57,6 +66,7 @@ public class LocalizationTest
     [Test]
     public void LocalizationTestRemoteLocalizationPass() 
     {
+        List<TextAsset> assets = m_localization.LocalizationTextAsset;
         JObject json = new JObject();
         json["version"] = "1.0.1"; json["locale"] = "English"; json["appName"] = "GameName";
         json["GENERIC"] = new JObject 

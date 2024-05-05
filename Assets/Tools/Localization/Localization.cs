@@ -97,7 +97,7 @@ namespace Tools
                 m_jsonLocalization = JObject.Parse(json);
                 SetLocale();
             }
-            PlayerPrefs.SetString("PPLocale", locale);
+            PlayerPrefs.SetString("PPLocale", Locale);
             return result;
         }
 
@@ -120,6 +120,11 @@ namespace Tools
                 for(int i = 1; i < paths.Length; ++i) 
                 {
                     token = token[paths[i]];
+                }
+                if(token == null) 
+                {
+                    Debug.LogWarning($"[Localization] Could not retrieve item {key}");
+                    return defaultValue;
                 }
                 string result = token.ToString();
                 if (formats != null && formats.Count > 0)
@@ -171,6 +176,12 @@ namespace Tools
         public string DefaultJson => m_defaultLocalization?.text;
 
         private void SetLocale() => Locale = m_jsonLocalization["locale"].ToObject<string>();
+#if UNITY_INCLUDE_TESTS
+        public List<TextAsset> LocalizationTextAsset 
+        { get { return m_localizations; } set { m_localizations = value; } }
+
+        public TextAsset DefaultTextAsset { get { return m_defaultLocalization; } set { m_defaultLocalization = value; } }
+#endif
     }
     [Serializable]
     public class LocArgument 
@@ -238,5 +249,9 @@ namespace Tools
         string DefaultJson { get; }
 
         string[] Localizations { get; }
+#if UNITY_INCLUDE_TESTS
+        List<TextAsset> LocalizationTextAsset { get; set; }
+        TextAsset DefaultTextAsset { get; set; }
+#endif
     }
 }

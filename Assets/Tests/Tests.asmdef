@@ -6,7 +6,7 @@
         "UnityEditor.TestRunner",
         "Tools",
         "UniTask",
-        ""
+        "Zenject"
     ],
     "includePlatforms": [
         "Editor"
@@ -17,7 +17,8 @@
     "precompiledReferences": [
         "nunit.framework.dll",
         "NSubstitute.dll",
-        "Newtonsoft.Json.dll"
+        "Newtonsoft.Json.dll",
+        "Zenject-usage.dll"
     ],
     "autoReferenced": false,
     "defineConstraints": [
