@@ -12,5 +12,6 @@ public class ZenjectProjectContext : MonoInstaller
         Container.BindInterfacesTo<UserPrefs>().FromNew().AsSingle().NonLazy();
         Container.BindInterfacesTo<ServicesManager>().FromNew().AsSingle().NonLazy();
         Container.BindInterfacesTo<Localization>().FromNewScriptableObject(m_localization).AsSingle().NonLazy();
+        Container.BindInterfacesTo<LevelManager>().FromNew().AsSingle().NonLazy();
     }
 }
