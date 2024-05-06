@@ -1,9 +1,14 @@
-using Cysharp.Threading.Tasks;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using Unity.Plastic.Newtonsoft.Json.Linq;
+using UnityEditor;
 using UnityEngine;
 using Zenject;
+
+#if UNITY_EDITOR
+using Unity.Services.CloudSave;
+#endif
 
 namespace Tools
 {
@@ -15,7 +20,7 @@ namespace Tools
         public bool IsInit { get; private set; }
         public string Json => m_jsonObject.ToString();
 
-        public event Func<UniTask> OnUpdate;
+        public event Action OnUpdate;
         public void Initialize()
         {
             string pp = PlayerPrefs.GetString(UserPrefsKey, "{}");
@@ -166,6 +171,20 @@ namespace Tools
             PlayerPrefs.SetString(UserPrefsKey, m_jsonObject.ToString());
             IsDirty = true;
         }
+
+#if UNITY_EDITOR
+        [MenuItem("Tools/Delete User prefs")]
+        static async void DoSomething()
+        {
+            IUserPrefs up = new UserPrefs();
+            ((IInitializable)up).Initialize();
+            up.ClearUserPrefs();
+            await CloudSaveService.Instance.Data.Player.SaveAsync(new Dictionary<string, object>
+            {
+                { "playerData", up.Json }
+            });
+        }
+#endif
     }
 
     public interface IUserPrefs 
@@ -229,7 +248,7 @@ namespace Tools
         /// </summary>
         string Json { get; }
 
-        event Func<UniTask> OnUpdate;
+        event Action OnUpdate;
     }
 
     public class UserPrefsUpdate : SignalData 

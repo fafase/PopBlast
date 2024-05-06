@@ -20,6 +20,11 @@ namespace Tools
             });
         }
 
+        public void InitWithLevel(Level level) 
+        {
+            
+        }
+
         private int CurrentLevel => 1;
 
         private void SetLevelSettings(int width, int height)

@@ -6,6 +6,7 @@ public class ZenjectProjectContext : MonoInstaller
 {
     [SerializeField] private GameObject m_popupManager;
     [SerializeField] private Localization m_localization;
+
     public override void InstallBindings()
     {
         Container.BindInterfacesTo<PopupManager>().FromComponentInNewPrefab(m_popupManager).AsSingle().NonLazy();
@@ -13,5 +14,7 @@ public class ZenjectProjectContext : MonoInstaller
         Container.BindInterfacesTo<ServicesManager>().FromNew().AsSingle().NonLazy();
         Container.BindInterfacesTo<Localization>().FromNewScriptableObject(m_localization).AsSingle().NonLazy();
         Container.BindInterfacesTo<LevelManager>().FromNew().AsSingle().NonLazy();
+        Container.BindInterfacesTo<PlayerData>().FromNew().AsSingle().NonLazy();
+        Container.BindInterfacesTo<CloudOperation>().FromNew().AsSingle().NonLazy();
     }
 }

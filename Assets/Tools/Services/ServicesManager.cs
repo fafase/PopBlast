@@ -2,7 +2,9 @@ using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 using Unity.Services.CloudSave;
+using Unity.Services.Core;
 using Unity.Services.RemoteConfig;
+using UnityEngine;
 using Zenject;
 
 namespace Tools
@@ -12,42 +14,29 @@ namespace Tools
         [Inject] private IUserPrefs m_userPrefs;
 
         public RuntimeConfig AppConfig { get; private set; }
-       // public IPlayerData PlayerData {  get; private set; }
-
-       // public void SetPlayerName(string name) => SetPlayerNameAsync(name).Forget();
 
         private const string PLAYER_DATA = "playerData";
-        
 
-        private async UniTask OnUserPrefsUpdate() 
+        public void Initialize()
         {
-            if (!m_userPrefs.IsDirty) 
-            {
-                return;
-            }
-            await CloudSaveService.Instance.Data.Player.SaveAsync(new Dictionary<string, object>
-            {
-                { PLAYER_DATA, m_userPrefs.Json }
-            });
-            m_userPrefs.IsDirty = false;
-        }
 
-        //public async UniTask SetPlayerNameAsync(string name)
-        //{
-        //    PlayerData.DisplayName = name;
-        //    await CloudSaveService.Instance.Data.Player.SaveAsync(new Dictionary<string, object>
-        //    {
-        //        { PLAYER_DATA, PlayerData }
-        //    });
-        //}
+        }
 
         public async UniTask InitServices() 
         {
-            //PlayerData = await GetPlayerData();
+            RetrieveCachedInfo();
             string json = await GetPlayerData();
             m_userPrefs.SetUserPrefsFromRemote(json);
             await RemoteConfigService.Instance.FetchConfigsAsync(new userAttributes(), new appAttributes());
             AppConfig = RemoteConfigService.Instance.appConfig;
+        }
+
+        private void RetrieveCachedInfo() 
+        {
+            if (!PlayerPrefs.HasKey(PLAYER_DATA)) 
+            {
+                
+            }
         }
 
         private async UniTask<string> GetPlayerData()
@@ -55,7 +44,6 @@ namespace Tools
             Dictionary<string, Unity.Services.CloudSave.Models.Item> playerData = await CloudSaveService.Instance.Data.Player.LoadAsync(new HashSet<string> { PLAYER_DATA });
             if (playerData.Count == 0)
             {
-                //PlayerData newData = new PlayerData();
                 string json = m_userPrefs.Json;
                 await CloudSaveService.Instance.Data.Player.SaveAsync(new Dictionary<string, object>
                 {
@@ -72,20 +60,12 @@ namespace Tools
             }
             return null;
         }
-
-        public void Initialize()
-        {
-            m_userPrefs.OnUpdate += OnUserPrefsUpdate;
-        }
     }
 
     public interface IServicesManager 
     {
         RuntimeConfig AppConfig { get; }
         UniTask InitServices();
-        //IPlayerData PlayerData { get; }
-
-        //void SetPlayerName(string name);
     }
 
     public struct userAttributes
