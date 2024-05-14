@@ -15,10 +15,10 @@ namespace PopBlast.AppControl
     {
         [Inject] private ILevelManager m_levelManager;
         [Inject] private ILevelObjective m_levelObjectives;
+        [Inject] private IItemGenerator generator = null;
+        [Inject] private ICoreUI m_coreUI;
 
-        private ItemGenerator generator = null;
         private InputController input = null;
-        private UIController uiCtrl = null;
 
         private int m_score = 0;
         private int m_moves = 0;
@@ -27,20 +27,10 @@ namespace PopBlast.AppControl
 
         protected virtual void Awake()
         {
-            generator = FindObjectOfType<ItemGenerator>();
-            if (generator == null)
-            {
-                throw new System.Exception("Missing ItemGenerator component");
-            }
             input = FindObjectOfType<InputController>();
             if (input == null)
             {
                 throw new System.Exception("Missing InputController component");
-            }
-            uiCtrl = FindObjectOfType<UIController>();
-            if (uiCtrl == null)
-            {
-                throw new System.Exception("Missing UIController component");
             }
         }
 
@@ -56,11 +46,11 @@ namespace PopBlast.AppControl
             generator.RaiseEndOfGame += RaiseEndOfGame;
             generator.RaiseItemPop += UpdateScore;
 
-            uiCtrl.RaiseNewGame += UiCtrl_RaiseNewGame;
-            uiCtrl.UpdateHiScore(TopScore.GetHiScore().ToString());
+            m_coreUI.RaiseNewGame += UiCtrl_RaiseNewGame;
+            m_coreUI.UpdateHiScore(TopScore.GetHiScore().ToString());
             m_moves = m_levelManager.CurrentLevel.moves;
-            uiCtrl.SetMoveCount(m_moves);
-            uiCtrl.SetObjectives(m_levelObjectives.Objectives);
+            m_coreUI.SetMoveCount(m_moves);
+            m_coreUI.SetObjectives(m_levelObjectives.Objectives);
             input.RaiseItemTapped += Input_RaiseItemTapped;
         }
 
@@ -88,9 +78,9 @@ namespace PopBlast.AppControl
             Objective objective = m_levelObjectives.UpdateObjectives((int)item.ItemType, amount);
             if(objective != null) 
             {
-                uiCtrl.UpdateObjectives((int)item.ItemType, objective.amount);
+                m_coreUI.UpdateObjectives((int)item.ItemType, objective.amount);
             }
-            uiCtrl.SetMoveCount(m_moves);
+            m_coreUI.SetMoveCount(m_moves);
 
             if (m_moves <= 0) 
             {
@@ -107,11 +97,11 @@ namespace PopBlast.AppControl
         {
             if (win) 
             {
-                uiCtrl.SetRestartPanel(true);
+                m_coreUI.SetRestartPanel(true);
             }
             else
             {
-                uiCtrl.SetRestartPanel(true);
+                m_coreUI.SetRestartPanel(true);
             }
         }
 
@@ -121,16 +111,16 @@ namespace PopBlast.AppControl
             // If only one item tapped, nothing
             if (amount <= 0) { return; }
             // Based on amount, set feedback to user
-            uiCtrl.SetFeedback(amount);
+            m_coreUI.SetFeedback(amount);
             // Exponential increase based on power of two
             m_score += Mathf.FloorToInt(Mathf.Pow(2, amount));
             // Update the visual of the score
-            uiCtrl.UpdateScore(m_score.ToString());
+            m_coreUI.UpdateScore(m_score.ToString());
             // Update the hi score if higher
             if (TopScore.SetHiScore(m_score))
             {
                 // Update the visual of hiscore if needed
-                uiCtrl.UpdateHiScore(TopScore.GetHiScore().ToString());
+                m_coreUI.UpdateHiScore(TopScore.GetHiScore().ToString());
             }         
         }
     }

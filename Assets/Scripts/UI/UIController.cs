@@ -12,9 +12,10 @@ namespace PopBlast.UI
     /// <summary>
     /// Controls the view of the level
     /// </summary>
-    public class UIController : MonoBehaviour
+    public class UIController : MonoBehaviour, ICoreUI
     {
         [Inject] private ILevelItems m_levelItems;
+
         [SerializeField] private GameObject m_objectivePrefab;
         [SerializeField] private Transform m_objectiveContainer;
 
@@ -122,7 +123,7 @@ namespace PopBlast.UI
         public void SetMoveCount(int moves) => m_moveTxt.text = moves.ToString();
 
         private List<UIObjective> m_objectives;
-        internal void SetObjectives(List<Objective> objectives)
+        public void SetObjectives(List<Objective> objectives)
         {
             m_objectives = new List<UIObjective>();
             foreach (Objective objective in objectives) 
@@ -175,5 +176,18 @@ namespace PopBlast.UI
             /// </summary>
             public string message;
         }
+    }
+
+    public interface ICoreUI
+    {
+        event Action RaiseNewGame;
+
+        void SetFeedback(int amount);
+        void SetMoveCount(int m_moves);
+        void SetObjectives(List<Objective> objectives);
+        void SetRestartPanel(bool v);
+        void UpdateHiScore(string v);
+        void UpdateObjectives(int itemType, int amount);
+        void UpdateScore(string v);
     }
 }

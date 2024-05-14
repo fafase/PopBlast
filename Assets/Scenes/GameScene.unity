@@ -2284,6 +2284,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_levelItems: {fileID: 11400000, guid: 2fa235d6417cca544b77658cf010d49b, type: 2}
+  m_uiCtrl: {fileID: 1228765713}
+  m_itemGenerator: {fileID: 1074336617}
 --- !u!114 &1644144803
 MonoBehaviour:
   m_ObjectHideFlags: 0
