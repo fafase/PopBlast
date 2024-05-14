@@ -1,51 +1,39 @@
 ﻿using PopBlast.InputSystem;
+using PopBlast.Items;
 using PopBlast.UI;
-using System.Collections;
-using System.Collections.Generic;
+using Tools;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Zenject;
 
-namespace PopBlast.AppControl.Level
+namespace PopBlast.AppControl
 {
     /// <summary>
     /// Class connecting all items in the level
     /// </summary>
     public class LevelController : MonoBehaviour
     {
-        #region MEMBERS
+        [Inject] private ILevelManager m_levelManager;
+        [Inject] private ILevelObjective m_levelObjectives;
+        [Inject] private IItemGenerator generator = null;
+        [Inject] private ICoreUI m_coreUI;
+        [Inject] private IPopupManager m_popupManager;
+        [Inject] private IPlayerData m_playerData;
+        [Inject] private ICloudOperation m_cloudOperation;
 
-        [Header("Create level values")]
-        [Range(5, 20)]
-        [SerializeField] private int row = 0;
-        [Range(5, 20)]
-        [SerializeField] private int col = 0;
-
-        private ItemGenerator generator = null;
         private InputController input = null;
-        private UIController uiCtrl = null;
 
-        private int score = 0;
-
-        #endregion
+        private int m_score = 0;
+        private int m_moves = 0;
 
         #region UNITY_LIFECYCLE
 
         protected virtual void Awake()
         {
-            generator = FindObjectOfType<ItemGenerator>();
-            if (generator == null)
-            {
-                throw new System.Exception("Missing ItemGenerator component");
-            }
             input = FindObjectOfType<InputController>();
             if (input == null)
             {
                 throw new System.Exception("Missing InputController component");
-            }
-            uiCtrl = FindObjectOfType<UIController>();
-            if (input == null)
-            {
-                throw new System.Exception("Missing UIController component");
             }
         }
 
@@ -53,25 +41,23 @@ namespace PopBlast.AppControl.Level
         {
             input.enabled = false;
 
-            CheckForSettings();
-
-            FindObjectOfType<GridGenerator>().Init(col, row);
-            generator.Init(col, row, () =>
+            Tools.Level currentLevel = m_levelManager.CurrentLevel;
+            generator.Init(currentLevel, () =>
             {
                 input.enabled = true;
             });
-            generator.RaiseEndOfGame += Generator_RaiseEndOfGame;
+            generator.RaiseEndOfGame += RaiseEndOfGame;
             generator.RaiseItemPop += UpdateScore;
 
-            uiCtrl.RaiseNewGame += UiCtrl_RaiseNewGame;
-            uiCtrl.UpdateHiScore(TopScore.GetHiScore().ToString());
-
+            m_coreUI.RaiseNewGame += UiCtrl_RaiseNewGame;
+            m_coreUI.UpdateHiScore(TopScore.GetHiScore().ToString());
+            m_moves = m_levelManager.CurrentLevel.moves;
+            m_coreUI.SetMoveCount(m_moves);
+            m_coreUI.SetObjectives(m_levelObjectives.Objectives);
             input.RaiseItemTapped += Input_RaiseItemTapped;
         }
 
         #endregion
-
-        #region PRIVATE_METHODS
 
         // Event call when new game is required
         // Loads a new scene
@@ -86,16 +72,51 @@ namespace PopBlast.AppControl.Level
         private void Input_RaiseItemTapped(GameObject obj)
         {
             input.enabled = false;
-            generator.CheckItemNeighbours(obj, () =>
+            int amount = generator.CheckItemNeighbours(obj, () =>
             {
                 input.enabled = true;
             });
+            --m_moves;
+            IItem item = obj.GetComponent<IItem>();
+            Objective objective = m_levelObjectives.UpdateObjectives((int)item.ItemType, amount);
+            if(objective != null) 
+            {
+                m_coreUI.UpdateObjectives((int)item.ItemType, objective.amount);
+            }
+            m_coreUI.SetMoveCount(m_moves);
+
+            if (m_moves <= 0) 
+            {
+                input.RaiseItemTapped -= Input_RaiseItemTapped;
+                RaiseEndOfGame(false);           
+            }
+            if (m_levelObjectives.IsLevelDone) 
+            {
+                input.RaiseItemTapped -= Input_RaiseItemTapped;
+                RaiseEndOfGame(true);
+            }
         }
 
         // Event triggered when Generator reports no more possible move
-        private void Generator_RaiseEndOfGame()
+        private void RaiseEndOfGame(bool win)
         {
-            uiCtrl.SetRestartPanel(true);
+            if (win) 
+            {
+                IPopup popup = m_popupManager.Show<LevelCompletePopup>();
+                ((LevelCompletePopup)popup).InitWithLevel(m_playerData.CurrentLevel);
+                popup.AddToClose(_ => ResetToMeta());
+            }
+            else
+            {
+                m_coreUI.SetRestartPanel(true);
+            }
+        }
+        private void ResetToMeta() 
+        {
+            m_playerData.IncreaseCurrentLevel();
+            m_cloudOperation.FlushOperations(dict => 
+            SceneManager.LoadSceneAsync(1));
+
         }
 
         // Update score with new amount
@@ -104,29 +125,17 @@ namespace PopBlast.AppControl.Level
             // If only one item tapped, nothing
             if (amount <= 0) { return; }
             // Based on amount, set feedback to user
-            uiCtrl.SetFeedback(amount);
+            m_coreUI.SetFeedback(amount);
             // Exponential increase based on power of two
-            score += Mathf.FloorToInt(Mathf.Pow(2, amount));
+            m_score += Mathf.FloorToInt(Mathf.Pow(2, amount));
             // Update the visual of the score
-            uiCtrl.UpdateScore(score.ToString());
+            m_coreUI.UpdateScore(m_score.ToString());
             // Update the hi score if higher
-            if (TopScore.SetHiScore(score))
+            if (TopScore.SetHiScore(m_score))
             {
                 // Update the visual of hiscore if needed
-                uiCtrl.UpdateHiScore(TopScore.GetHiScore().ToString());
+                m_coreUI.UpdateHiScore(TopScore.GetHiScore().ToString());
             }         
         }
-
-        private void CheckForSettings()
-        {
-            // If came from start level, values should exist
-            col = PlayerPrefs.GetInt("Width", col);
-            row = PlayerPrefs.GetInt("Height", row);
-            // Delete values so editor can start from Game scene
-            PlayerPrefs.DeleteKey("Width");
-            PlayerPrefs.DeleteKey("Height");
-        }
-
-        #endregion
     }
 }

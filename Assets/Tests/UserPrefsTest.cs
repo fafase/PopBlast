@@ -3,16 +3,20 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using Tools;
+using UnityEngine;
 using Zenject;
 
 public class UserPrefsTest
 {
     private IUserPrefs m_userPrefs;
     private DateTime m_date = new DateTime(2020, 10, 1, 0, 0, 0 );
+    private string m_json;
+    private const string UserPrefsKey = "UserPrefsKey";
 
     [OneTimeSetUp]
     public void OneTimeSetUp() 
     {
+        m_json =  PlayerPrefs.GetString(UserPrefsKey, "{}");
         m_userPrefs = new UserPrefs();
         IInitializable init = m_userPrefs as IInitializable;
         init.Initialize();
@@ -22,6 +26,14 @@ public class UserPrefsTest
     public void SetUp() 
     {
         m_userPrefs.ClearUserPrefs();
+    }
+
+    [OneTimeTearDown]
+    public void OneTimeTearDown() 
+    {
+        PlayerPrefs.DeleteKey(UserPrefsKey);
+        PlayerPrefs.SetString(UserPrefsKey, m_json);
+        PlayerPrefs.Save();
     }
 
     [Test]
@@ -333,7 +345,7 @@ public class UserPrefsTest
 
         string keyEnabled = "enabled"; 
         JObject merge = new JObject();
-        merge[keyEnabled] = true; merge[keyScore] = JArray.FromObject(new int[] { 0, 10, 15 });
+        merge[keyEnabled] = true; merge[keyScore] = JArray.FromObject(new int[] { 0, 10, 15 }); merge[keyPlayer] = "Jeff";
         m_userPrefs.MergeContentFromRemote(merge.ToString());
 
         bool resB = m_userPrefs.TryGetObject(keyScore, out int[] valuesB);

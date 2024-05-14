@@ -11,7 +11,6 @@ namespace Tools
 
         private void Start()
         {
-            m_title.SetArgument(new LocArgument("level", CurrentLevel.ToString()));
             m_playButton.onClick.RemoveAllListeners();
             m_playButton.onClick.AddListener(() =>
             {
@@ -20,7 +19,10 @@ namespace Tools
             });
         }
 
-        private int CurrentLevel => 1;
+        public void InitWithLevel(Level level) 
+        {
+            m_title.SetArgument(new LocArgument("level", level.level.ToString()));
+        }
 
         private void SetLevelSettings(int width, int height)
         {

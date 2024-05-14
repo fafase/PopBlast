@@ -1,7 +1,9 @@
-﻿using System;
+﻿using PopBlast.AppControl;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace PopBlast.Items
 {
@@ -11,8 +13,7 @@ namespace PopBlast.Items
     /// </summary>
     public class Item : MonoBehaviour , IItem
     {
-        #region MEMBERS
-
+        [SerializeField] private SpriteRenderer m_sprite;
         [Tooltip("Explosion prefab for this item")]
         [SerializeField] private GameObject explosion;
         [Tooltip("Type of the item")]
@@ -33,8 +34,8 @@ namespace PopBlast.Items
         public int Row { get { return (int)row; } }
 
         private IItem left, right, top, bottom;
-
-        #endregion
+        private Transform m_target;
+        public ItemType ItemType => type;
 
         #region PUBLIC_METHODS
 
@@ -46,15 +47,18 @@ namespace PopBlast.Items
             get { return gameObject; }
         }
 
+        public Sprite GetSprite() =>  m_sprite.sprite;
+        
         /// <summary>
         /// Set the item with a new grid value
         /// </summary>
         /// <param name="newCol"></param>
         /// <param name="newRow"></param>
-        public void SetGrid(int newCol, int newRow)
+        public void SetGrid(int newCol, int newRow, IItemGenerator item)
         {
             col = (float)newCol;
             row = (float)newRow;
+            m_target = item.Target;
             StartCoroutine(MoveToPositionCoroutine(null));
         }
 
@@ -129,16 +133,18 @@ namespace PopBlast.Items
         // Interpolation movement based on time
         private IEnumerator MoveToPositionCoroutine(Action onCompletion)
         {
-            float timeSinceStarted = 0f;
-            float target = row + 0.5f;
-            while (Mathf.Approximately(transform.position.y, target) == false)
+            float target = m_target.position.y  + row + 0.5f;
+            float timer = 0f;
+            while (timer < 1f)
             {
-                timeSinceStarted += Time.deltaTime;
+                timer += Time.deltaTime;
                 Vector3 pos = transform.position;
-                pos.y = Mathf.Lerp(pos.y, target, timeSinceStarted / movementSeconds);
+                pos.y = Mathf.Lerp(pos.y, target, timer / movementSeconds);
                 transform.position = pos;
                 yield return null;
             }
+            Vector3 p = transform.position;
+            transform.position = new Vector3(p.x, target, 0f);
             onCompletion?.Invoke();
         }
 
@@ -146,7 +152,7 @@ namespace PopBlast.Items
     }
     public enum ItemType : byte
     {
-        None, CakeFull, CakePiece, Candybar, Lollipop, Icecream, Heart
+        None, CakePiece, Candybar, Icecream, CakeFull, Heart, Lollipop
     }
 
     /// <summary>
@@ -159,8 +165,11 @@ namespace PopBlast.Items
         IItem[] GetSameTypeNeighbours();
         void StartMovement(Action onCompletion);
         void SetNeighbors(IItem newleft, IItem newRight, IItem newTop, IItem newBottom);
-        void SetGrid(int newCol, int newRow);
+        void SetGrid(int newCol, int newRow, IItemGenerator item);
         GameObject GameObject { get; }
         void DestroyItem();
+        Sprite GetSprite();
+
+        ItemType ItemType { get; }
     }
 }

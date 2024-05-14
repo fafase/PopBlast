@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using PopBlast.Items;
+using Tools;
+using Zenject;
 
 namespace PopBlast.AppControl
 {
@@ -10,31 +12,32 @@ namespace PopBlast.AppControl
     /// Component controlling the grid of items
     /// Main business logic of the system
     /// </summary>
-    public class ItemGenerator : MonoBehaviour
+    public class ItemGenerator : MonoBehaviour, IItemGenerator
     {
-        #region MEMBERS
+        [Inject] private ILevelItems m_items;
+        [SerializeField] private Transform m_top;
+        [SerializeField] private Transform m_bottom;
 
         [Tooltip("Waiting time for row creation of item")]
         [SerializeField] private float waitTimeForCreation = 0.5f;
-        [Tooltip("Items prefabs")]
-        [SerializeField] private GameObject[] items = null;
 
         private Transform[] spawns = null;
         private IItem[,] grid;
-
+        private Level m_level;
         private int width, height;
 
         /// <summary>
         /// Event triggered when no more moves are possible
         /// </summary>
-        public event Action RaiseEndOfGame;
+        public event Action<bool> RaiseEndOfGame;
 
         /// <summary>
         /// Event raised when pop happens, parameter indicates how many items at once
         /// </summary>
         public event Action<int> RaiseItemPop;
 
-        #endregion
+        public Transform Top => m_top;
+        public Transform Target => m_bottom;
 
         #region PUBLIC_METHODS
 
@@ -44,19 +47,22 @@ namespace PopBlast.AppControl
         /// <param name="col"></param>
         /// <param name="row"></param>
         /// <param name="onCompletion"></param>
-        public void Init(int col, int row, Action onCompletion)
+        public void Init(Level level, Action onCompletion)
         {
+            m_level = level;
+            int col = level.Column;
+            int row = level.Row;
             spawns = new Transform[col];
             width = col;
             height = row;
 
+            float offsetX = (col / 2f);
             // Generate the spawn points
             for (int i = 0; i < col; i++)
             {
                 GameObject obj = new GameObject($"Spawn_{i}");
                 spawns[i] = obj.transform;
-                float posY = (float)row + 1f;
-                obj.transform.position = new Vector3(i + 0.5f, posY, 0f);
+                obj.transform.position = new Vector3(i + 0.5f - offsetX, m_top.position.y, 0f);
                 obj.transform.parent = transform;
             }
 
@@ -67,11 +73,10 @@ namespace PopBlast.AppControl
                 Transform spawnTr = spawns[i];
                 for (int j = 0; j < row; j++)
                 {
-                    int rand = UnityEngine.Random.Range(0, items.Length);
-                    GameObject obj = Instantiate<GameObject>(items[rand], spawnTr);
+                    GameObject obj = Instantiate<GameObject>(m_items.GetRandomCoreItems(m_level.items), spawnTr);
                     obj.transform.position = spawnTr.position;
                     IItem item = obj.GetComponent<IItem>();
-                    item.SetGrid(i, j);
+                    item.SetGrid(i, j, this);
                     item.GameObject.SetActive(false);
                     grid[i, j] = item;
                 }
@@ -87,19 +92,19 @@ namespace PopBlast.AppControl
         /// </summary>
         /// <param name="go"></param>
         /// <param name="onCompletion"></param>
-        public void CheckItemNeighbours(GameObject go, Action onCompletion)
+        public int CheckItemNeighbours(GameObject go, Action onCompletion)
         {
             Item item = go.GetComponent<Item>();
             if(item == null)
             {
                 onCompletion?.Invoke();
-                return;
+                return 0;
             }
             IItem[] results = item.GetSameTypeNeighbours();
             if(results.Length == 0)
             {
                 onCompletion?.Invoke();
-                return;
+                return 0;
             }
             int amount = ProcessItemToRemove(item);
             CheckForEmptySpaces();
@@ -108,10 +113,11 @@ namespace PopBlast.AppControl
                 SetNeighboursGrid();
                 if (CheckForRemainingMovement() == false)
                 {
-                    RaiseEndOfGame?.Invoke();
+                    RaiseEndOfGame?.Invoke(false);
                 }
                 onCompletion?.Invoke();
             }));
+            return amount;
         }
 
         #endregion
@@ -181,7 +187,7 @@ namespace PopBlast.AppControl
                             if (t != null)
                             {
                                 // Assign item with empty spot location
-                                t.SetGrid(i, j);
+                                t.SetGrid(i, j, this);
                                 // Update grid
                                 grid[i, j] = t;
                                 // Set old item grid spot to null
@@ -225,14 +231,13 @@ namespace PopBlast.AppControl
                     {
                         // Get the spawn point
                         Transform spawnTr = spawns[j];
-                        // Create new item with random value
-                        int rand = UnityEngine.Random.Range(0, items.Length);
-                        GameObject obj = Instantiate<GameObject>(items[rand], spawnTr);
+                        // Create new item 
+                        GameObject obj = Instantiate<GameObject>(m_items.GetRandomCoreItems(m_level.items), spawnTr);
                         // Set position at spawn
                         obj.transform.position = spawnTr.position;
                         // Populate the IItem values
                         IItem item = obj.GetComponent<IItem>();
-                        item.SetGrid(j, i);
+                        item.SetGrid(j, i, this);
                        
                         // Sart the movement with callback
                         item.StartMovement(()=> 
@@ -296,5 +301,15 @@ namespace PopBlast.AppControl
                 }
             }
         }
+    }
+
+    public interface IItemGenerator 
+    {
+        Transform Target { get; }
+        event Action<bool> RaiseEndOfGame;
+        event Action<int> RaiseItemPop;
+
+        int CheckItemNeighbours(GameObject obj, Action value);
+        void Init(Level currentLevel, Action value);
     }
 }

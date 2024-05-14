@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using Tools;
 using Zenject;
 
-namespace PopBlast.AppControl.Level
+namespace PopBlast.AppControl
 {
     /// <summary>
     /// Front page controller with four buttons to load level with predifined difficulties 

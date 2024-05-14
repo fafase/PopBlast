@@ -1,19 +1,12 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace PopBlast.InputSystem
 {
     public class InputController : MonoBehaviour
     {
-        #region MEMBERS
 
         public event Action<GameObject> RaiseItemTapped;
-
-        #endregion
-
-        #region UNITY_LIFECYCLE
 
         private void Update()
         {
@@ -28,7 +21,5 @@ namespace PopBlast.InputSystem
                 RaiseItemTapped?.Invoke(hit.collider.gameObject);
             }
         }
-
-        #endregion
     }
 }

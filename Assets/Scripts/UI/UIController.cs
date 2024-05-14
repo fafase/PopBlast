@@ -1,19 +1,25 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Tools;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Zenject;
 
 namespace PopBlast.UI
 {
     /// <summary>
     /// Controls the view of the level
     /// </summary>
-    public class UIController : MonoBehaviour
+    public class UIController : MonoBehaviour, ICoreUI
     {
-        #region MEMBERS
+        [Inject] private ILevelItems m_levelItems;
 
+        [SerializeField] private GameObject m_objectivePrefab;
+        [SerializeField] private Transform m_objectiveContainer;
+
+        [SerializeField] private TextMeshProUGUI m_moveTxt;
         [SerializeField] private Button restartBtn = null;
         [SerializeField] private Button quitBtn = null;
         [SerializeField] private Text scoreTxt = null;
@@ -31,10 +37,6 @@ namespace PopBlast.UI
         /// </summary>
         public event Action RaiseNewGame;
 
-        #endregion
-
-        #region UNITY_LIFECYCLE
-
         protected virtual void Awake()
         {
             restartBtn.onClick.AddListener(() =>
@@ -49,10 +51,6 @@ namespace PopBlast.UI
             UpdateScore(0.ToString());
             SetFeedbackPanelOff();
         }
-
-        #endregion
-
-        #region PUBLIC_METHODS
 
         /// <summary>
         /// Set the restart panel active
@@ -118,19 +116,54 @@ namespace PopBlast.UI
             Invoke("SetFeedbackPanelOff", feedbackTimer);
         }
 
-        #endregion
-
-        #region PRIVATE_METHODS
-
         private void SetFeedbackPanelOff()
         {
             feedbackTxt.transform.parent.gameObject.SetActive(false);
         }
+        public void SetMoveCount(int moves) => m_moveTxt.text = moves.ToString();
 
-        #endregion
+        private List<UIObjective> m_objectives;
+        public void SetObjectives(List<Objective> objectives)
+        {
+            m_objectives = new List<UIObjective>();
+            foreach (Objective objective in objectives) 
+            {
+                GameObject obj = Instantiate(m_objectivePrefab);
+                obj.transform.SetParent(m_objectiveContainer.transform, false);
+                obj.SetActive(true);
+                Sprite sprite = m_levelItems.GetCoreItem((int)objective.itemType);
+                Image img = obj.GetComponent<Image>();
+                img.sprite = sprite;
+                TextMeshProUGUI txt = obj.GetComponentInChildren<TextMeshProUGUI>();
+                txt.text = objective.amount.ToString();
+                UIObjective uiObj = new UIObjective(img, txt, objective.itemType);
+                m_objectives.Add(uiObj);  
+            }
+        }
 
-        #region DATA_TYPES
-        
+        public void UpdateObjectives(int type, int amount)
+        {
+            ObjectiveItemType oit = (ObjectiveItemType)type;
+            UIObjective o = m_objectives.Find((obj) => obj.type == oit);
+            if (o != null)
+            {
+                o.txtComp.text = amount.ToString();
+            }
+        }
+
+        class UIObjective
+        {
+            public Image image;
+            public TextMeshProUGUI txtComp;
+            public ObjectiveItemType type;
+            public UIObjective(Image img, TextMeshProUGUI txt, ObjectiveItemType t) 
+            {
+                image = img;
+                txtComp = txt;
+                type = t;
+            }
+        }
+
         [Serializable]
         public struct FeedbackKeyValue
         {
@@ -143,6 +176,18 @@ namespace PopBlast.UI
             /// </summary>
             public string message;
         }
-        #endregion
+    }
+
+    public interface ICoreUI
+    {
+        event Action RaiseNewGame;
+
+        void SetFeedback(int amount);
+        void SetMoveCount(int m_moves);
+        void SetObjectives(List<Objective> objectives);
+        void SetRestartPanel(bool v);
+        void UpdateHiScore(string v);
+        void UpdateObjectives(int itemType, int amount);
+        void UpdateScore(string v);
     }
 }

@@ -51,7 +51,6 @@ namespace Tools
                 if (!string.IsNullOrEmpty(name)) 
                 {
                     m_userPrefs.SetValue(DISPLAY_NAME, name);
-                    //m_servicesManager.SetPlayerName(name);
                 }
             });
             while (popup.IsOpen) 
