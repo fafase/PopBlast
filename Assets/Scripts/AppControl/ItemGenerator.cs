@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using PopBlast.Items;
 using Tools;
+using Zenject;
 
 namespace PopBlast.AppControl
 {
@@ -13,17 +14,16 @@ namespace PopBlast.AppControl
     /// </summary>
     public class ItemGenerator : MonoBehaviour, IItemGenerator
     {
+        [Inject] private ILevelItems m_items;
         [SerializeField] private Transform m_top;
         [SerializeField] private Transform m_bottom;
 
         [Tooltip("Waiting time for row creation of item")]
         [SerializeField] private float waitTimeForCreation = 0.5f;
-        [Tooltip("Items prefabs")]
-        [SerializeField] private GameObject[] items = null;
 
         private Transform[] spawns = null;
         private IItem[,] grid;
-
+        private Level m_level;
         private int width, height;
 
         /// <summary>
@@ -49,6 +49,7 @@ namespace PopBlast.AppControl
         /// <param name="onCompletion"></param>
         public void Init(Level level, Action onCompletion)
         {
+            m_level = level;
             int col = level.Column;
             int row = level.Row;
             spawns = new Transform[col];
@@ -56,7 +57,6 @@ namespace PopBlast.AppControl
             height = row;
 
             float offsetX = (col / 2f);
-            //float offsetY = -(row / 2f);
             // Generate the spawn points
             for (int i = 0; i < col; i++)
             {
@@ -64,7 +64,6 @@ namespace PopBlast.AppControl
                 spawns[i] = obj.transform;
                 obj.transform.position = new Vector3(i + 0.5f - offsetX, m_top.position.y, 0f);
                 obj.transform.parent = transform;
-                //obj.transform.localPosition = new Vector3(i + 0.5f - offsetX, 0f, 0f);
             }
 
             // Generate all items
@@ -74,8 +73,7 @@ namespace PopBlast.AppControl
                 Transform spawnTr = spawns[i];
                 for (int j = 0; j < row; j++)
                 {
-                    int rand = UnityEngine.Random.Range(0, level.items);
-                    GameObject obj = Instantiate<GameObject>(items[rand], spawnTr);
+                    GameObject obj = Instantiate<GameObject>(m_items.GetRandomCoreItems(m_level.items), spawnTr);
                     obj.transform.position = spawnTr.position;
                     IItem item = obj.GetComponent<IItem>();
                     item.SetGrid(i, j, this);
@@ -232,9 +230,8 @@ namespace PopBlast.AppControl
                     {
                         // Get the spawn point
                         Transform spawnTr = spawns[j];
-                        // Create new item with random value
-                        int rand = UnityEngine.Random.Range(0, items.Length);
-                        GameObject obj = Instantiate<GameObject>(items[rand], spawnTr);
+                        // Create new item 
+                        GameObject obj = Instantiate<GameObject>(m_items.GetRandomCoreItems(m_level.items), spawnTr);
                         // Set position at spawn
                         obj.transform.position = spawnTr.position;
                         // Populate the IItem values

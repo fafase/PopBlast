@@ -1280,13 +1280,6 @@ MonoBehaviour:
   m_top: {fileID: 1297948562}
   m_bottom: {fileID: 1524806705}
   waitTimeForCreation: 0.1
-  items:
-  - {fileID: 7471438814375694069, guid: 77f1c4cb728fcc143b6d7fe09a13e1c7, type: 3}
-  - {fileID: 7471438814375694069, guid: 58ff47e3d01f0ba458a8611f14f47ab1, type: 3}
-  - {fileID: 7471438814375694069, guid: b16a4a583861b534583a0c58fffcb9d4, type: 3}
-  - {fileID: 7471438814375694069, guid: e6d88a17e6619974995fa8b02082c398, type: 3}
-  - {fileID: 7471438814375694069, guid: c77207bb726a00148b28893c6e75dd4d, type: 3}
-  - {fileID: 7471438814375694069, guid: 493f682658165f54a909e7e3981f6e7c, type: 3}
 --- !u!114 &1074336618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2001,6 +1994,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 948d3a024e170b24a9dec098c116926e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_levelItems: {fileID: 11400000, guid: 2fa235d6417cca544b77658cf010d49b, type: 2}
 --- !u!114 &1644144803
 MonoBehaviour:
   m_ObjectHideFlags: 0
