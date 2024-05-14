@@ -79,6 +79,8 @@ namespace Tools
         public int items;
         public int Column => gridSize[0];
         public int Row => gridSize[1];
+
+        public List<Objective> Objectives { get; set; }
     }
     public interface ILevelManager 
     {
@@ -87,4 +89,45 @@ namespace Tools
         Level CurrentLevel { get; }
         Level GetLevel(int level);
     }
+
+    public enum ObjectiveType
+    {
+        None, Collect, Chain
+    }
+    public enum ItemType
+    {
+        None, Item1, Item2, Item3, Item4, Item5, Item6
+    }
+
+    [Serializable]
+    public class Objective : ICloneable
+    {
+        public ObjectiveType objectiveType;
+        public ItemType itemType;
+        public int amount;
+
+        public object Clone()
+        {
+            return new Objective
+            {
+                objectiveType = objectiveType,
+                itemType = itemType,
+                amount = amount
+            };
+        }
+
+        public bool UpdateObjective(int amount) 
+        {
+            this.amount -= amount;
+            if(this.amount < 0) 
+            {
+                this.amount = 0;
+            }
+            return this.amount == 0;
+        }
+    }
+    public interface ILevelObjective
+    {
+        void UpdateObjectives(ItemType itemType, int amount)
+}
 }

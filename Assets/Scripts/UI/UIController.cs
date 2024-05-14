@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections;
-using System.Runtime.CompilerServices;
 using TMPro;
-using Tools;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using Zenject;
 
 namespace PopBlast.UI
 {
@@ -14,9 +10,7 @@ namespace PopBlast.UI
     /// Controls the view of the level
     /// </summary>
     public class UIController : MonoBehaviour
-    {
-        [Inject] private ILevelManager m_levelManager;
-        
+    {   
         [SerializeField] private TextMeshProUGUI m_moveTxt;
         [SerializeField] private Button restartBtn = null;
         [SerializeField] private Button quitBtn = null;
