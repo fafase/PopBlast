@@ -118,7 +118,7 @@ namespace PopBlast.UI
         {
             feedbackTxt.transform.parent.gameObject.SetActive(false);
         }
-        public void SetMoveCount(int moves) => m_moveTxt.text = "Moves: "  +moves;
+        public void SetMoveCount(int moves) => m_moveTxt.text = moves.ToString();
 
 
         #region DATA_TYPES
