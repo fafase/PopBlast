@@ -48,6 +48,18 @@ MonoBehaviour:
     m_Localized: Jouer
     m_Metadata:
       m_Items: []
+  - m_Id: 24830671814656
+    m_Localized: Choisis un Nom
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26003361464320
+    m_Localized: 'Ton nom est :'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26623342510080
+    m_Localized: Continuer
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
