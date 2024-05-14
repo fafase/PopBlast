@@ -1,13 +1,11 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Localization.Components;
 
 namespace Tools
 {
     public class LevelCompletePopup : Popup 
     {
-        [SerializeField] private LocalizedTMP_UGUI m_title;
+        [SerializeField] private LocalizeStringEvent m_locaString;
         public void ConfirmLevelComplete() 
         {
             Close();
@@ -15,7 +13,7 @@ namespace Tools
 
         public void InitWithLevel(int level)
         {
-            m_title.SetArgument(new LocArgument("level", level.ToString()));
+            m_locaString.SetArgument("level", level.ToString());
         }
     }
 }

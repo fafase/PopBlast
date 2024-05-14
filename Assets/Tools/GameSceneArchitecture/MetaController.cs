@@ -32,8 +32,7 @@ namespace Tools
                 }
                 PlayPopup popup = (PlayPopup)m_popupManager.Show<PlayPopup>();
                 Level level = m_levelManager.Levels[currentLevel-1];
-                popup.InitWithLevel(level);
-                popup.AddToClose(_ => m_popupManager.LoadSceneWithLoadingPopup("GameScene").Forget());
+                popup.InitWithLevel(level, () =>  m_popupManager.LoadSceneWithLoadingPopup("GameScene").Forget());
             });
 
             m_settings.onClick.AddListener(() => OpenSettings());

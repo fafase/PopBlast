@@ -6,6 +6,8 @@ using System.Globalization;
 using System.Net;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Localization.SmartFormat.PersistentVariables;
+using UnityEngine.Localization.Components;
 
 namespace Tools 
 {
@@ -137,6 +139,15 @@ namespace Tools
             {
                 return false;
             }
+        }
+    }
+
+    public static class LocalizationUtility 
+    {
+        public static void SetArgument(this LocalizeStringEvent lse, string key, string value) 
+        {
+            lse.StringReference.Add(key, new StringVariable { Value = value });
+            lse.RefreshString();
         }
     }
 }
