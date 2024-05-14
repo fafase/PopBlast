@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 using TMPro;
+using Cysharp.Threading.Tasks;
 
 namespace Tools
 {
@@ -13,7 +14,6 @@ namespace Tools
         [SerializeField] private Button m_playBtn;
 
         [Inject] private IPopupManager m_popupManager;
-        [Inject] private IServicesManager m_servicesManager;
         [Inject] private IPlayerData m_playerData;
         [Inject] private ILevelManager m_levelManager;
 
@@ -24,14 +24,16 @@ namespace Tools
 
             m_playBtn.onClick.AddListener(() =>
             {
-                PlayPopup popup = (PlayPopup)m_popupManager.Show<PlayPopup>();
+
                 if(currentLevel > m_levelManager.Levels.Count) 
                 {
                     // This is end of content
                     currentLevel = m_levelManager.Levels.Count - 1;
                 }
+                PlayPopup popup = (PlayPopup)m_popupManager.Show<PlayPopup>();
                 Level level = m_levelManager.Levels[currentLevel-1];
                 popup.InitWithLevel(level);
+                popup.AddToClose(_ => m_popupManager.LoadSceneWithLoadingPopup("GameScene").Forget());
             });
 
             m_settings.onClick.AddListener(() => OpenSettings());

@@ -89,7 +89,7 @@ namespace Tools
         void Init(IPopupManager popupManager);
         void AddToClose(Action<IPopup> action);
         void RemoveToClose(Action<IPopup> action);
-
+        State PopupState { get; }
         bool IsOpen { get; }
         public enum State
         {

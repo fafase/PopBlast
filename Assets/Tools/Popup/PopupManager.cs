@@ -2,8 +2,10 @@ using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Tools
 {
@@ -43,6 +45,20 @@ namespace Tools
             return null;
         }
 
+        public async UniTask LoadSceneWithLoadingPopup(string scene)
+        {
+            IPopup popup = Show<LoadingPopup>();
+            while (popup.PopupState != IPopup.State.Idle)
+            {
+                await Task.Yield();
+            }
+            AsyncOperation loading = SceneManager.LoadSceneAsync(scene);
+            while (!loading.isDone)
+            {
+                await Task.Yield();
+            }
+            popup.Close();
+        }
 
         public void Close(IPopup popup) 
         {
@@ -57,5 +73,7 @@ namespace Tools
 
         void Close(IPopup popup);
         IPopup Show<T>() where T : IPopup;
+
+        UniTask LoadSceneWithLoadingPopup(string scene);
     }
 }
