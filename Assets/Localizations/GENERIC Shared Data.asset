@@ -55,6 +55,14 @@ MonoBehaviour:
     m_Key: continue
     m_Metadata:
       m_Items: []
+  - m_Id: 27149194985472
+    m_Key: customerId
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27589676597248
+    m_Key: appVersion
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

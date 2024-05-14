@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Services.Authentication;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
 namespace Tools
@@ -12,15 +14,14 @@ namespace Tools
         [SerializeField] private Button m_sfx;
         [SerializeField] private Button m_credits;
         [SerializeField] private Button m_reset;
-        [SerializeField] private LocalizedTMP_UGUI m_customer;
-        [SerializeField] private LocalizedTMP_UGUI m_version;
+        [SerializeField] private LocalizeStringEvent m_customer;
+        [SerializeField] private LocalizeStringEvent m_version;
 
         public override void Init(IPopupManager popupManager) 
         {
             base.Init(popupManager);
-            string id = AuthenticationService.Instance.PlayerId;
-            m_customer.SetArgument("id", id);
-            m_version.SetArgument("version", "0.1.0");
+            m_customer.SetArgument("id", AuthenticationService.Instance.PlayerId);
+            m_version.SetArgument("version", PlayerSettings.bundleVersion);
         }
     }
 

@@ -60,10 +60,20 @@ MonoBehaviour:
     m_Localized: Continue
     m_Metadata:
       m_Items: []
+  - m_Id: 27149194985472
+    m_Localized: 'Customer ID : {id}'
+    m_Metadata:
+      m_Items:
+      - rid: 1523731036225142810
+  - m_Id: 27589676597248
+    m_Localized: 'App Version : {version}'
+    m_Metadata:
+      m_Items:
+      - rid: 1523731036225142810
   references:
     version: 2
     RefIds:
     - rid: 1523731036225142810
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_Entries: 0080df5498020000
+        m_Entries: 0080df54980200000080dfb81719000000801f2ab1180000
