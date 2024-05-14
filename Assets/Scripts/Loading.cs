@@ -17,21 +17,6 @@ public class Loading : MonoBehaviour
     public void OnInitComplete(List<InitializationResult> results)
     {
         Debug.Log("End init");
-        LoadAsync().Forget();
-    }
-
-    private async UniTask LoadAsync() 
-    {
-        IPopup popup = m_popupManager.Show<LoadingPopup>();
-        while (popup.PopupState != IPopup.State.Idle) 
-        {
-            await Task.Yield();
-        }
-        AsyncOperation loading = SceneManager.LoadSceneAsync("Meta");
-        while (!loading.isDone)
-        {
-            await Task.Yield();
-        }
-        popup.Close();
+        m_popupManager.LoadSceneWithLoadingPopup("Meta").Forget();
     }
 }
