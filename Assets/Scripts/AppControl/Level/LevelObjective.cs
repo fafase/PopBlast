@@ -36,14 +36,24 @@ public class LevelObjective : ILevelObjective, IInitializable, IDisposable
         m_isDisposed = true;
     }
 
-    public virtual Objective UpdateObjectives(int itemType, int amount) 
+    public virtual Objective UpdateObjectives(int itemType, int amount)
     {
         Objective objective = m_objectives.Find((obj) => (int)obj.itemType == itemType);
-        if (objective == null) 
+        if (objective != null) 
         {
-            return null;
+            switch (objective.objectiveType) 
+            {
+                case ObjectiveActionType.Collect:
+                    objective.UpdateObjective(amount);
+                    break;
+                case ObjectiveActionType.Chain:
+                    if(amount >= 5) 
+                    { 
+                        objective.UpdateObjective(1);
+                    }
+                    break;
+            }
         }
-        objective.UpdateObjective(amount);
         return objective;
     }
 }
