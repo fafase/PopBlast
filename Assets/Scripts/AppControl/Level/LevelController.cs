@@ -17,6 +17,9 @@ namespace PopBlast.AppControl
         [Inject] private ILevelObjective m_levelObjectives;
         [Inject] private IItemGenerator generator = null;
         [Inject] private ICoreUI m_coreUI;
+        [Inject] private IPopupManager m_popupManager;
+        [Inject] private IPlayerData m_playerData;
+        [Inject] private ICloudOperation m_cloudOperation;
 
         private InputController input = null;
 
@@ -84,10 +87,12 @@ namespace PopBlast.AppControl
 
             if (m_moves <= 0) 
             {
-                RaiseEndOfGame(false);
+                input.RaiseItemTapped -= Input_RaiseItemTapped;
+                RaiseEndOfGame(false);           
             }
             if (m_levelObjectives.IsLevelDone) 
             {
+                input.RaiseItemTapped -= Input_RaiseItemTapped;
                 RaiseEndOfGame(true);
             }
         }
@@ -97,12 +102,21 @@ namespace PopBlast.AppControl
         {
             if (win) 
             {
-                m_coreUI.SetRestartPanel(true);
+                IPopup popup = m_popupManager.Show<LevelCompletePopup>();
+                ((LevelCompletePopup)popup).InitWithLevel(m_playerData.CurrentLevel);
+                popup.AddToClose(_ => ResetToMeta());
             }
             else
             {
                 m_coreUI.SetRestartPanel(true);
             }
+        }
+        private void ResetToMeta() 
+        {
+            m_playerData.IncreaseCurrentLevel();
+            m_cloudOperation.FlushOperations(dict => 
+            SceneManager.LoadSceneAsync(1));
+
         }
 
         // Update score with new amount
