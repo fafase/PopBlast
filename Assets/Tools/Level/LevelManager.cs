@@ -14,6 +14,7 @@ namespace Tools
     public class LevelManager : ILevelManager, IInitializable
     {
         [Inject] IPlayerData m_playerData;
+
         public List<Level> Levels {  get; private set; }   
         public event Action OnInitDone;
         public Level CurrentLevel => GetLevel(m_playerData.CurrentLevel);
@@ -25,7 +26,6 @@ namespace Tools
             foreach (string levelBundle in Directory.GetFiles(LEVEL_PATH, "*.zip"))
             {
                 string fileName = Path.GetFileName(levelBundle);
-                //string directoryTarget = $"{PERSISTENT_STORAGE}{Path.GetFileNameWithoutExtension(fileName)}";
                 if (!Directory.Exists(PERSISTENT_STORAGE))
                 {
                     ZipFile.ExtractToDirectory(levelBundle, PERSISTENT_STORAGE);
@@ -82,6 +82,7 @@ namespace Tools
 
         public List<Objective> Objectives { get; set; }
     }
+
     public interface ILevelManager 
     {
         List<Level> Levels { get; }
@@ -90,11 +91,11 @@ namespace Tools
         Level GetLevel(int level);
     }
 
-    public enum ObjectiveType
+    public enum ObjectiveActionType
     {
         None, Collect, Chain
     }
-    public enum ItemType
+    public enum ObjectiveItemType
     {
         None, Item1, Item2, Item3, Item4, Item5, Item6
     }
@@ -102,8 +103,8 @@ namespace Tools
     [Serializable]
     public class Objective : ICloneable
     {
-        public ObjectiveType objectiveType;
-        public ItemType itemType;
+        public ObjectiveActionType objectiveType;
+        public ObjectiveItemType itemType;
         public int amount;
 
         public object Clone()
@@ -125,9 +126,12 @@ namespace Tools
             }
             return this.amount == 0;
         }
+        public bool IsDone => amount <= 0;
     }
     public interface ILevelObjective
     {
-        void UpdateObjectives(ItemType itemType, int amount)
-}
+        Objective UpdateObjectives(int itemType, int amount);
+        List<Objective> Objectives { get; }
+        bool IsLevelDone { get; }
+    }
 }

@@ -2,16 +2,24 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Tools;
-using UnityEngine;
 using Zenject;
 
-[CreateAssetMenu(fileName = "Level Objectives", menuName = "Game/Level Objectives")]
-public class LevelObjective : ScriptableObject, ILevelObjective, IInitializable, IDisposable
+public class LevelObjective : ILevelObjective, IInitializable, IDisposable
 {
     [Inject] ILevelManager m_levelManager;
 
     private bool m_isDisposed = false;
     private List<Objective> m_objectives;
+
+    public List<Objective> Objectives => m_objectives;
+
+    public bool IsLevelDone 
+    {
+        get 
+        {
+            return m_objectives.FindIndex((obj) => obj.amount > 0) < 0;       
+        }
+    }
 
     public virtual void Initialize()
     {
@@ -28,13 +36,14 @@ public class LevelObjective : ScriptableObject, ILevelObjective, IInitializable,
         m_isDisposed = true;
     }
 
-    public virtual void UpdateObjectives(ItemType itemType, int amount) 
+    public virtual Objective UpdateObjectives(int itemType, int amount) 
     {
-        Objective objective = m_objectives.Where((objective) => objective.itemType == itemType).First();
-        if(objective == null) 
+        Objective objective = m_objectives.Find((obj) => (int)obj.itemType == itemType);
+        if (objective == null) 
         {
-            return;
+            return null;
         }
-        bool objectiveDone = objective.UpdateObjective(amount);
+        objective.UpdateObjective(amount);
+        return objective;
     }
 }

@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using TMPro;
+using Tools;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Zenject;
 
 namespace PopBlast.UI
 {
@@ -10,7 +13,11 @@ namespace PopBlast.UI
     /// Controls the view of the level
     /// </summary>
     public class UIController : MonoBehaviour
-    {   
+    {
+        [Inject] private ILevelItems m_levelItems;
+        [SerializeField] private GameObject m_objectivePrefab;
+        [SerializeField] private Transform m_objectiveContainer;
+
         [SerializeField] private TextMeshProUGUI m_moveTxt;
         [SerializeField] private Button restartBtn = null;
         [SerializeField] private Button quitBtn = null;
@@ -114,9 +121,48 @@ namespace PopBlast.UI
         }
         public void SetMoveCount(int moves) => m_moveTxt.text = moves.ToString();
 
+        private List<UIObjective> m_objectives;
+        internal void SetObjectives(List<Objective> objectives)
+        {
+            m_objectives = new List<UIObjective>();
+            foreach (Objective objective in objectives) 
+            {
+                GameObject obj = Instantiate(m_objectivePrefab);
+                obj.transform.SetParent(m_objectiveContainer.transform, false);
+                obj.SetActive(true);
+                Sprite sprite = m_levelItems.GetCoreItem((int)objective.itemType);
+                Image img = obj.GetComponent<Image>();
+                img.sprite = sprite;
+                TextMeshProUGUI txt = obj.GetComponentInChildren<TextMeshProUGUI>();
+                txt.text = objective.amount.ToString();
+                UIObjective uiObj = new UIObjective(img, txt, objective.itemType);
+                m_objectives.Add(uiObj);  
+            }
+        }
 
-        #region DATA_TYPES
-        
+        public void UpdateObjectives(int type, int amount)
+        {
+            ObjectiveItemType oit = (ObjectiveItemType)type;
+            UIObjective o = m_objectives.Find((obj) => obj.type == oit);
+            if (o != null)
+            {
+                o.txtComp.text = amount.ToString();
+            }
+        }
+
+        class UIObjective
+        {
+            public Image image;
+            public TextMeshProUGUI txtComp;
+            public ObjectiveItemType type;
+            public UIObjective(Image img, TextMeshProUGUI txt, ObjectiveItemType t) 
+            {
+                image = img;
+                txtComp = txt;
+                type = t;
+            }
+        }
+
         [Serializable]
         public struct FeedbackKeyValue
         {
@@ -129,6 +175,5 @@ namespace PopBlast.UI
             /// </summary>
             public string message;
         }
-        #endregion
     }
 }

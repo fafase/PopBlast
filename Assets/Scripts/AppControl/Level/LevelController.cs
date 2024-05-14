@@ -1,4 +1,5 @@
 ﻿using PopBlast.InputSystem;
+using PopBlast.Items;
 using PopBlast.UI;
 using Tools;
 using UnityEngine;
@@ -13,6 +14,7 @@ namespace PopBlast.AppControl
     public class LevelController : MonoBehaviour
     {
         [Inject] private ILevelManager m_levelManager;
+        [Inject] private ILevelObjective m_levelObjectives;
 
         private ItemGenerator generator = null;
         private InputController input = null;
@@ -40,8 +42,6 @@ namespace PopBlast.AppControl
             {
                 throw new System.Exception("Missing UIController component");
             }
-            m_moves = m_levelManager.CurrentLevel.moves;
-            uiCtrl.SetMoveCount(m_moves);
         }
 
         protected virtual void Start()
@@ -58,7 +58,9 @@ namespace PopBlast.AppControl
 
             uiCtrl.RaiseNewGame += UiCtrl_RaiseNewGame;
             uiCtrl.UpdateHiScore(TopScore.GetHiScore().ToString());
-
+            m_moves = m_levelManager.CurrentLevel.moves;
+            uiCtrl.SetMoveCount(m_moves);
+            uiCtrl.SetObjectives(m_levelObjectives.Objectives);
             input.RaiseItemTapped += Input_RaiseItemTapped;
         }
 
@@ -77,22 +79,40 @@ namespace PopBlast.AppControl
         private void Input_RaiseItemTapped(GameObject obj)
         {
             input.enabled = false;
-            generator.CheckItemNeighbours(obj, () =>
+            int amount = generator.CheckItemNeighbours(obj, () =>
             {
                 input.enabled = true;
             });
             --m_moves;
-            uiCtrl.SetMoveCount(m_moves);
-            if(m_moves <= 0) 
+            IItem item = obj.GetComponent<IItem>();
+            Objective objective = m_levelObjectives.UpdateObjectives((int)item.ItemType, amount);
+            if(objective != null) 
             {
-                RaiseEndOfGame();
+                uiCtrl.UpdateObjectives((int)item.ItemType, objective.amount);
+            }
+            uiCtrl.SetMoveCount(m_moves);
+
+            if (m_moves <= 0) 
+            {
+                RaiseEndOfGame(false);
+            }
+            if (m_levelObjectives.IsLevelDone) 
+            {
+                RaiseEndOfGame(true);
             }
         }
 
         // Event triggered when Generator reports no more possible move
-        private void RaiseEndOfGame()
+        private void RaiseEndOfGame(bool win)
         {
-            uiCtrl.SetRestartPanel(true);
+            if (win) 
+            {
+                uiCtrl.SetRestartPanel(true);
+            }
+            else
+            {
+                uiCtrl.SetRestartPanel(true);
+            }
         }
 
         // Update score with new amount

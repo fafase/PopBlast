@@ -8,5 +8,6 @@ public class CoreContext : MonoInstaller
     public override void InstallBindings()
     {
         Container.BindInterfacesTo<LevelItems>().FromNewScriptableObject(m_levelItems).AsSingle().NonLazy();
+        Container.BindInterfacesTo<LevelObjective>().FromNew().AsSingle().NonLazy();
     }
 }

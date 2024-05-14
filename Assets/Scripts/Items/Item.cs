@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace PopBlast.Items
 {
@@ -12,7 +13,7 @@ namespace PopBlast.Items
     /// </summary>
     public class Item : MonoBehaviour , IItem
     {
-
+        [SerializeField] private SpriteRenderer m_sprite;
         [Tooltip("Explosion prefab for this item")]
         [SerializeField] private GameObject explosion;
         [Tooltip("Type of the item")]
@@ -34,6 +35,7 @@ namespace PopBlast.Items
 
         private IItem left, right, top, bottom;
         private Transform m_target;
+        public ItemType ItemType => type;
 
         #region PUBLIC_METHODS
 
@@ -45,6 +47,8 @@ namespace PopBlast.Items
             get { return gameObject; }
         }
 
+        public Sprite GetSprite() =>  m_sprite.sprite;
+        
         /// <summary>
         /// Set the item with a new grid value
         /// </summary>
@@ -148,7 +152,7 @@ namespace PopBlast.Items
     }
     public enum ItemType : byte
     {
-        None, CakeFull, CakePiece, Candybar, Lollipop, Icecream, Heart
+        None, CakePiece, Candybar, Icecream, CakeFull, Heart, Lollipop
     }
 
     /// <summary>
@@ -164,5 +168,8 @@ namespace PopBlast.Items
         void SetGrid(int newCol, int newRow, IItemGenerator item);
         GameObject GameObject { get; }
         void DestroyItem();
+        Sprite GetSprite();
+
+        ItemType ItemType { get; }
     }
 }

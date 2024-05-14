@@ -29,7 +29,7 @@ namespace PopBlast.AppControl
         /// <summary>
         /// Event triggered when no more moves are possible
         /// </summary>
-        public event Action RaiseEndOfGame;
+        public event Action<bool> RaiseEndOfGame;
 
         /// <summary>
         /// Event raised when pop happens, parameter indicates how many items at once
@@ -92,19 +92,19 @@ namespace PopBlast.AppControl
         /// </summary>
         /// <param name="go"></param>
         /// <param name="onCompletion"></param>
-        public void CheckItemNeighbours(GameObject go, Action onCompletion)
+        public int CheckItemNeighbours(GameObject go, Action onCompletion)
         {
             Item item = go.GetComponent<Item>();
             if(item == null)
             {
                 onCompletion?.Invoke();
-                return;
+                return 0;
             }
             IItem[] results = item.GetSameTypeNeighbours();
             if(results.Length == 0)
             {
                 onCompletion?.Invoke();
-                return;
+                return 0;
             }
             int amount = ProcessItemToRemove(item);
             CheckForEmptySpaces();
@@ -113,10 +113,11 @@ namespace PopBlast.AppControl
                 SetNeighboursGrid();
                 if (CheckForRemainingMovement() == false)
                 {
-                    RaiseEndOfGame?.Invoke();
+                    RaiseEndOfGame?.Invoke(false);
                 }
                 onCompletion?.Invoke();
             }));
+            return amount;
         }
 
         #endregion
