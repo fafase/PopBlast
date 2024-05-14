@@ -11,9 +11,10 @@ namespace PopBlast.AppControl
     /// Component controlling the grid of items
     /// Main business logic of the system
     /// </summary>
-    public class ItemGenerator : MonoBehaviour
+    public class ItemGenerator : MonoBehaviour, IItemGenerator
     {
-        #region MEMBERS
+        [SerializeField] private Transform m_top;
+        [SerializeField] private Transform m_bottom;
 
         [Tooltip("Waiting time for row creation of item")]
         [SerializeField] private float waitTimeForCreation = 0.5f;
@@ -35,7 +36,8 @@ namespace PopBlast.AppControl
         /// </summary>
         public event Action<int> RaiseItemPop;
 
-        #endregion
+        public Transform Top => m_top;
+        public Transform Target => m_bottom;
 
         #region PUBLIC_METHODS
 
@@ -54,14 +56,15 @@ namespace PopBlast.AppControl
             height = row;
 
             float offsetX = (col / 2f);
-            float offsetY = -(row / 2f);
+            //float offsetY = -(row / 2f);
             // Generate the spawn points
             for (int i = 0; i < col; i++)
             {
                 GameObject obj = new GameObject($"Spawn_{i}");
                 spawns[i] = obj.transform;
+                obj.transform.position = new Vector3(i + 0.5f - offsetX, m_top.position.y, 0f);
                 obj.transform.parent = transform;
-                obj.transform.position = new Vector3(i + 0.5f - offsetX, offsetY, 0f);
+                //obj.transform.localPosition = new Vector3(i + 0.5f - offsetX, 0f, 0f);
             }
 
             // Generate all items
@@ -75,7 +78,7 @@ namespace PopBlast.AppControl
                     GameObject obj = Instantiate<GameObject>(items[rand], spawnTr);
                     obj.transform.position = spawnTr.position;
                     IItem item = obj.GetComponent<IItem>();
-                    item.SetGrid(i, j);
+                    item.SetGrid(i, j, this);
                     item.GameObject.SetActive(false);
                     grid[i, j] = item;
                 }
@@ -185,7 +188,7 @@ namespace PopBlast.AppControl
                             if (t != null)
                             {
                                 // Assign item with empty spot location
-                                t.SetGrid(i, j);
+                                t.SetGrid(i, j, this);
                                 // Update grid
                                 grid[i, j] = t;
                                 // Set old item grid spot to null
@@ -236,7 +239,7 @@ namespace PopBlast.AppControl
                         obj.transform.position = spawnTr.position;
                         // Populate the IItem values
                         IItem item = obj.GetComponent<IItem>();
-                        item.SetGrid(j, i);
+                        item.SetGrid(j, i, this);
                        
                         // Sart the movement with callback
                         item.StartMovement(()=> 
@@ -300,5 +303,10 @@ namespace PopBlast.AppControl
                 }
             }
         }
+    }
+
+    public interface IItemGenerator 
+    {
+        Transform Target { get; }
     }
 }

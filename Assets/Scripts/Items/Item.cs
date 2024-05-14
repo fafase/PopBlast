@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PopBlast.AppControl;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -32,7 +33,7 @@ namespace PopBlast.Items
         public int Row { get { return (int)row; } }
 
         private IItem left, right, top, bottom;
-
+        private Transform m_target;
 
         #region PUBLIC_METHODS
 
@@ -49,10 +50,11 @@ namespace PopBlast.Items
         /// </summary>
         /// <param name="newCol"></param>
         /// <param name="newRow"></param>
-        public void SetGrid(int newCol, int newRow)
+        public void SetGrid(int newCol, int newRow, IItemGenerator item)
         {
             col = (float)newCol;
             row = (float)newRow;
+            m_target = item.Target;
             StartCoroutine(MoveToPositionCoroutine(null));
         }
 
@@ -127,16 +129,18 @@ namespace PopBlast.Items
         // Interpolation movement based on time
         private IEnumerator MoveToPositionCoroutine(Action onCompletion)
         {
-            float timeSinceStarted = 0f;
-            float target = row + 0.5f;
-            while (Mathf.Approximately(transform.position.y, target) == false)
+            float target = m_target.position.y  + row + 0.5f;
+            float timer = 0f;
+            while (timer < 1f)
             {
-                timeSinceStarted += Time.deltaTime;
+                timer += Time.deltaTime;
                 Vector3 pos = transform.position;
-                pos.y = Mathf.Lerp(pos.y, target, timeSinceStarted / movementSeconds);
+                pos.y = Mathf.Lerp(pos.y, target, timer / movementSeconds);
                 transform.position = pos;
                 yield return null;
             }
+            Vector3 p = transform.position;
+            transform.position = new Vector3(p.x, target, 0f);
             onCompletion?.Invoke();
         }
 
@@ -157,7 +161,7 @@ namespace PopBlast.Items
         IItem[] GetSameTypeNeighbours();
         void StartMovement(Action onCompletion);
         void SetNeighbors(IItem newleft, IItem newRight, IItem newTop, IItem newBottom);
-        void SetGrid(int newCol, int newRow);
+        void SetGrid(int newCol, int newRow, IItemGenerator item);
         GameObject GameObject { get; }
         void DestroyItem();
     }
