@@ -9,8 +9,6 @@ namespace Tools
         [SerializeField] private LocalizedTMP_UGUI m_title;
         [SerializeField] private Button m_playButton;
 
-        private int CurrentLevel { get; set; }
-
         private void Start()
         {
             m_playButton.onClick.RemoveAllListeners();
