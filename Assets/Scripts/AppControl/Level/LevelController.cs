@@ -1,32 +1,25 @@
 ﻿using PopBlast.InputSystem;
 using PopBlast.UI;
-using System.Collections;
-using System.Collections.Generic;
+using Tools;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Zenject;
 
-namespace PopBlast.AppControl.Level
+namespace PopBlast.AppControl
 {
     /// <summary>
     /// Class connecting all items in the level
     /// </summary>
     public class LevelController : MonoBehaviour
     {
-        #region MEMBERS
-
-        [Header("Create level values")]
-        [Range(5, 20)]
-        [SerializeField] private int row = 0;
-        [Range(5, 20)]
-        [SerializeField] private int col = 0;
+        [Inject] private ILevelManager m_levelManager;
 
         private ItemGenerator generator = null;
         private InputController input = null;
         private UIController uiCtrl = null;
 
-        private int score = 0;
-
-        #endregion
+        private int m_score = 0;
+        private int m_moves = 0;
 
         #region UNITY_LIFECYCLE
 
@@ -43,24 +36,24 @@ namespace PopBlast.AppControl.Level
                 throw new System.Exception("Missing InputController component");
             }
             uiCtrl = FindObjectOfType<UIController>();
-            if (input == null)
+            if (uiCtrl == null)
             {
                 throw new System.Exception("Missing UIController component");
             }
+            m_moves = m_levelManager.CurrentLevel.moves;
+            uiCtrl.SetMoveCount(m_moves);
         }
 
         protected virtual void Start()
         {
             input.enabled = false;
 
-            CheckForSettings();
-
-            FindObjectOfType<GridGenerator>().Init(col, row);
-            generator.Init(col, row, () =>
+            Tools.Level currentLevel = m_levelManager.CurrentLevel;
+            generator.Init(currentLevel, () =>
             {
                 input.enabled = true;
             });
-            generator.RaiseEndOfGame += Generator_RaiseEndOfGame;
+            generator.RaiseEndOfGame += RaiseEndOfGame;
             generator.RaiseItemPop += UpdateScore;
 
             uiCtrl.RaiseNewGame += UiCtrl_RaiseNewGame;
@@ -70,8 +63,6 @@ namespace PopBlast.AppControl.Level
         }
 
         #endregion
-
-        #region PRIVATE_METHODS
 
         // Event call when new game is required
         // Loads a new scene
@@ -90,10 +81,16 @@ namespace PopBlast.AppControl.Level
             {
                 input.enabled = true;
             });
+            --m_moves;
+            uiCtrl.SetMoveCount(m_moves);
+            if(m_moves <= 0) 
+            {
+                RaiseEndOfGame();
+            }
         }
 
         // Event triggered when Generator reports no more possible move
-        private void Generator_RaiseEndOfGame()
+        private void RaiseEndOfGame()
         {
             uiCtrl.SetRestartPanel(true);
         }
@@ -106,27 +103,15 @@ namespace PopBlast.AppControl.Level
             // Based on amount, set feedback to user
             uiCtrl.SetFeedback(amount);
             // Exponential increase based on power of two
-            score += Mathf.FloorToInt(Mathf.Pow(2, amount));
+            m_score += Mathf.FloorToInt(Mathf.Pow(2, amount));
             // Update the visual of the score
-            uiCtrl.UpdateScore(score.ToString());
+            uiCtrl.UpdateScore(m_score.ToString());
             // Update the hi score if higher
-            if (TopScore.SetHiScore(score))
+            if (TopScore.SetHiScore(m_score))
             {
                 // Update the visual of hiscore if needed
                 uiCtrl.UpdateHiScore(TopScore.GetHiScore().ToString());
             }         
         }
-
-        private void CheckForSettings()
-        {
-            // If came from start level, values should exist
-            col = PlayerPrefs.GetInt("Width", col);
-            row = PlayerPrefs.GetInt("Height", row);
-            // Delete values so editor can start from Game scene
-            PlayerPrefs.DeleteKey("Width");
-            PlayerPrefs.DeleteKey("Height");
-        }
-
-        #endregion
     }
 }

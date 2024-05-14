@@ -11,7 +11,6 @@ namespace PopBlast.Items
     /// </summary>
     public class Item : MonoBehaviour , IItem
     {
-        #region MEMBERS
 
         [Tooltip("Explosion prefab for this item")]
         [SerializeField] private GameObject explosion;
@@ -34,7 +33,6 @@ namespace PopBlast.Items
 
         private IItem left, right, top, bottom;
 
-        #endregion
 
         #region PUBLIC_METHODS
 

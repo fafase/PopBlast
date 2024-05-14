@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
+using TMPro;
 
 namespace Tools
 {
@@ -13,26 +14,29 @@ namespace Tools
 
         [Inject] private IPopupManager m_popupManager;
         [Inject] private IServicesManager m_servicesManager;
-        [Inject] private IUserPrefs m_userPrefs;
+        [Inject] private IPlayerData m_playerData;
         [Inject] private ILevelManager m_levelManager;
 
         private void Awake()
         {
-            // 4 levels of difficulties
+            int currentLevel = m_playerData.CurrentLevel;
+            m_playBtn.GetComponentInChildren<TextMeshProUGUI>().text = currentLevel.ToString();
+
             m_playBtn.onClick.AddListener(() =>
             {
                 PlayPopup popup = (PlayPopup)m_popupManager.Show<PlayPopup>();
-                m_userPrefs.TryGetInt("level", out int currentLevel, 1);
                 if(currentLevel > m_levelManager.Levels.Count) 
                 {
                     // This is end of content
                     currentLevel = m_levelManager.Levels.Count - 1;
                 }
-                Level level = m_levelManager.Levels[currentLevel];
+                Level level = m_levelManager.Levels[currentLevel-1];
                 popup.InitWithLevel(level);
             });
 
             m_settings.onClick.AddListener(() => OpenSettings());
+
+            Signal.Send(new MetaLanding());
         }
 
         private void OpenSettings()

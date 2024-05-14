@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using TMPro;
+using Tools;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Zenject;
 
 namespace PopBlast.UI
 {
@@ -12,8 +15,9 @@ namespace PopBlast.UI
     /// </summary>
     public class UIController : MonoBehaviour
     {
-        #region MEMBERS
-
+        [Inject] private ILevelManager m_levelManager;
+        
+        [SerializeField] private TextMeshProUGUI m_moveTxt;
         [SerializeField] private Button restartBtn = null;
         [SerializeField] private Button quitBtn = null;
         [SerializeField] private Text scoreTxt = null;
@@ -31,10 +35,6 @@ namespace PopBlast.UI
         /// </summary>
         public event Action RaiseNewGame;
 
-        #endregion
-
-        #region UNITY_LIFECYCLE
-
         protected virtual void Awake()
         {
             restartBtn.onClick.AddListener(() =>
@@ -49,10 +49,6 @@ namespace PopBlast.UI
             UpdateScore(0.ToString());
             SetFeedbackPanelOff();
         }
-
-        #endregion
-
-        #region PUBLIC_METHODS
 
         /// <summary>
         /// Set the restart panel active
@@ -118,16 +114,12 @@ namespace PopBlast.UI
             Invoke("SetFeedbackPanelOff", feedbackTimer);
         }
 
-        #endregion
-
-        #region PRIVATE_METHODS
-
         private void SetFeedbackPanelOff()
         {
             feedbackTxt.transform.parent.gameObject.SetActive(false);
         }
+        public void SetMoveCount(int moves) => m_moveTxt.text = "Moves: "  +moves;
 
-        #endregion
 
         #region DATA_TYPES
         

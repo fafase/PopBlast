@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using PopBlast.Items;
+using Tools;
 
 namespace PopBlast.AppControl
 {
@@ -44,20 +45,23 @@ namespace PopBlast.AppControl
         /// <param name="col"></param>
         /// <param name="row"></param>
         /// <param name="onCompletion"></param>
-        public void Init(int col, int row, Action onCompletion)
+        public void Init(Level level, Action onCompletion)
         {
+            int col = level.Column;
+            int row = level.Row;
             spawns = new Transform[col];
             width = col;
             height = row;
 
+            float offsetX = (col / 2f);
+            float offsetY = -(row / 2f);
             // Generate the spawn points
             for (int i = 0; i < col; i++)
             {
                 GameObject obj = new GameObject($"Spawn_{i}");
                 spawns[i] = obj.transform;
-                float posY = (float)row + 1f;
-                obj.transform.position = new Vector3(i + 0.5f, posY, 0f);
                 obj.transform.parent = transform;
+                obj.transform.position = new Vector3(i + 0.5f - offsetX, offsetY, 0f);
             }
 
             // Generate all items
@@ -67,7 +71,7 @@ namespace PopBlast.AppControl
                 Transform spawnTr = spawns[i];
                 for (int j = 0; j < row; j++)
                 {
-                    int rand = UnityEngine.Random.Range(0, items.Length);
+                    int rand = UnityEngine.Random.Range(0, level.items);
                     GameObject obj = Instantiate<GameObject>(items[rand], spawnTr);
                     obj.transform.position = spawnTr.position;
                     IItem item = obj.GetComponent<IItem>();

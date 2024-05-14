@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Tools
 {
-    public class CloudOperation :ICloudOperation, IInitializable, IDisposable
+    public class CloudOperation : ICloudOperation, IInitializable, IDisposable
     {
         [Inject] IUserPrefs m_userPrefs;
 
@@ -19,19 +19,39 @@ namespace Tools
 
         private bool m_isDisposed = false;
         private int m_processedIndex = 0;
+        public List<Operation> Operations => m_operations;
+#if UNITY_INCLUDE_TESTS
+        public CloudOperation(IUserPrefs userPrefs) => m_userPrefs = userPrefs;
+#endif
         public void Initialize()
         {
             string serializedOperation = PlayerPrefs.GetString(SERIALIZE_OPERATION, "");
             m_operations = string.IsNullOrEmpty(serializedOperation) ? new List<Operation>() : JsonConvert.DeserializeObject<List<Operation>>(serializedOperation);
             m_userPrefs.OnUpdate += () => AddOperation(OperationType.UserPrefsUpdate);
+
+            Signal.Connect<LoginSignalData>((data) => 
+            {
+                if (data.State == ServicesInitializationState.Initialized)
+                {
+                    FlushOperations(null).Forget();
+                }
+            });
         }
 
-        public void AddOperation(OperationType type) 
+        public void AddOperation(OperationType type) => AddOperation(new Operation(type));
+ 
+        public void AddOperation(Operation newOperation) 
         {
-            m_operations.Add(new Operation(type));
+            switch (newOperation.type)
+            {
+                case OperationType.UserPrefsUpdate:
+                    // No need to keep many calls
+                    m_operations.RemoveAll(op => op.type.Equals(newOperation.type));
+                    m_operations.Add(newOperation);
+                    break;
+            }
         }
-
-        public async UniTask SendOperations() 
+        public async UniTask FlushOperations(Action<Dictionary<string, string>> cloudSaveCallback) 
         {
             m_processedIndex = 0;
             foreach(Operation operation in m_operations) 
@@ -43,15 +63,30 @@ namespace Tools
                         {
                             return;
                         }
-                        if (UnityServices.State != ServicesInitializationState.Initialized)
+                        if(Application.internetReachability == NetworkReachability.NotReachable) 
                         {
                             return;
                         }
-                        await CloudSaveService.Instance.Data.Player.SaveAsync(new Dictionary<string, object>
-            {
-                { PLAYER_DATA, m_userPrefs.Json }
-            });
-                        m_userPrefs.IsDirty = false;
+                        try
+                        {
+                            if(UnityServices.State == ServicesInitializationState.Uninitialized) 
+                            {
+                                await UnityServices.InitializeAsync();
+                            }
+                            Dictionary<string, string> data = await CloudSaveService.Instance.Data.Player.SaveAsync(new Dictionary<string, object>
+                                {
+                                    { PLAYER_DATA, m_userPrefs.Json }
+                                });
+                            m_userPrefs.IsDirty = false;
+                            Signal.Send(new FlushOperation(data));
+                            cloudSaveCallback?.Invoke(data);
+                        }
+                        catch (Exception e) 
+                        {
+                            Debug.LogError(e.Message);
+                            // Something went wrong so we return and will try later. Operation is still in the list.
+                            return;
+                        }
                         break;
                 }
                 ++m_processedIndex;
@@ -71,7 +106,7 @@ namespace Tools
             {
                 return;
             }
-            m_operations = m_operations.GetRange(m_processedIndex, m_operations.Count - 1);
+            m_operations = m_operations.GetRange(m_processedIndex, m_operations.Count);
             string json = JsonConvert.SerializeObject(m_operations);
             PlayerPrefs.SetString(SERIALIZE_OPERATION, json);
             PlayerPrefs.Save();
@@ -83,7 +118,9 @@ namespace Tools
     public interface ICloudOperation 
     {
         void AddOperation(OperationType newOperation);
-        UniTask SendOperations();
+        void AddOperation(Operation newOperation);
+        UniTask FlushOperations(Action<Dictionary<string, string>> cloudSaveCallback);
+        List<Operation> Operations { get; }
     }
     public enum OperationType
     {

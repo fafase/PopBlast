@@ -9,9 +9,10 @@ namespace Tools
         [SerializeField] private LocalizedTMP_UGUI m_title;
         [SerializeField] private Button m_playButton;
 
+        private int CurrentLevel { get; set; }
+
         private void Start()
         {
-            m_title.SetArgument(new LocArgument("level", CurrentLevel.ToString()));
             m_playButton.onClick.RemoveAllListeners();
             m_playButton.onClick.AddListener(() =>
             {
@@ -22,10 +23,8 @@ namespace Tools
 
         public void InitWithLevel(Level level) 
         {
-            
+            m_title.SetArgument(new LocArgument("level", level.level.ToString()));
         }
-
-        private int CurrentLevel => 1;
 
         private void SetLevelSettings(int width, int height)
         {

@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1536
     height: 772.8
   m_ShowMode: 4
-  m_Title: Console
+  m_Title: Hierarchy
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -119,7 +119,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 1911
+  controlID: 38
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -139,12 +139,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1003.2
+    width: 1053.6
     height: 722.8
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 1912
+  controlID: 39
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -164,12 +164,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1003.2
-    height: 453.6
+    width: 1053.6
+    height: 454.4
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 1913
+  controlID: 40
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -187,8 +187,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 247.2
-    height: 453.6
+    width: 259.2
+    height: 454.4
   m_MinSize: {x: 201, y: 221}
   m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 13}
@@ -211,10 +211,10 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 247.2
+    x: 259.2
     y: 0
-    width: 756
-    height: 453.6
+    width: 794.39996
+    height: 454.4
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 14}
@@ -235,24 +235,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: ConsoleWindow
+  m_Name: ProjectBrowser
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 453.6
-    width: 1003.2
-    height: 269.19998
-  m_MinSize: {x: 101, y: 121}
-  m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 12}
+    y: 454.4
+    width: 1053.6
+    height: 268.4
+  m_MinSize: {x: 231, y: 271}
+  m_MaxSize: {x: 10001, y: 10021}
+  m_ActualView: {fileID: 18}
   m_Panes:
   - {fileID: 18}
   - {fileID: 12}
   - {fileID: 19}
-  m_Selected: 1
-  m_LastSelected: 0
+  m_Selected: 0
+  m_LastSelected: 1
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -268,12 +268,12 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 1003.2
+    x: 1053.6
     y: 0
-    width: 532.8
+    width: 482.40002
     height: 722.8
-  m_MinSize: {x: 276, y: 71}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 20}
   m_Panes:
   - {fileID: 20}
@@ -302,9 +302,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 527.2
-    width: 1002.2
-    height: 248.19998
+    y: 528
+    width: 1052.6
+    height: 247.4
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -338,8 +338,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 73.6
-    width: 246.2
-    height: 432.6
+    width: 258.2
+    height: 433.4
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -353,9 +353,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 90590000
-      m_LastClickedID: 0
-      m_ExpandedIDs: a8d2ffff1cd4ffff7ed4ffffe2d4ffff44d5ffffa6d5ffffb8ddffff38deffffaedeffff78dfffff06e0ffff80e1ffff36e2ffffece2ffffa2e3ffff16e4ffff8ce4ffff44e6ffff0ce7ffff80e7fffff4e7ffff68e8ffffdee8ffffa8e9ffff7ceafffff0eaffff66ebffff3eecffffb4ecffff88edffff50eeffffc6eeffff60f0ffffeaf3ffff4cf4ffffb0f4ffff12f5ffff74f5ffff64f6ffffe6f6ffff5af7ffffe4f8ffff08faffff12fbffff
+      m_SelectedIDs: 20c0ffff
+      m_LastClickedID: -16352
+      m_ExpandedIDs: 1cc0ffff20c0ffff28c0ffff26c4ffffd6cbffffdecbffff62d2ffff6ad2ffff4cd6ffff7addffff82ddffff7ae4ffff68f1ffffd0f5ffff30f7ffff24fbfffff4ffffff486000005666000092670000de670000066c0000526c0000f66e0000426f0000e87100003472000062730000ae730000507600009c760000d477000020780000507900009c790000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -400,10 +400,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 247.2
+    x: 259.2
     y: 73.6
-    width: 754
-    height: 432.6
+    width: 792.39996
+    height: 433.4
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -762,9 +762,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 635.8962, y: 189.68318, z: -3.8585792}
+    m_Target: {x: 0, y: 1.4929669, z: -0.45}
     speed: 2
-    m_Value: {x: 635.8962, y: 189.68318, z: -3.8585792}
+    m_Value: {x: 0, y: 1.4929669, z: -0.45}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -814,9 +814,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 456.56787
+    m_Target: 6.520898
     speed: 2
-    m_Value: 456.56787
+    m_Value: 6.520898
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -862,10 +862,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 247.2
+    x: 259.2
     y: 73.6
-    width: 754
-    height: 432.6
+    width: 792.39996
+    height: 433.4
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -882,7 +882,7 @@ MonoBehaviour:
   m_ShowGizmos: 0
   m_TargetDisplay: 0
   m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
-  m_TargetSize: {x: 942.5, y: 514.5}
+  m_TargetSize: {x: 1920, y: 1080}
   m_TextureFilterMode: 0
   m_TextureHideFlags: 61
   m_RenderIMGUI: 1
@@ -891,16 +891,16 @@ MonoBehaviour:
   m_VSyncEnabled: 0
   m_Gizmos: 0
   m_Stats: 0
-  m_SelectedSizes: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
+  m_SelectedSizes: 00000000000000000000000006000000000000000000000000000000000000000000000000000000
   m_ZoomArea:
     m_HRangeLocked: 0
     m_VRangeLocked: 0
     hZoomLockedByDefault: 0
     vZoomLockedByDefault: 0
-    m_HBaseRangeMin: -377
-    m_HBaseRangeMax: 377
-    m_VBaseRangeMin: -205.8
-    m_VBaseRangeMax: 205.8
+    m_HBaseRangeMin: -768
+    m_HBaseRangeMax: 768
+    m_VBaseRangeMin: -432
+    m_VBaseRangeMax: 432
     m_HAllowExceedBaseRangeMin: 1
     m_HAllowExceedBaseRangeMax: 1
     m_VAllowExceedBaseRangeMin: 1
@@ -918,23 +918,23 @@ MonoBehaviour:
       serializedVersion: 2
       x: 0
       y: 21
-      width: 754
-      height: 411.6
-    m_Scale: {x: 1, y: 1}
-    m_Translation: {x: 377, y: 205.8}
+      width: 792.39996
+      height: 412.4
+    m_Scale: {x: 0.4773148, y: 0.4773148}
+    m_Translation: {x: 396.19998, y: 206.2}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -377
-      y: -205.8
-      width: 754
-      height: 411.6
+      x: -830.0601
+      y: -432
+      width: 1660.1202
+      height: 864
     m_MinimalGUI: 1
-  m_defaultScale: 1
-  m_LastWindowPixelSize: {x: 942.5, y: 540.75}
+  m_defaultScale: 0.4773148
+  m_LastWindowPixelSize: {x: 990.49994, y: 541.75}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 00000000000000000000
@@ -961,10 +961,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 283.2
+    x: 259.2
     y: 73.6
-    width: 865.2
-    height: 488.6
+    width: 791.60004
+    height: 432.6
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1011,10 +1011,10 @@ MonoBehaviour:
     m_OverlaysVisible: 1
   m_ShowAlpha: 0
   m_MipLevel: 0
-  m_Zoom: 0.1188
-  m_ScrollPosition: {x: -37.32952, y: -64.93274}
-  m_SelectedObject: {fileID: 11400000, guid: ceab107f696f3c54fbe946c4d22cd82b, type: 2}
-  m_SelectedSpriteRectGUID: 00000000000000000000000000000000
+  m_Zoom: -1
+  m_ScrollPosition: {x: 0, y: 0}
+  m_SelectedObject: {fileID: 0}
+  m_SelectedSpriteRectGUID: a19302db55f46df408c00e79a77d1e24
   m_LastUsedModuleTypeName: 
 --- !u!114 &18
 MonoBehaviour:
@@ -1038,9 +1038,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 527.2
-    width: 1002.2
-    height: 248.19998
+    y: 528
+    width: 1052.6
+    height: 247.4
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1052,7 +1052,7 @@ MonoBehaviour:
     m_SaveData: []
     m_OverlaysVisible: 1
   m_SearchFilter:
-    m_NameFilter: localizer
+    m_NameFilter: itemgenerator
     m_ClassNames: []
     m_AssetLabels: []
     m_AssetBundleNames: []
@@ -1062,24 +1062,24 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Tests
+    - Assets/Scripts/AppControl
     m_Globs: []
-    m_OriginalText: localizer
+    m_OriginalText: itemgenerator
     m_ImportLogFlags: 0
     m_FilterByTypeIntersection: 0
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/Tests
+  - Assets/Scripts/AppControl
   m_LastFoldersGridSize: 16
   m_LastProjectPath: C:\Users\lucascosson\Documents\GitHub\PopBlast
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 197.80188}
-    m_SelectedIDs: 50610000
-    m_LastClickedID: 24912
-    m_ExpandedIDs: 000000008460000086600000886000008a6000008c6000008e600000906000009260000000ca9a3bffffff7f
+    scrollPos: {x: 0, y: 223}
+    m_SelectedIDs: f0610000
+    m_LastClickedID: 25072
+    m_ExpandedIDs: 00000000e6610000e8610000ea610000ec610000ee610000f0610000f2610000f461000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1107,7 +1107,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000008460000086600000886000008a6000008c6000008e600000906000009260000000ca9a3bffffff7f
+    m_ExpandedIDs: 00000000e6610000e8610000ea610000ec610000ee610000f0610000f2610000f4610000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1132,8 +1132,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 90590000
-    m_LastClickedInstanceID: 22928
+    m_SelectedInstanceIDs: 
+    m_LastClickedInstanceID: 0
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000d46000007a860000
     m_RenameOverlay:
@@ -1200,7 +1200,7 @@ MonoBehaviour:
     m_OverlaysVisible: 1
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: 27230
+  m_LastSelectedObjectID: -13374
 --- !u!114 &20
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -1222,9 +1222,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1003.2
+    x: 1053.6
     y: 73.6
-    width: 531.8
+    width: 481.40002
     height: 701.8
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -1270,9 +1270,9 @@ MonoBehaviour:
       Part of the com.unity.test-framework package.
   m_Pos:
     serializedVersion: 2
-    x: 1003.2
+    x: 1052.8
     y: 73.6
-    width: 531.8
+    width: 482.19995
     height: 701.8
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -1285,7 +1285,7 @@ MonoBehaviour:
     m_SaveData: []
     m_OverlaysVisible: 1
   m_Spl:
-    ID: 115
+    ID: 114
     splitterInitialOffset: 0
     currentActiveSplitter: -1
     realSizes:
@@ -6729,7 +6729,7 @@ MonoBehaviour:
       name: PopBlast
       fullName: PopBlast
       resultStatus: 1
-      duration: 0.1220793
+      duration: 0.1221312
       messages: 
       output: 
       stacktrace: 
@@ -6745,7 +6745,7 @@ MonoBehaviour:
       name: Tests.dll
       fullName: C:/Users/lucascosson/Documents/GitHub/PopBlast/Library/ScriptAssemblies/Tests.dll
       resultStatus: 1
-      duration: 0.0913699
+      duration: 0.0764097
       messages: 
       output: 
       stacktrace: 
@@ -6756,6 +6756,73 @@ MonoBehaviour:
       categories: []
       parentId: 1626
       parentUniqueId: '[PopBlast][suite]'
+    - id: 1001
+      uniqueId: Tests.dll/[Tests][CloudOperationTest][suite]
+      name: CloudOperationTest
+      fullName: CloudOperationTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1060
+      parentUniqueId: '[Tests][C:/Users/lucascosson/Documents/GitHub/PopBlast/Library/ScriptAssemblies/Tests.dll][suite]'
+    - id: 1003
+      uniqueId: Tests.dll/CloudOperationTest/[Tests][CloudOperationTest.CloudOperationAddOperationPasses]
+      name: CloudOperationAddOperationPasses
+      fullName: CloudOperationTest.CloudOperationAddOperationPasses
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Tests.dll/[Tests][CloudOperationTest][suite]
+    - id: 1002
+      uniqueId: Tests.dll/CloudOperationTest/[Tests][CloudOperationTest.CloudOperationTestDisposePasses]
+      name: CloudOperationTestDisposePasses
+      fullName: CloudOperationTest.CloudOperationTestDisposePasses
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Tests.dll/[Tests][CloudOperationTest][suite]
+    - id: 1004
+      uniqueId: Tests.dll/CloudOperationTest/[Tests][CloudOperationTest.CloudOperationTestSendOperationsPasses]
+      name: CloudOperationTestSendOperationsPasses
+      fullName: CloudOperationTest.CloudOperationTestSendOperationsPasses
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Tests.dll/[Tests][CloudOperationTest][suite]
     - id: 1627
       uniqueId: Tests.dll/[Tests][InitializerTest][suite]
       name: InitializerTest
@@ -6871,12 +6938,45 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1627
       parentUniqueId: Tests.dll/[Tests][InitializerTest][suite]
+    - id: 1006
+      uniqueId: Tests.dll/[Tests][LevelManagerTest][suite]
+      name: LevelManagerTest
+      fullName: LevelManagerTest
+      resultStatus: 1
+      duration: 0.6750378
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1056
+      parentUniqueId: '[Tests][C:/Users/lucascosson/Documents/GitHub/PopBlast/Library/ScriptAssemblies/Tests.dll][suite]'
+    - id: 1007
+      uniqueId: Tests.dll/LevelManagerTest/[Tests][LevelManagerTest.LevelManagerLoadLocalBundlePass]
+      name: LevelManagerLoadLocalBundlePass
+      fullName: LevelManagerTest.LevelManagerLoadLocalBundlePass
+      resultStatus: 1
+      duration: 0.6533407
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1006
+      parentUniqueId: Tests.dll/[Tests][LevelManagerTest][suite]
     - id: 1632
       uniqueId: Tests.dll/[Tests][LocalizationTest][suite]
       name: LocalizationTest
       fullName: LocalizationTest
       resultStatus: 1
-      duration: 0.0895795
+      duration: 0.1425726
       messages: 
       output: 
       stacktrace: 
@@ -6892,7 +6992,7 @@ MonoBehaviour:
       name: LocalizationTestFormatInputPass
       fullName: LocalizationTest.LocalizationTestFormatInputPass
       resultStatus: 1
-      duration: 0.0112648
+      duration: 0.0414975
       messages: 
       output: 
       stacktrace: 
@@ -6909,7 +7009,7 @@ MonoBehaviour:
       name: LocalizationTestGetLocalizationPass
       fullName: LocalizationTest.LocalizationTestGetLocalizationPass
       resultStatus: 1
-      duration: 0.0078449
+      duration: 0.0016245
       messages: 
       output: 
       stacktrace: 
@@ -6926,7 +7026,7 @@ MonoBehaviour:
       name: LocalizationTestMissingDefaultPass
       fullName: LocalizationTest.LocalizationTestMissingDefaultPass
       resultStatus: 1
-      duration: 0.0077294
+      duration: 0.0069633
       messages: 
       output: 
       stacktrace: 
@@ -6943,18 +7043,12 @@ MonoBehaviour:
       name: LocalizationTestMissingKeyPass
       fullName: LocalizationTest.LocalizationTestMissingKeyPass
       resultStatus: 1
-      duration: 0.0086006
+      duration: 0.0041493
       messages: 
       output: '[Localization] Could not retrieve item missingKey
 
-        Object
-        reference not set to an instance of an object
-
-        [Localization] Could
-        not retrieve item missingKey
-
-        Object reference not set to an instance
-        of an object
+        [Localization]
+        Could not retrieve item missingKey
 
 '
       stacktrace: 
@@ -6971,11 +7065,10 @@ MonoBehaviour:
       name: LocalizationTestRemoteLocalizationPass
       fullName: LocalizationTest.LocalizationTestRemoteLocalizationPass
       resultStatus: 1
-      duration: 0.0553978
+      duration: 0.0173722
       messages: 
       output: "[Localization] Swapping localization content \r\n[Localization] Could
-        not retrieve item GENERIC/loading\nObject reference not set to an instance
-        of an object\r\n"
+        not retrieve item GENERIC/loading\r\n"
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -6990,7 +7083,7 @@ MonoBehaviour:
       name: LocalizationTestSetDefaultPass
       fullName: LocalizationTest.LocalizationTestSetDefaultPass
       resultStatus: 1
-      duration: 0.0152131
+      duration: 0.0007245
       messages: 
       output: 
       stacktrace: 
@@ -7006,27 +7099,11 @@ MonoBehaviour:
       uniqueId: Tests.dll/LocalizationTest/[Tests][LocalizationTest.LocalizationTestSwapLanguagePass]
       name: LocalizationTestSwapLanguagePass
       fullName: LocalizationTest.LocalizationTestSwapLanguagePass
-      resultStatus: 2
-      duration: 0.0154312
-      messages: 'UnityEngine.MissingReferenceException : The object of type ''TextAsset''
-        has been destroyed but you are still trying to access it.
-
-        Your script
-        should either check if it is null or you should not destroy the object.'
+      resultStatus: 1
+      duration: 0.0015084
+      messages: 
       output: 
-      stacktrace: "  at (wrapper managed-to-native) UnityEngine.Object.GetName(UnityEngine.Object)\r\n 
-        at UnityEngine.Object.get_name () [0x00001] in <cb81df0c49c643b1a04d9fc6ccca2433>:0
-        \r\n  at Tools.Localization+<>c__DisplayClass20_0.<SetWithLocale>b__0 (UnityEngine.TextAsset
-        loca) [0x00000] in C:\\Users\\lucascosson\\Documents\\GitHub\\PopBlast\\Assets\\Tools\\Localization\\Localization.cs:87
-        \r\n  at System.Collections.Generic.List`1[T].Find (System.Predicate`1[T]
-        match) [0x0000d] in <27124aa0e30a41659b903b822b959bc7>:0 \r\n  at Tools.Localization.SetWithLocale
-        (System.String locale) [0x00035] in C:\\Users\\lucascosson\\Documents\\GitHub\\PopBlast\\Assets\\Tools\\Localization\\Localization.cs:87
-        \r\n  at LocalizationTest.LocalizationTestSwapLanguagePass () [0x00001] in
-        C:\\Users\\lucascosson\\Documents\\GitHub\\PopBlast\\Assets\\Tests\\LocalizationTest.cs:107
-        \r\n  at (wrapper managed-to-native) System.Reflection.RuntimeMethodInfo.InternalInvoke(System.Reflection.RuntimeMethodInfo,object,object[],System.Exception&)\r\n 
-        at System.Reflection.RuntimeMethodInfo.Invoke (System.Object obj, System.Reflection.BindingFlags
-        invokeAttr, System.Reflection.Binder binder, System.Object[] parameters,
-        System.Globalization.CultureInfo culture) [0x0006a] in <27124aa0e30a41659b903b822b959bc7>:0 "
+      stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -7039,27 +7116,13 @@ MonoBehaviour:
       uniqueId: Tests.dll/LocalizationTest/[Tests][LocalizationTest.LocalizationTestSwapLanguageResultPass]
       name: LocalizationTestSwapLanguageResultPass
       fullName: LocalizationTest.LocalizationTestSwapLanguageResultPass
-      resultStatus: 2
-      duration: 0.0150531
-      messages: 'UnityEngine.MissingReferenceException : The object of type ''TextAsset''
-        has been destroyed but you are still trying to access it.
+      resultStatus: 1
+      duration: 0.0021662
+      messages: 
+      output: '[Localization] Missing localization for Sudanese, setting to default
 
-        Your script
-        should either check if it is null or you should not destroy the object.'
-      output: 
-      stacktrace: "  at (wrapper managed-to-native) UnityEngine.Object.GetName(UnityEngine.Object)\r\n 
-        at UnityEngine.Object.get_name () [0x00001] in <cb81df0c49c643b1a04d9fc6ccca2433>:0
-        \r\n  at Tools.Localization+<>c__DisplayClass20_0.<SetWithLocale>b__0 (UnityEngine.TextAsset
-        loca) [0x00000] in C:\\Users\\lucascosson\\Documents\\GitHub\\PopBlast\\Assets\\Tools\\Localization\\Localization.cs:87
-        \r\n  at System.Collections.Generic.List`1[T].Find (System.Predicate`1[T]
-        match) [0x0000d] in <27124aa0e30a41659b903b822b959bc7>:0 \r\n  at Tools.Localization.SetWithLocale
-        (System.String locale) [0x00035] in C:\\Users\\lucascosson\\Documents\\GitHub\\PopBlast\\Assets\\Tools\\Localization\\Localization.cs:87
-        \r\n  at LocalizationTest.LocalizationTestSwapLanguageResultPass () [0x0000d]
-        in C:\\Users\\lucascosson\\Documents\\GitHub\\PopBlast\\Assets\\Tests\\LocalizationTest.cs:148
-        \r\n  at (wrapper managed-to-native) System.Reflection.RuntimeMethodInfo.InternalInvoke(System.Reflection.RuntimeMethodInfo,object,object[],System.Exception&)\r\n 
-        at System.Reflection.RuntimeMethodInfo.Invoke (System.Object obj, System.Reflection.BindingFlags
-        invokeAttr, System.Reflection.Binder binder, System.Object[] parameters,
-        System.Globalization.CultureInfo culture) [0x0006a] in <27124aa0e30a41659b903b822b959bc7>:0 "
+'
+      stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -7292,7 +7355,7 @@ MonoBehaviour:
       name: UserPrefsTest
       fullName: UserPrefsTest
       resultStatus: 1
-      duration: 0.2167244
+      duration: 0.0732225
       messages: 
       output: 
       stacktrace: 
@@ -7308,7 +7371,7 @@ MonoBehaviour:
       name: UserPrefsMergePass
       fullName: UserPrefsTest.UserPrefsMergePass
       resultStatus: 1
-      duration: 0.1086185
+      duration: 0.0508383
       messages: 
       output: 
       stacktrace: 
@@ -16858,15 +16921,13 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1715
       parentUniqueId: Zenject-UnitTests-Editor.dll/Zenject/Tests/[Zenject-UnitTests-Editor][Zenject.Tests.TestValidationSettings][suite]
-    m_ResultText: "LocalizationTestRemoteLocalizationPass (0.055s)\n---\n[Localization]
-      Swapping localization content \r\n[Localization] Could not retrieve item GENERIC/loading\nObject
-      reference not set to an instance of an object"
+    m_ResultText: UserPrefsMergePass (0.051s)
     m_ResultStacktrace: 
     m_TestListState:
-      scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: db15ae28
-      m_LastClickedID: 682497499
-      m_ExpandedIDs: ba8a27802076b780a9cd0a838c3b7d859daf2e88f1fe3b892a6fd689d69f388ccfebdc8facccf48f30e5d1901cc3719205cb62951744ab9541b6fd9726d2ca997a9792a0c5dc25a1b40f83a68ac4e9a62cecfda865d8b8a9d3e1a6ab2b3ed9ab23b810ac8b1b2eadcb4051afac1b46b00158ebb09d1511b1a47a31be5d514cc681f0d7c6e881e0c7eaedb4c92ed928ca954229cac1c4ffcb7a4f13cc09fa37d4b342aad8113b2dd91e3b3cd9ddad9bd9db76b8d9751fc0d97d0786ddfc37dddd20fa82de599eacdf643d13e5f520f1ea5fb13feb9ba435ec50e340ed149096ed6ce072ee37ccc9f0728376f171f0baf5377d7dfd287c46fe581af0ffc9c8b60000025d026294700499ae370a97db500aa9b1200bca982f0c4f00300c4e9b0d0f7eed1c1098ab6311fb761614905f0e18a37852188eff8719d406c61b41cf001c0031b01c8adeda20a1c1ba237cf7e723898d37261c5e6226870a6128be0da0295dedc92adc1d212bb804472c65bf832d6d272d3043b45a302e094933892b8534a65aa437ce55e9374c12d9399cccd23baec0843c8abb453df0ea4e3d9b09ca3e6745c23f97bca5410289c141818fec413526ff4b1af2164cfc2c484d5efce74ff9bc6151aa565c52d5130153b534de534b1ac05459e2e255b60302587d187c599695665cbc033a5d9b35a86078988866a286af66e586f075bcad74762be2c0786a8bb47c93d9ee7eb501497fffffff7f
+      scrollPos: {x: 0, y: 206.9989}
+      m_SelectedIDs: 769745f1
+      m_LastClickedID: -247097482
+      m_ExpandedIDs: ba8a27802076b780a9cd0a838c3b7d859daf2e88f1fe3b892a6fd689d69f388ccfebdc8facccf48f30e5d1901cc3719205cb62951744ab9541b6fd9726d2ca997a9792a0c5dc25a1b40f83a68ac4e9a62cecfda865d8b8a9d3e1a6ab2b3ed9ab23b810ac8b1b2eadcb4051afac1b46b00158ebb09d1511b1a47a31be5d514cc681f0d7c6e881e0c7eaedb4c92ed928ca954229cac1c4ffcb7a4f13cc09fa37d4b342aad8113b2dd91e3b3cd9ddad9bd9db76b8d9751fc0d97d0786ddfc37dddd20fa82de599eacdf643d13e5f520f1ea5fb13feb9ba435ec50e340ed149096ed6ce072ee37ccc9f0728376f171f0baf5377d7dfd287c46fe581af0ffc9c8b60000025d026294700499ae370a97db500aa9b1200bca982f0c4f00300c4e9b0d0f7eed1c1098ab631146008a13fb761614905f0e18a37852188eff8719d406c61b41cf001c0031b01c8adeda20a1c1ba237cf7e723898d37261c5e6226870a6128be0da0295dedc92adc1d212bb804472c65bf832d6d272d3043b45a302e094933892b8534a65aa437ce55e9374c12d9399cccd23baec0843c8abb453df0ea4e3d9b09ca3e6745c23f97bca5410289c141818fec413526ff4b1af2164cfc2c484d5efce74ff9bc6151aa565c52d5130153b534de534b1ac05459e2e255b60302587d187c599695665cbc033a5d9b35a86078988866a286af66e586f075bcad74762be2c0786a8bb47c93d9ee7eb501497fffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 

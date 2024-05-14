@@ -1,5 +1,4 @@
 using Cysharp.Threading.Tasks;
-using System;
 using System.Collections.Generic;
 using Unity.Services.CloudSave;
 using Unity.Services.Core;
@@ -24,9 +23,12 @@ namespace Tools
 
         public async UniTask InitServices() 
         {
+            //UnityServices.Initialize() will initialize all services that are subscribed to Core
+            await UnityServices.InitializeAsync();
+            Debug.Log($"Unity services initialization: {UnityServices.State}");
             RetrieveCachedInfo();
             string json = await GetPlayerData();
-            m_userPrefs.SetUserPrefsFromRemote(json);
+            m_userPrefs.MergeContentFromRemote(json);
             await RemoteConfigService.Instance.FetchConfigsAsync(new userAttributes(), new appAttributes());
             AppConfig = RemoteConfigService.Instance.appConfig;
         }
