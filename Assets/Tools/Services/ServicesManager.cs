@@ -1,10 +1,12 @@
 using Cysharp.Threading.Tasks;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using Unity.Services.CloudSave;
 using Unity.Services.Core;
 using Unity.Services.RemoteConfig;
 using UnityEngine;
 using Zenject;
+using static Tools.NameGenerationInit;
 
 namespace Tools
 {
@@ -62,12 +64,51 @@ namespace Tools
             }
             return null;
         }
+
+        public T GetConfig<T>(string key) 
+        {
+            if(AppConfig == null) 
+            {
+                throw new System.Exception("[ServicesManager] AppConfig is not ready");
+            }
+            string json = AppConfig.GetJson(key);
+
+            if (string.IsNullOrEmpty(json))
+            {
+                Debug.LogWarning($"[ServicesManager] Could not find config {key}");
+                return default(T);
+            }
+            return JsonConvert.DeserializeObject<T>(json);
+        }
+        public T GetConfig<T>() where T: Config
+        {
+            if (AppConfig == null)
+            {
+                throw new System.Exception("[ServicesManager] AppConfig is not ready");
+            }
+            var type = typeof(T);
+            string key = type.GetField("CONFIG")?.GetValue(null)?.ToString();
+            if (string.IsNullOrEmpty(key)) 
+            {
+                throw new System.Exception("[ServicesManager] Could not retrieve key");
+            }
+            string json = AppConfig.GetJson(key);
+
+            if (string.IsNullOrEmpty(json))
+            {
+                Debug.LogWarning($"[ServicesManager] Could not find config {key}");
+                return default(T);
+            }
+            return JsonConvert.DeserializeObject<T>(json);
+        }
     }
 
     public interface IServicesManager 
     {
         RuntimeConfig AppConfig { get; }
         UniTask InitServices();
+        T GetConfig<T>(string key);
+        T GetConfig<T>() where T : Config;
     }
 
     public struct userAttributes

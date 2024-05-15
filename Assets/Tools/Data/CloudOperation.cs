@@ -29,13 +29,13 @@ namespace Tools
             m_operations = string.IsNullOrEmpty(serializedOperation) ? new List<Operation>() : JsonConvert.DeserializeObject<List<Operation>>(serializedOperation);
             m_userPrefs.OnUpdate += () => AddOperation(OperationType.UserPrefsUpdate);
 
-            Signal.Connect<LoginSignalData>((data) => 
-            {
-                if (data.State == ServicesInitializationState.Initialized)
-                {
-                    FlushOperations(null).Forget();
-                }
-            });
+            //Signal.Connect<LoginSignalData>((data) => 
+            //{
+            //    if (data.State == ServicesInitializationState.Initialized)
+            //    {
+            //        //FlushOperations(null).Forget();
+            //    }
+            //});
         }
 
         public void AddOperation(OperationType type) => AddOperation(new Operation(type));

@@ -16,6 +16,6 @@ public class ZenjectProjectContext : MonoInstaller
         Container.BindInterfacesTo<Localization>().FromNewScriptableObject(m_localization).AsSingle().NonLazy();
         Container.BindInterfacesTo<LevelManager>().FromNew().AsSingle().NonLazy();
         Container.BindInterfacesTo<PlayerData>().FromNew().AsSingle().NonLazy();
-
+        Container.BindInterfacesTo<Inventory>().FromNew().AsSingle().NonLazy();
     }
 }
