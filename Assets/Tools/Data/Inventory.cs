@@ -9,13 +9,26 @@ namespace Tools
         private int coins;
         private int lives;
 
-        public int Coins => coins;
-        public int Lives => lives;
+        public int lifeReload;
+        public int maxLives;
+
+        public int Coins 
+        {
+            get => coins;
+            set => coins = value;
+        }
+        public int Lives 
+        {
+            get => lives;
+            set => lives = value;
+        }
 
         public void SetWithConfig(InventoryConfig config) 
         {
             coins = config.coins;
             lives = config.lives;
+            lifeReload = config.lifeReload;
+            maxLives = config.maxLives; 
         }
 
         public object Clone()

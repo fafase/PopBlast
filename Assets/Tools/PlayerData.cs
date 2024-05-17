@@ -14,6 +14,8 @@ namespace Tools
 
         private const string CURRENT_LEVEL = "currentLevel";
         private const string INVENTORY = "inventory";
+        public IInventory Inventory => m_inventory;
+        public IUserPrefs UserPrefs => m_userPrefs;
 
         public void Initialize()
         {
@@ -49,5 +51,7 @@ namespace Tools
     {
         int CurrentLevel { get; }
         void IncreaseCurrentLevel();
+        IInventory Inventory { get; }
+        IUserPrefs UserPrefs { get; }
     }
 }

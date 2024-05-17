@@ -12,6 +12,8 @@ namespace Tools
     {
         [SerializeField] private Button m_settings;
         [SerializeField] private Button m_playBtn;
+        [SerializeField] private TextMeshProUGUI m_coins;
+        [SerializeField] private TextMeshProUGUI m_lives;
 
         [Inject] private IPopupManager m_popupManager;
         [Inject] private IPlayerData m_playerData;
@@ -36,6 +38,8 @@ namespace Tools
             });
 
             m_settings.onClick.AddListener(() => OpenSettings());
+            m_coins.text = m_playerData.Inventory.Coins.ToString();
+            m_lives.text = m_playerData.Inventory.Lives.ToString();
 
             Signal.Send(new MetaLanding());
         }

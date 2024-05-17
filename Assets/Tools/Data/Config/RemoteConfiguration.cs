@@ -22,6 +22,8 @@ namespace Tools
     {
         public int coins;
         public int lives;
+        public int lifeReload;
+        public int maxLives;
     }
 
     [Serializable]
