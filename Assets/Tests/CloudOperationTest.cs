@@ -12,7 +12,7 @@ public class CloudOperationTest
     private IUserPrefs m_userPrefs;
     private ICloudOperation m_cloudOperation;
 
-    private string m_testKey = "CO_Test_Key";
+    //private string m_testKey = "CO_Test_Key";
     private List<Operation> m_originalOperations;
 
     [OneTimeSetUp]

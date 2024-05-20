@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.Localization.Components;
-using UnityEngine.Localization.SmartFormat.PersistentVariables;
 using UnityEngine.UI;
 
 namespace Tools
@@ -11,21 +10,19 @@ namespace Tools
         [SerializeField] private LocalizeStringEvent m_locaString;
         [SerializeField] private Button m_playButton;
 
-        private Action m_onPress;
-        private void Start()
+        private void Awake()
         {
             m_playButton.onClick.RemoveAllListeners();
             m_playButton.onClick.AddListener(() =>
             {
-                m_onPress?.Invoke();
                 Close();
             });
         }
 
-        public void InitWithLevel(Level level, Action onPress) 
+        public void InitWithLevel(Level lvl, Action onPress)
         {
-            m_onPress = onPress;
-            m_locaString.SetArgument("level",  level.level.ToString());
+            m_locaString.SetArgument("level", lvl.level.ToString());
+            m_playButton.onClick.AddListener(() => onPress?.Invoke());
         }
     }
 }

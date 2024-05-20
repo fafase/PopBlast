@@ -2,6 +2,7 @@ using NSubstitute;
 using NUnit.Framework;
 using System;
 using Tools;
+using Unity.Services.Core;
 using Zenject;
 
 public class LifeManagerTest
@@ -40,7 +41,8 @@ public class LifeManagerTest
     public void LifeManagerTestInitializationFullPass()
     {
         m_storage = new LifeStorage(5, new DateTime(2020, 1, 1, 15, 15, 15), default(DateTime));
-        m_init.Initialize();
+        Signal.Send(new LoginSignalData(ServicesInitializationState.Initialized));
+        
         Assert.AreEqual(m_lifeManager.MaxAmount, m_config.maxLives);
         Assert.AreEqual(m_lifeManager.RefillTime, m_config.lifeReload);
         Assert.AreEqual(m_lifeManager.Amount, m_storage.amount);
@@ -50,7 +52,9 @@ public class LifeManagerTest
     public void LifeManagerTestInitializationRefillAllPass()
     {
         m_storage = new LifeStorage(3, DateTime.Now.Subtract(new TimeSpan(0, 5, 0)), default(DateTime));
-        m_init.Initialize();
+        m_storage = new LifeStorage(5, new DateTime(2020, 1, 1, 15, 15, 15), default(DateTime));
+        Signal.Send(new LoginSignalData(ServicesInitializationState.Initialized));
+       
         Assert.AreEqual(m_config.maxLives, m_lifeManager.MaxAmount);
         Assert.AreEqual(m_config.lifeReload, m_lifeManager.RefillTime);
         Assert.AreEqual(5, m_lifeManager.Amount);
@@ -77,7 +81,8 @@ public class LifeManagerTest
     public void LifeManagerTestInitializationNotRefillPass([ValueSource("_testData")] TestData data)
     {
         m_storage = new LifeStorage(data.amount, data.next, default(DateTime));
-        m_init.Initialize();
+        Signal.Send(new LoginSignalData(ServicesInitializationState.Initialized));
+
         Assert.AreEqual(m_config.maxLives, m_lifeManager.MaxAmount);
         Assert.AreEqual(m_config.lifeReload, m_lifeManager.RefillTime);
         Assert.AreEqual(data.expectedResult, m_lifeManager.Amount);
@@ -92,7 +97,8 @@ public class LifeManagerTest
         int refill = m_config.lifeReload * (m_config.maxLives - initialAmount) - 2;
         DateTime dateTime = (initialAmount == 5) ? DateTime.Now.Subtract(new TimeSpan(0, 20, 0)): DateTime.Now.AddMinutes(refill);
         m_storage = new LifeStorage(initialAmount, dateTime, default(DateTime));
-        m_init.Initialize();
+        Signal.Send(new LoginSignalData(ServicesInitializationState.Initialized));
+        
         bool result = m_lifeManager.UseLife();
 
         Assert.AreEqual(expectedResult, result);
@@ -103,7 +109,8 @@ public class LifeManagerTest
     public void LifeManagerTestHasUnlimitedStoragePass() 
     {
         m_storage = new LifeStorage(5, default(DateTime), DateTime.Now.AddMinutes(10));
-        m_init.Initialize();
+        Signal.Send(new LoginSignalData(ServicesInitializationState.Initialized));
+
         Assert.IsTrue(m_lifeManager.HasUnlimitedLives);
     }
 
@@ -112,7 +119,8 @@ public class LifeManagerTest
     public void LifeManagerTestHasUnlimitedAddedPass(int amount, bool expected)
     {
         m_storage = new LifeStorage(5, default(DateTime), default(DateTime));
-        m_init.Initialize();
+        Signal.Send(new LoginSignalData(ServicesInitializationState.Initialized));
+
         m_lifeManager.AddUnlimited(amount);
         Assert.AreEqual(expected, m_lifeManager.HasUnlimitedLives);
     }
@@ -124,7 +132,8 @@ public class LifeManagerTest
         int refill = m_config.lifeReload * (m_config.maxLives - initialAmount) - 2;
         DateTime dateTime = DateTime.Now.AddMinutes(refill);
         m_storage = new LifeStorage(initialAmount, dateTime, default(DateTime));
-        m_init.Initialize();
+        Signal.Send(new LoginSignalData(ServicesInitializationState.Initialized));
+
         bool result = m_lifeManager.UseLife();
         m_lifeManager.RefillAllLives();
         Assert.IsTrue(result);
