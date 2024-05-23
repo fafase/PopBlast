@@ -28,19 +28,16 @@ namespace Tools
             //UnityServices.Initialize() will initialize all services that are subscribed to Core
             await UnityServices.InitializeAsync();
             Debug.Log($"Unity services initialization: {UnityServices.State}");
-            RetrieveCachedInfo();
-            string json = await GetPlayerData();
-            m_userPrefs.MergeContentFromRemote(json);
+            await SetUserPrefsWithRemote();
             await RemoteConfigService.Instance.FetchConfigsAsync(new userAttributes(), new appAttributes());
             AppConfig = RemoteConfigService.Instance.appConfig;
+            Signal.Connect<FlushOperation>(_ => SetUserPrefsWithRemote().Forget());
         }
 
-        private void RetrieveCachedInfo() 
+        public async UniTask SetUserPrefsWithRemote()
         {
-            if (!PlayerPrefs.HasKey(PLAYER_DATA)) 
-            {
-                
-            }
+            string json = await GetPlayerData();
+            m_userPrefs.MergeContentFromRemote(json);
         }
 
         private async UniTask<string> GetPlayerData()
@@ -109,6 +106,7 @@ namespace Tools
         UniTask InitServices();
         T GetConfig<T>(string key);
         T GetConfig<T>() where T : Config;
+        UniTask SetUserPrefsWithRemote();
     }
 
     public struct userAttributes

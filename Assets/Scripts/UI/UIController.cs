@@ -20,11 +20,8 @@ namespace PopBlast.UI
         [SerializeField] private Transform m_objectiveContainer;
 
         [SerializeField] private TextMeshProUGUI m_moveTxt;
-        [SerializeField] private Button restartBtn = null;
         [SerializeField] private Button quitBtn = null;
-        [SerializeField] private Text scoreTxt = null;
-        [SerializeField] private Text hiScoreTxt = null;
-        [SerializeField] private Text feedbackTxt = null;
+        [SerializeField] private TextMeshProUGUI feedbackTxt = null;
 
         [Header("Feedback")]
         [Space()]
@@ -32,60 +29,16 @@ namespace PopBlast.UI
         [Tooltip("For each key value, provide an amount and a message. Amount is how many item destroyed in one tap")]
         [SerializeField] private FeedbackKeyValue[] keyValues;
 
-        /// <summary>
-        /// Event triggered when a new game is started
-        /// </summary>
-        public event Action RaiseNewGame;
 
         protected virtual void Awake()
         {
-            restartBtn.onClick.AddListener(() =>
-            {
-                RaiseNewGame?.Invoke();
-            });
             quitBtn.onClick.AddListener(()=> 
             {
                 SceneManager.LoadScene(0);
             });
-            SetRestartPanel(false);
-            UpdateScore(0.ToString());
             SetFeedbackPanelOff();
         }
 
-        /// <summary>
-        /// Set the restart panel active
-        /// </summary>
-        /// <param name="active"></param>
-        public void SetRestartPanel(bool active)
-        {
-            restartBtn.gameObject.SetActive(active);
-        }
-
-        /// <summary>
-        /// Update the user score
-        /// </summary>
-        /// <param name="score">Value to be displayed</param>
-        public void UpdateScore(string score)
-        {
-            if (string.IsNullOrEmpty(score))
-            {
-                return;
-            }
-            scoreTxt.text = $"Pts : {score}";
-        }
-
-        /// <summary>
-        /// Update hi score with new score
-        /// </summary>
-        /// <param name="score"></param>
-        public void UpdateHiScore(string score)
-        {
-            if (string.IsNullOrEmpty(score))
-            {
-                return;
-            }
-            hiScoreTxt.text = $"1st : {score}";
-        }
 
         /// <summary>
         /// Set feedback panel based on item destroyed amount
@@ -180,14 +133,9 @@ namespace PopBlast.UI
 
     public interface ICoreUI
     {
-        event Action RaiseNewGame;
-
         void SetFeedback(int amount);
         void SetMoveCount(int m_moves);
         void SetObjectives(List<Objective> objectives);
-        void SetRestartPanel(bool v);
-        void UpdateHiScore(string v);
         void UpdateObjectives(int itemType, int amount);
-        void UpdateScore(string v);
     }
 }

@@ -13,14 +13,7 @@ namespace Tools
         }
     }
 
-    public class MetaLanding : SignalData {  }
+    public class MetaLanding : SignalData { }
 
-    public class FlushOperation : SignalData
-    {
-        public Dictionary<string, string> Data { get; private set; }
-        public FlushOperation(Dictionary<string, string> data)
-        {
-            Data = data;
-        }
-    }
+    public class FlushOperation : SignalData { }
 }

@@ -12,6 +12,7 @@ namespace Tools
     public class CloudOperation : ICloudOperation, IInitializable, IDisposable
     {
         [Inject] IUserPrefs m_userPrefs;
+        [Inject] IServicesManager m_servicesManager;
 
         private List<Operation> m_operations;
         private const string PLAYER_DATA = "playerData";
@@ -28,14 +29,7 @@ namespace Tools
             string serializedOperation = PlayerPrefs.GetString(SERIALIZE_OPERATION, "");
             m_operations = string.IsNullOrEmpty(serializedOperation) ? new List<Operation>() : JsonConvert.DeserializeObject<List<Operation>>(serializedOperation);
             m_userPrefs.OnUpdate += () => AddOperation(OperationType.UserPrefsUpdate);
-
-            //Signal.Connect<LoginSignalData>((data) => 
-            //{
-            //    if (data.State == ServicesInitializationState.Initialized)
-            //    {
-            //        //FlushOperations(null).Forget();
-            //    }
-            //});
+            Signal.Connect<LoginSignalData>(_ => FlushOperations(null).Forget());
         }
 
         public void AddOperation(OperationType type) => AddOperation(new Operation(type));
@@ -51,48 +45,56 @@ namespace Tools
                     break;
             }
         }
-        public async UniTask FlushOperations(Action<Dictionary<string, string>> cloudSaveCallback) 
+
+        public async UniTask FlushOperations(Action cloudSaveCallback) 
         {
             m_processedIndex = 0;
-            foreach(Operation operation in m_operations) 
+            try
             {
-                switch (operation.type) 
+                foreach (Operation operation in m_operations)
                 {
-                    case OperationType.UserPrefsUpdate:
-                        if (!m_userPrefs.IsDirty)
-                        {
-                            return;
-                        }
-                        if(Application.internetReachability == NetworkReachability.NotReachable) 
-                        {
-                            return;
-                        }
-                        try
-                        {
-                            if(UnityServices.State == ServicesInitializationState.Uninitialized) 
+                    switch (operation.type)
+                    {
+                        case OperationType.UserPrefsUpdate:
+                            if (!m_userPrefs.IsDirty)
                             {
-                                await UnityServices.InitializeAsync();
+                                return;
                             }
-                            Dictionary<string, string> data = await CloudSaveService.Instance.Data.Player.SaveAsync(new Dictionary<string, object>
+                            if (Application.internetReachability == NetworkReachability.NotReachable)
+                            {
+                                return;
+                            }
+                            try
+                            {
+                                if (UnityServices.State == ServicesInitializationState.Uninitialized)
+                                {
+                                    await UnityServices.InitializeAsync();
+                                }
+                                await CloudSaveService.Instance.Data.Player.SaveAsync(new Dictionary<string, object>
                                 {
                                     { PLAYER_DATA, m_userPrefs.Json }
                                 });
-                            m_userPrefs.IsDirty = false;
-                            Signal.Send(new FlushOperation(data));
-                            cloudSaveCallback?.Invoke(data);
-                        }
-                        catch (Exception e) 
-                        {
-                            Debug.LogError(e.Message);
-                            // Something went wrong so we return and will try later. Operation is still in the list.
-                            return;
-                        }
-                        break;
+                            }
+                            catch (Exception e)
+                            {
+                                Debug.LogError(e.Message);
+                                // Something went wrong so we return and will try later. Operation is still in the list.
+                                return;
+                            }
+                            break;
+                    }
+                    ++m_processedIndex;
                 }
-                ++m_processedIndex;
+                m_processedIndex = 0;
+                m_operations.Clear();
+                await m_servicesManager.SetUserPrefsWithRemote();
+                Signal.Send(new FlushOperation());
+                cloudSaveCallback?.Invoke();
             }
-            m_processedIndex = 0;
-            m_operations.Clear();
+            catch(Exception e) 
+            {
+                Debug.Log(e.Message);
+            }
         }
 
         public void Dispose()
@@ -119,7 +121,7 @@ namespace Tools
     {
         void AddOperation(OperationType newOperation);
         void AddOperation(Operation newOperation);
-        UniTask FlushOperations(Action<Dictionary<string, string>> cloudSaveCallback);
+        UniTask FlushOperations(Action cloudSaveCallback);
         List<Operation> Operations { get; }
     }
     public enum OperationType

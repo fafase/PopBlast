@@ -43,6 +43,10 @@ MonoBehaviour:
     m_Key: play
     m_Metadata:
       m_Items: []
+  - m_Id: 2463000822775808
+    m_Key: endLevel
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

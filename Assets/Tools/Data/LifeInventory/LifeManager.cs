@@ -23,9 +23,13 @@ namespace Tools
         public DateTime NextLife => m_nextLife;
         private bool m_disposed;
         public event Action OnLifeChange;
+
         public void Initialize()
         {
-            Signal.Connect<LoginSignalData>(OnLoginSignal);         
+            Signal.Connect<LoginSignalData>(OnLoginSignal);
+#if DEBUG
+            s_instance = this;
+#endif
         }
 
         private void OnLoginSignal(LoginSignalData data) 
@@ -56,7 +60,6 @@ namespace Tools
                 }
             }
         }
-
         public void Tick()
         {
             if(!HasAllLives && m_nextLife < DateTime.Now) 
@@ -141,8 +144,18 @@ namespace Tools
             OnLifeChange?.Invoke();
         }
 
-        [MenuItem("Tools/Life/Add Life")]
-        public static void AddLifeMenu() { }
+#if DEBUG
+
+        private static LifeManager s_instance;
+#endif
+        [MenuItem("Tools/Life/Add 1 Life")]
+        public static void Add1LifeMenu() => s_instance.AddLife(1);
+        [MenuItem("Tools/Life/Refill lives")]
+        public static void RefillLifeMenu() => s_instance.AddLife(5);
+        
+        [MenuItem("Tools/Life/Remove 1 Life")]
+        public static void Remove1LifeMenu() => s_instance.UseLife();
+
 
 #if UNITY_INCLUDE_TESTS
         public void SetDependencies(IUserPrefs up, IServicesManager sm) 

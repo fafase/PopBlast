@@ -21,6 +21,7 @@ namespace Tools
         public string Json => m_jsonObject.ToString();
 
         public event Action OnUpdate;
+
         public void Initialize()
         {
             string pp = PlayerPrefs.GetString(UserPrefsKey, "{}");
