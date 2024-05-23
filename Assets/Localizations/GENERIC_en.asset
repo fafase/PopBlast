@@ -48,6 +48,10 @@ MonoBehaviour:
     m_Localized: Play
     m_Metadata:
       m_Items: []
+  - m_Id: 2463000822775808
+    m_Localized: 'Continue ? '
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

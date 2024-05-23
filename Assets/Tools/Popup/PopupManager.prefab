@@ -57,7 +57,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 100
@@ -74,7 +74,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -121,3 +121,4 @@ MonoBehaviour:
   - {fileID: -8089787908719402231, guid: a42eba0998b709b429d3b4d25c2d9212, type: 3}
   - {fileID: 4560421328183786692, guid: 59a694d04c2c11d4a9d2adbded79b76c, type: 3}
   - {fileID: 5374197869588907398, guid: 1ef957f9bb71d3b45ba00b1676801769, type: 3}
+  - {fileID: 1614558200530118043, guid: 78c3c003e50a40e479c41135f539bea0, type: 3}

@@ -21,6 +21,7 @@ namespace Tools
         public string Json => m_jsonObject.ToString();
 
         public event Action OnUpdate;
+
         public void Initialize()
         {
             string pp = PlayerPrefs.GetString(UserPrefsKey, "{}");
@@ -179,6 +180,11 @@ namespace Tools
             IUserPrefs up = new UserPrefs();
             ((IInitializable)up).Initialize();
             up.ClearUserPrefs();
+            if (!Application.isPlaying)
+            {
+                Debug.LogWarning("Application needs to be running to save on cloud");
+                return;
+            }
             await CloudSaveService.Instance.Data.Player.SaveAsync(new Dictionary<string, object>
             {
                 { "playerData", up.Json }

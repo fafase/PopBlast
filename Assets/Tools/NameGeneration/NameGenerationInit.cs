@@ -23,26 +23,21 @@ namespace Tools
             {
                 return new InitializationResult(false, GetType().ToString());
             }
-            //IPlayerData playerData = m_servicesManager.PlayerData;
-            //if (playerData == null)
-            //{
-            //    Debug.Log("[NameGenerationInit] No player data found");
-            //    return new InitializationResult(false, GetType().ToString());
-            //}
+
             m_userPrefs.TryGetObject<string>(DISPLAY_NAME, out string displayName);
             if (!string.IsNullOrEmpty(displayName))
             {
                 return new InitializationResult(true, GetType().ToString());
             }
 
-            string json = m_servicesManager.AppConfig.GetJson(NAME_GENERATOR);
+            //string json = m_servicesManager.AppConfig.GetJson(NAME_GENERATOR);
             
-            if (string.IsNullOrEmpty(json))
-            {
-                Debug.Log("[NameGenerationInit] No name generator config found");
-                return new InitializationResult(false, GetType().ToString());
-            }
-            m_config = JsonConvert.DeserializeObject<NameConfig>(json);
+            //if (string.IsNullOrEmpty(json))
+            //{
+            //    Debug.Log("[NameGenerationInit] No name generator config found");
+            //    return new InitializationResult(false, GetType().ToString());
+            //}
+            m_config = m_servicesManager.GetConfig<NameConfig>();// JsonConvert.DeserializeObject<NameConfig>(json);
             NameGeneratorPopup popup = m_popupManager.Show<NameGeneratorPopup>() as NameGeneratorPopup;
             popup.Init(this);
             popup.AddToClose(_ => 
@@ -62,21 +57,6 @@ namespace Tools
         }
 
         public string RandomName=> m_config.GetRandomName();
-
-        [Serializable]
-        public class NameConfig
-        {
-            public string title { get; set; }
-            public string language { get; set; }
-            public List<string> playerNames { get; set; }
-            public List<string> forbidden { get; set; }
-
-            public string GetRandomName()
-            {
-                int index = UnityEngine.Random.Range(0, playerNames.Count);
-                return playerNames[index];
-            }
-        }
     }
     public interface INameGenerationInit
     {

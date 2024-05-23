@@ -19,12 +19,38 @@ MonoBehaviour:
     width: 1536
     height: 772.8
   m_ShowMode: 4
-  m_Title: Game
-  m_RootView: {fileID: 2}
+  m_Title: Inspector
+  m_RootView: {fileID: 3}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
   m_Maximized: 1
 --- !u!114 &2
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: GameView
+  m_EditorClassIdentifier: 
+  m_Children: []
+  m_Position:
+    serializedVersion: 2
+    x: 443.2
+    y: 0
+    width: 704.8
+    height: 484.8
+  m_MinSize: {x: 102, y: 121}
+  m_MaxSize: {x: 4002, y: 4021}
+  m_ActualView: {fileID: 16}
+  m_Panes:
+  - {fileID: 16}
+  m_Selected: 0
+  m_LastSelected: 0
+--- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -37,9 +63,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Children:
-  - {fileID: 3}
-  - {fileID: 5}
   - {fileID: 4}
+  - {fileID: 6}
+  - {fileID: 5}
   m_Position:
     serializedVersion: 2
     x: 0
@@ -52,7 +78,7 @@ MonoBehaviour:
   m_TopViewHeight: 30
   m_UseBottomView: 1
   m_BottomViewHeight: 20
---- !u!114 &3
+--- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -74,7 +100,7 @@ MonoBehaviour:
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
   m_LastLoadedLayoutName: 
---- !u!114 &4
+--- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -95,31 +121,6 @@ MonoBehaviour:
     height: 20
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
---- !u!114 &5
-MonoBehaviour:
-  m_ObjectHideFlags: 52
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 1
-  m_Script: {fileID: 12010, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Children:
-  - {fileID: 6}
-  - {fileID: 11}
-  m_Position:
-    serializedVersion: 2
-    x: 0
-    y: 30
-    width: 1536
-    height: 722.8
-  m_MinSize: {x: 300, y: 100}
-  m_MaxSize: {x: 24288, y: 16192}
-  vertical: 0
-  controlID: 37
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -134,17 +135,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Children:
   - {fileID: 7}
-  - {fileID: 10}
+  - {fileID: 12}
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 0
-    width: 1054.4
+    y: 30
+    width: 1536
     height: 722.8
-  m_MinSize: {x: 200, y: 100}
-  m_MaxSize: {x: 16192, y: 16192}
-  vertical: 1
-  controlID: 38
+  m_MinSize: {x: 400, y: 100}
+  m_MaxSize: {x: 32384, y: 16192}
+  vertical: 0
+  controlID: 130
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -159,18 +160,44 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Children:
   - {fileID: 8}
-  - {fileID: 9}
+  - {fileID: 11}
   m_Position:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1054.4
-    height: 447.2
-  m_MinSize: {x: 200, y: 50}
-  m_MaxSize: {x: 16192, y: 8096}
-  vertical: 0
-  controlID: 39
+    width: 1148
+    height: 722.8
+  m_MinSize: {x: 300, y: 100}
+  m_MaxSize: {x: 24288, y: 16192}
+  vertical: 1
+  controlID: 49
 --- !u!114 &8
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 1
+  m_Script: {fileID: 12010, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Children:
+  - {fileID: 9}
+  - {fileID: 10}
+  - {fileID: 2}
+  m_Position:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1148
+    height: 484.8
+  m_MinSize: {x: 300, y: 50}
+  m_MaxSize: {x: 24288, y: 8096}
+  vertical: 0
+  controlID: 50
+--- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -187,16 +214,16 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 259.2
-    height: 447.2
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
-  m_ActualView: {fileID: 13}
+    width: 187.2
+    height: 484.8
+  m_MinSize: {x: 201, y: 221}
+  m_MaxSize: {x: 4001, y: 4021}
+  m_ActualView: {fileID: 14}
   m_Panes:
-  - {fileID: 13}
+  - {fileID: 14}
   m_Selected: 0
   m_LastSelected: 0
---- !u!114 &9
+--- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -211,21 +238,19 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 259.2
+    x: 187.2
     y: 0
-    width: 795.2
-    height: 447.2
+    width: 256
+    height: 484.8
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
-  m_ActualView: {fileID: 14}
+  m_ActualView: {fileID: 15}
   m_Panes:
-  - {fileID: 14}
   - {fileID: 15}
-  - {fileID: 16}
   - {fileID: 17}
   m_Selected: 0
-  m_LastSelected: 1
---- !u!114 &10
+  m_LastSelected: 0
+--- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -235,25 +260,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: ConsoleWindow
+  m_Name: ProjectBrowser
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 447.2
-    width: 1054.4
-    height: 275.59998
-  m_MinSize: {x: 101, y: 121}
-  m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 12}
+    y: 484.8
+    width: 1148
+    height: 238
+  m_MinSize: {x: 231, y: 271}
+  m_MaxSize: {x: 10001, y: 10021}
+  m_ActualView: {fileID: 18}
   m_Panes:
   - {fileID: 18}
-  - {fileID: 12}
+  - {fileID: 13}
   - {fileID: 19}
-  m_Selected: 1
-  m_LastSelected: 0
---- !u!114 &11
+  m_Selected: 0
+  m_LastSelected: 1
+--- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -268,9 +293,9 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 1054.4
+    x: 1148
     y: 0
-    width: 481.59998
+    width: 388
     height: 722.8
   m_MinSize: {x: 276, y: 71}
   m_MaxSize: {x: 4001, y: 4021}
@@ -280,7 +305,7 @@ MonoBehaviour:
   - {fileID: 21}
   m_Selected: 0
   m_LastSelected: 1
---- !u!114 &12
+--- !u!114 &13
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -302,9 +327,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 520.8
-    width: 1053.4
-    height: 254.59998
+    y: 558.4
+    width: 1147
+    height: 217
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -315,7 +340,7 @@ MonoBehaviour:
     m_LastAppliedPresetName: Default
     m_SaveData: []
     m_OverlaysVisible: 1
---- !u!114 &13
+--- !u!114 &14
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -338,8 +363,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 73.6
-    width: 258.2
-    height: 426.2
+    width: 186.2
+    height: 463.8
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -353,9 +378,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: fc610000
-      m_LastClickedID: 0
-      m_ExpandedIDs: 7a07ffff1836ffffca51ffff4057ffff5457ffff5e57ffff5659ffff045bffff605cffffb077ffff5e78ffff807effffce7fffffc890ffff7094ffff7c97ffffd898ffff00a5ffff74a6fffff4a6ffffb2affffff0c3fffff8c3ffff54c5ffff68cbffff16dcffff1edcffff0ae2ffff6ae2ffff6ee2ffff76e2ffff46ebffff4eebffff6eefffffa8f3ffffb0f3ffff0cf5fffff8f9ffff24fbfffff4ffffffce610000ec610000106800005c68000098690000a0690000e4690000126b00005e6b0000fe6d00004a6e00007a6f0000c66f0000807500009e750000b4780000ea780000087900005e7b000080800000c8800000f680000014810000348400005284000088840000d884000024850000ca8c00001a8d000068900000b89000000491000046920000aa9200004499000094990000e0990000
+      m_SelectedIDs: 2a750000
+      m_LastClickedID: 29994
+      m_ExpandedIDs: 6acdffff8ed5ffff3cd6ffff24fbfffffc6700003a7500009c750000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -371,7 +396,7 @@ MonoBehaviour:
         m_IsRenaming: 0
         m_OriginalEventType: 11
         m_IsRenamingFilename: 0
-        m_ClientGUIView: {fileID: 8}
+        m_ClientGUIView: {fileID: 9}
       m_SearchString: 
     m_ExpandedScenes: []
     m_CurrenRootInstanceID: 0
@@ -379,7 +404,7 @@ MonoBehaviour:
       m_IsLocked: 0
     m_CurrentSortingName: TransformSorting
   m_WindowGUID: 4c969a2b90040154d917609493e03593
---- !u!114 &14
+--- !u!114 &15
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -400,10 +425,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 259.2
+    x: 187.2
     y: 73.6
-    width: 793.2
-    height: 426.2
+    width: 254
+    height: 463.8
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -762,9 +787,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 360, y: 1217, z: 0}
+    m_Target: {x: 112.5, y: 225.25, z: 0}
     speed: 2
-    m_Value: {x: 360, y: 1217, z: 0}
+    m_Value: {x: 112.5, y: 225.25, z: 0}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -814,9 +839,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 62.5
+    m_Target: 251.78128
     speed: 2
-    m_Value: 62.5
+    m_Value: 251.78128
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -841,7 +866,7 @@ MonoBehaviour:
   m_SceneVisActive: 1
   m_LastLockedObject: {fileID: 0}
   m_ViewIsLockedToObject: 0
---- !u!114 &15
+--- !u!114 &16
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -862,10 +887,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 259.2
+    x: 443.2
     y: 73.6
-    width: 793.2
-    height: 426.2
+    width: 702.8
+    height: 463.8
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -882,7 +907,7 @@ MonoBehaviour:
   m_ShowGizmos: 0
   m_TargetDisplay: 0
   m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
-  m_TargetSize: {x: 720, y: 1280}
+  m_TargetSize: {x: 277, y: 553.5}
   m_TextureFilterMode: 0
   m_TextureHideFlags: 61
   m_RenderIMGUI: 1
@@ -891,16 +916,16 @@ MonoBehaviour:
   m_VSyncEnabled: 0
   m_Gizmos: 0
   m_Stats: 0
-  m_SelectedSizes: 00000000000000000000000003000000000000000000000000000000000000000000000000000000
+  m_SelectedSizes: 0000000000000000000000000f000000000000000000000000000000000000000000000000000000
   m_ZoomArea:
     m_HRangeLocked: 0
     m_VRangeLocked: 0
     hZoomLockedByDefault: 0
     vZoomLockedByDefault: 0
-    m_HBaseRangeMin: -288
-    m_HBaseRangeMax: 288
-    m_VBaseRangeMin: -512
-    m_VBaseRangeMax: 512
+    m_HBaseRangeMin: -110.8
+    m_HBaseRangeMax: 110.8
+    m_VBaseRangeMin: -221.40001
+    m_VBaseRangeMax: 221.40001
     m_HAllowExceedBaseRangeMin: 1
     m_HAllowExceedBaseRangeMax: 1
     m_VAllowExceedBaseRangeMin: 1
@@ -909,7 +934,7 @@ MonoBehaviour:
     m_HSlider: 0
     m_VSlider: 0
     m_IgnoreScrollWheelUntilClicked: 0
-    m_EnableMouseInput: 0
+    m_EnableMouseInput: 1
     m_EnableSliderZoomHorizontal: 0
     m_EnableSliderZoomVertical: 0
     m_UniformScale: 1
@@ -918,63 +943,28 @@ MonoBehaviour:
       serializedVersion: 2
       x: 0
       y: 21
-      width: 793.2
-      height: 405.2
-    m_Scale: {x: 0.39570314, y: 0.39570314}
-    m_Translation: {x: 396.6, y: 202.6}
+      width: 702.8
+      height: 442.8
+    m_Scale: {x: 0.99999994, y: 0.99999994}
+    m_Translation: {x: 351.4, y: 221.4}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -1002.26654
-      y: -512
-      width: 2004.5331
-      height: 1024
+      x: -351.40002
+      y: -221.40001
+      width: 702.80005
+      height: 442.80002
     m_MinimalGUI: 1
-  m_defaultScale: 0.39570314
-  m_LastWindowPixelSize: {x: 991.5, y: 532.75}
+  m_defaultScale: 0.99999994
+  m_LastWindowPixelSize: {x: 878.5, y: 579.75}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 00000000000000000000
   m_XRRenderMode: 0
   m_RenderTexture: {fileID: 0}
---- !u!114 &16
-MonoBehaviour:
-  m_ObjectHideFlags: 52
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 12111, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_MinSize: {x: 455, y: 354}
-  m_MaxSize: {x: 4000, y: 4000}
-  m_TitleContent:
-    m_Text: Asset Store
-    m_Image: {fileID: -7444545952099596278, guid: 0000000000000000d000000000000000,
-      type: 0}
-    m_Tooltip: 
-  m_Pos:
-    serializedVersion: 2
-    x: 259.2
-    y: 73.6
-    width: 791.60004
-    height: 432.6
-  m_SerializedDataModeController:
-    m_DataMode: 0
-    m_PreferredDataMode: 0
-    m_SupportedDataModes: 
-    isAutomatic: 1
-  m_ViewDataDictionary: {fileID: 0}
-  m_OverlayCanvas:
-    m_LastAppliedPresetName: Default
-    m_SaveData: []
-    m_OverlaysVisible: 1
 --- !u!114 &17
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -995,10 +985,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 247.2
+    x: 187.2
     y: 73.6
-    width: 754
-    height: 432.6
+    width: 958.8
+    height: 534.2
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1011,11 +1001,11 @@ MonoBehaviour:
     m_OverlaysVisible: 1
   m_ShowAlpha: 0
   m_MipLevel: 0
-  m_Zoom: -1
-  m_ScrollPosition: {x: 0, y: 0}
+  m_Zoom: 0.7564865
+  m_ScrollPosition: {x: -70.72822, y: 16.21014}
   m_SelectedObject: {fileID: 0}
-  m_SelectedSpriteRectGUID: a19302db55f46df408c00e79a77d1e24
-  m_LastUsedModuleTypeName: 
+  m_SelectedSpriteRectGUID: 00000000000000000000000000000000
+  m_LastUsedModuleTypeName: UnityEditor.U2D.Sprites.SpriteFrameModule
 --- !u!114 &18
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -1038,9 +1028,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 520.8
-    width: 1053.4
-    height: 254.59998
+    y: 558.4
+    width: 1147
+    height: 217
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1062,7 +1052,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts/AppControl/Level
+    - Packages/com.unity.textmeshpro/Scripts/Editor
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -1070,16 +1060,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/Scripts/AppControl/Level
+  - Packages/com.unity.textmeshpro/Scripts/Editor
   m_LastFoldersGridSize: 16
   m_LastProjectPath: C:\Users\lucascosson\Documents\GitHub\PopBlast
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 71.899475}
-    m_SelectedIDs: b6600000
-    m_LastClickedID: 24758
-    m_ExpandedIDs: 00000000926000009460000096600000986000009a6000009c6000009e600000a0600000b0600000c0600000c26000001891000000ca9a3bffffff7f
+    scrollPos: {x: 0, y: 847}
+    m_SelectedIDs: ac7c0000
+    m_LastClickedID: 31916
+    m_ExpandedIDs: 00000000ea680000ec680000ee680000f0680000f2680000f4680000f66800001069000028690000546900005e7b000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1095,7 +1085,7 @@ MonoBehaviour:
       m_IsRenaming: 0
       m_OriginalEventType: 11
       m_IsRenamingFilename: 1
-      m_ClientGUIView: {fileID: 10}
+      m_ClientGUIView: {fileID: 11}
     m_SearchString: 
     m_CreateAssetUtility:
       m_EndAction: {fileID: 0}
@@ -1107,7 +1097,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000926000009460000096600000986000009a6000009c6000009e600000a0600000
+    m_ExpandedIDs: 00000000ea680000ec680000ee680000f0680000f2680000f4680000f6680000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1132,26 +1122,26 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: fc610000
-    m_LastClickedInstanceID: 25084
+    m_SelectedInstanceIDs: 
+    m_LastClickedInstanceID: 0
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000d46000007a860000cc620000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: Cake_Piece
-      m_OriginalName: Cake_Piece
+      m_Name: LossPopup
+      m_OriginalName: LossPopup
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 25078
+      m_UserData: 27172
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
       m_OriginalEventType: 0
       m_IsRenamingFilename: 1
-      m_ClientGUIView: {fileID: 10}
+      m_ClientGUIView: {fileID: 11}
     m_CreateAssetUtility:
       m_EndAction: {fileID: 0}
       m_InstanceID: 0
@@ -1159,7 +1149,7 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
     m_NewAssetIndexInList: -1
-    m_ScrollPosition: {x: 0, y: 0}
+    m_ScrollPosition: {x: 0, y: 205.99872}
     m_GridSize: 16
   m_SkipHiddenPackages: 0
   m_DirectoriesAreaWidth: 207
@@ -1185,9 +1175,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 524
-    width: 1149.4
-    height: 251.4
+    y: 521.60004
+    width: 1147
+    height: 253.79999
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1200,7 +1190,7 @@ MonoBehaviour:
     m_OverlaysVisible: 1
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: -47892
+  m_LastSelectedObjectID: 30108
 --- !u!114 &20
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -1222,9 +1212,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1054.4
+    x: 1148
     y: 73.6
-    width: 480.59998
+    width: 387
     height: 701.8
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -1270,9 +1260,9 @@ MonoBehaviour:
       Part of the com.unity.test-framework package.
   m_Pos:
     serializedVersion: 2
-    x: 1052.8
+    x: 1148
     y: 73.6
-    width: 482.19995
+    width: 387
     height: 701.8
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -1285,7 +1275,7 @@ MonoBehaviour:
     m_SaveData: []
     m_OverlaysVisible: 1
   m_Spl:
-    ID: 114
+    ID: 115
     splitterInitialOffset: 0
     currentActiveSplitter: -1
     realSizes:
@@ -6729,7 +6719,7 @@ MonoBehaviour:
       name: PopBlast
       fullName: PopBlast
       resultStatus: 1
-      duration: 0.1221312
+      duration: 0.2385186
       messages: 
       output: 
       stacktrace: 
@@ -6745,7 +6735,7 @@ MonoBehaviour:
       name: Tests.dll
       fullName: C:/Users/lucascosson/Documents/GitHub/PopBlast/Library/ScriptAssemblies/Tests.dll
       resultStatus: 1
-      duration: 0.0764097
+      duration: 0.20472
       messages: 
       output: 
       stacktrace: 
@@ -6828,7 +6818,7 @@ MonoBehaviour:
       name: InitializerTest
       fullName: InitializerTest
       resultStatus: 2
-      duration: 1.7787532
+      duration: 0.2035473
       messages: One or more child tests had errors
       output: 
       stacktrace: 
@@ -6861,7 +6851,7 @@ MonoBehaviour:
       name: InitializerTestMultipleNoWaitPasses
       fullName: InitializerTest.InitializerTestMultipleNoWaitPasses
       resultStatus: 2
-      duration: 0.0148086
+      duration: 0.044167
       messages: 'Unhandled log message: ''[Error] [Initilization] Process was cancelled
         The operation was canceled.''. Use UnityEngine.TestTools.LogAssert.Expect'
       output: '[Initilization] Process was cancelled The operation was canceled.
@@ -6971,6 +6961,330 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1006
       parentUniqueId: Tests.dll/[Tests][LevelManagerTest][suite]
+    - id: 1012
+      uniqueId: Tests.dll/[Tests][LifeManagerTest][suite]
+      name: LifeManagerTest
+      fullName: LifeManagerTest
+      resultStatus: 1
+      duration: 0.2030675
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1062
+      parentUniqueId: '[Tests][C:/Users/lucascosson/Documents/GitHub/PopBlast/Library/ScriptAssemblies/Tests.dll][suite]'
+    - id: 1029
+      uniqueId: Tests.dll/LifeManagerTest/[Tests][LifeManagerTest.LifeManagerTestHasUnlimitedAddedPass][suite]
+      name: LifeManagerTestHasUnlimitedAddedPass
+      fullName: LifeManagerTest.LifeManagerTestHasUnlimitedAddedPass
+      resultStatus: 1
+      duration: 0.0272916
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1012
+      parentUniqueId: Tests.dll/[Tests][LifeManagerTest][suite]
+    - id: 1027
+      uniqueId: Tests.dll/LifeManagerTest/LifeManagerTestHasUnlimitedAddedPass/[Tests][LifeManagerTest.LifeManagerTestHasUnlimitedAddedPass(10,True)]
+      name: LifeManagerTestHasUnlimitedAddedPass(10,True)
+      fullName: LifeManagerTest.LifeManagerTestHasUnlimitedAddedPass(10,True)
+      resultStatus: 1
+      duration: 0.0190049
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1029
+      parentUniqueId: Tests.dll/LifeManagerTest/[Tests][LifeManagerTest.LifeManagerTestHasUnlimitedAddedPass][suite]
+    - id: 1028
+      uniqueId: Tests.dll/LifeManagerTest/LifeManagerTestHasUnlimitedAddedPass/[Tests][LifeManagerTest.LifeManagerTestHasUnlimitedAddedPass(-10,False)]
+      name: LifeManagerTestHasUnlimitedAddedPass(-10,False)
+      fullName: LifeManagerTest.LifeManagerTestHasUnlimitedAddedPass(-10,False)
+      resultStatus: 1
+      duration: 0.0002146
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1029
+      parentUniqueId: Tests.dll/LifeManagerTest/[Tests][LifeManagerTest.LifeManagerTestHasUnlimitedAddedPass][suite]
+    - id: 1026
+      uniqueId: Tests.dll/LifeManagerTest/[Tests][LifeManagerTest.LifeManagerTestHasUnlimitedStoragePass]
+      name: LifeManagerTestHasUnlimitedStoragePass
+      fullName: LifeManagerTest.LifeManagerTestHasUnlimitedStoragePass
+      resultStatus: 1
+      duration: 0.0005929
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1012
+      parentUniqueId: Tests.dll/[Tests][LifeManagerTest][suite]
+    - id: 1013
+      uniqueId: Tests.dll/LifeManagerTest/[Tests][LifeManagerTest.LifeManagerTestInitializationFullPass]
+      name: LifeManagerTestInitializationFullPass
+      fullName: LifeManagerTest.LifeManagerTestInitializationFullPass
+      resultStatus: 1
+      duration: 0.0010047
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1012
+      parentUniqueId: Tests.dll/[Tests][LifeManagerTest][suite]
+    - id: 1016
+      uniqueId: Tests.dll/LifeManagerTest/[Tests][LifeManagerTest.LifeManagerTestInitializationNotRefillPass][suite]
+      name: LifeManagerTestInitializationNotRefillPass
+      fullName: LifeManagerTest.LifeManagerTestInitializationNotRefillPass
+      resultStatus: 1
+      duration: 0.0101676
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1012
+      parentUniqueId: Tests.dll/[Tests][LifeManagerTest][suite]
+    - id: 1015
+      uniqueId: Tests.dll/LifeManagerTest/LifeManagerTestInitializationNotRefillPass/[Tests][LifeManagerTest.LifeManagerTestInitializationNotRefillPass(LifeManagerTest+TestData)]
+      name: LifeManagerTestInitializationNotRefillPass(LifeManagerTest+TestData)
+      fullName: LifeManagerTest.LifeManagerTestInitializationNotRefillPass(LifeManagerTest+TestData)
+      resultStatus: 1
+      duration: 0.0005573
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1016
+      parentUniqueId: Tests.dll/LifeManagerTest/[Tests][LifeManagerTest.LifeManagerTestInitializationNotRefillPass][suite]
+    - id: 1016
+      uniqueId: Tests.dll/LifeManagerTest/LifeManagerTestInitializationNotRefillPass/[Tests][LifeManagerTest.LifeManagerTestInitializationNotRefillPass(LifeManagerTest+TestData)]2
+      name: LifeManagerTestInitializationNotRefillPass(LifeManagerTest+TestData)
+      fullName: LifeManagerTest.LifeManagerTestInitializationNotRefillPass(LifeManagerTest+TestData
+        GeneratedTestCase2)
+      resultStatus: 1
+      duration: 0.0002548
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1017
+      parentUniqueId: Tests.dll/LifeManagerTest/[Tests][LifeManagerTest.LifeManagerTestInitializationNotRefillPass][suite]
+    - id: 1017
+      uniqueId: Tests.dll/LifeManagerTest/LifeManagerTestInitializationNotRefillPass/[Tests][LifeManagerTest.LifeManagerTestInitializationNotRefillPass(LifeManagerTest+TestData)]3
+      name: LifeManagerTestInitializationNotRefillPass(LifeManagerTest+TestData)
+      fullName: LifeManagerTest.LifeManagerTestInitializationNotRefillPass(LifeManagerTest+TestData
+        GeneratedTestCase3)
+      resultStatus: 1
+      duration: 0.0001819
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1018
+      parentUniqueId: Tests.dll/LifeManagerTest/[Tests][LifeManagerTest.LifeManagerTestInitializationNotRefillPass][suite]
+    - id: 1018
+      uniqueId: Tests.dll/LifeManagerTest/LifeManagerTestInitializationNotRefillPass/[Tests][LifeManagerTest.LifeManagerTestInitializationNotRefillPass(LifeManagerTest+TestData)]4
+      name: LifeManagerTestInitializationNotRefillPass(LifeManagerTest+TestData)
+      fullName: LifeManagerTest.LifeManagerTestInitializationNotRefillPass(LifeManagerTest+TestData
+        GeneratedTestCase4)
+      resultStatus: 1
+      duration: 0.0001879
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1019
+      parentUniqueId: Tests.dll/LifeManagerTest/[Tests][LifeManagerTest.LifeManagerTestInitializationNotRefillPass][suite]
+    - id: 1019
+      uniqueId: Tests.dll/LifeManagerTest/LifeManagerTestInitializationNotRefillPass/[Tests][LifeManagerTest.LifeManagerTestInitializationNotRefillPass(LifeManagerTest+TestData)]5
+      name: LifeManagerTestInitializationNotRefillPass(LifeManagerTest+TestData)
+      fullName: LifeManagerTest.LifeManagerTestInitializationNotRefillPass(LifeManagerTest+TestData
+        GeneratedTestCase5)
+      resultStatus: 1
+      duration: 0.0001285
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1020
+      parentUniqueId: Tests.dll/LifeManagerTest/[Tests][LifeManagerTest.LifeManagerTestInitializationNotRefillPass][suite]
+    - id: 1020
+      uniqueId: Tests.dll/LifeManagerTest/LifeManagerTestInitializationNotRefillPass/[Tests][LifeManagerTest.LifeManagerTestInitializationNotRefillPass(LifeManagerTest+TestData)]6
+      name: LifeManagerTestInitializationNotRefillPass(LifeManagerTest+TestData)
+      fullName: LifeManagerTest.LifeManagerTestInitializationNotRefillPass(LifeManagerTest+TestData
+        GeneratedTestCase6)
+      resultStatus: 1
+      duration: 0.0002192
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1021
+      parentUniqueId: Tests.dll/LifeManagerTest/[Tests][LifeManagerTest.LifeManagerTestInitializationNotRefillPass][suite]
+    - id: 1014
+      uniqueId: Tests.dll/LifeManagerTest/[Tests][LifeManagerTest.LifeManagerTestInitializationRefillAllPass]
+      name: LifeManagerTestInitializationRefillAllPass
+      fullName: LifeManagerTest.LifeManagerTestInitializationRefillAllPass
+      resultStatus: 1
+      duration: 0.0003403
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1012
+      parentUniqueId: Tests.dll/[Tests][LifeManagerTest][suite]
+    - id: 1030
+      uniqueId: Tests.dll/LifeManagerTest/[Tests][LifeManagerTest.LifeManagerTestRefillAlldPass]
+      name: LifeManagerTestRefillAlldPass
+      fullName: LifeManagerTest.LifeManagerTestRefillAlldPass
+      resultStatus: 1
+      duration: 0.0005106
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1012
+      parentUniqueId: Tests.dll/[Tests][LifeManagerTest][suite]
+    - id: 1025
+      uniqueId: Tests.dll/LifeManagerTest/[Tests][LifeManagerTest.LifeManagerTestUseLifePass][suite]
+      name: LifeManagerTestUseLifePass
+      fullName: LifeManagerTest.LifeManagerTestUseLifePass
+      resultStatus: 1
+      duration: 0.0088053
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1012
+      parentUniqueId: Tests.dll/[Tests][LifeManagerTest][suite]
+    - id: 1022
+      uniqueId: Tests.dll/LifeManagerTest/LifeManagerTestUseLifePass/[Tests][LifeManagerTest.LifeManagerTestUseLifePass(5,4,True)]
+      name: LifeManagerTestUseLifePass(5,4,True)
+      fullName: LifeManagerTest.LifeManagerTestUseLifePass(5,4,True)
+      resultStatus: 1
+      duration: 0.0007676
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1025
+      parentUniqueId: Tests.dll/LifeManagerTest/[Tests][LifeManagerTest.LifeManagerTestUseLifePass][suite]
+    - id: 1023
+      uniqueId: Tests.dll/LifeManagerTest/LifeManagerTestUseLifePass/[Tests][LifeManagerTest.LifeManagerTestUseLifePass(1,0,True)]
+      name: LifeManagerTestUseLifePass(1,0,True)
+      fullName: LifeManagerTest.LifeManagerTestUseLifePass(1,0,True)
+      resultStatus: 1
+      duration: 0.0003055
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1025
+      parentUniqueId: Tests.dll/LifeManagerTest/[Tests][LifeManagerTest.LifeManagerTestUseLifePass][suite]
+    - id: 1024
+      uniqueId: Tests.dll/LifeManagerTest/LifeManagerTestUseLifePass/[Tests][LifeManagerTest.LifeManagerTestUseLifePass(0,0,False)]
+      name: LifeManagerTestUseLifePass(0,0,False)
+      fullName: LifeManagerTest.LifeManagerTestUseLifePass(0,0,False)
+      resultStatus: 1
+      duration: 0.0002314
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1025
+      parentUniqueId: Tests.dll/LifeManagerTest/[Tests][LifeManagerTest.LifeManagerTestUseLifePass][suite]
     - id: 1632
       uniqueId: Tests.dll/[Tests][LocalizationTest][suite]
       name: LocalizationTest
@@ -16921,13 +17235,13 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1715
       parentUniqueId: Zenject-UnitTests-Editor.dll/Zenject/Tests/[Zenject-UnitTests-Editor][Zenject.Tests.TestValidationSettings][suite]
-    m_ResultText: UserPrefsMergePass (0.051s)
+    m_ResultText: LifeManagerTest (0.203s)
     m_ResultStacktrace: 
     m_TestListState:
-      scrollPos: {x: 0, y: 206.9989}
-      m_SelectedIDs: 769745f1
-      m_LastClickedID: -247097482
-      m_ExpandedIDs: ba8a27802076b780a9cd0a838c3b7d859daf2e88f1fe3b892a6fd689d69f388ccfebdc8facccf48f30e5d1901cc3719205cb62951744ab9541b6fd9726d2ca997a9792a0c5dc25a1b40f83a68ac4e9a62cecfda865d8b8a9d3e1a6ab2b3ed9ab23b810ac8b1b2eadcb4051afac1b46b00158ebb09d1511b1a47a31be5d514cc681f0d7c6e881e0c7eaedb4c92ed928ca954229cac1c4ffcb7a4f13cc09fa37d4b342aad8113b2dd91e3b3cd9ddad9bd9db76b8d9751fc0d97d0786ddfc37dddd20fa82de599eacdf643d13e5f520f1ea5fb13feb9ba435ec50e340ed149096ed6ce072ee37ccc9f0728376f171f0baf5377d7dfd287c46fe581af0ffc9c8b60000025d026294700499ae370a97db500aa9b1200bca982f0c4f00300c4e9b0d0f7eed1c1098ab631146008a13fb761614905f0e18a37852188eff8719d406c61b41cf001c0031b01c8adeda20a1c1ba237cf7e723898d37261c5e6226870a6128be0da0295dedc92adc1d212bb804472c65bf832d6d272d3043b45a302e094933892b8534a65aa437ce55e9374c12d9399cccd23baec0843c8abb453df0ea4e3d9b09ca3e6745c23f97bca5410289c141818fec413526ff4b1af2164cfc2c484d5efce74ff9bc6151aa565c52d5130153b534de534b1ac05459e2e255b60302587d187c599695665cbc033a5d9b35a86078988866a286af66e586f075bcad74762be2c0786a8bb47c93d9ee7eb501497fffffff7f
+      scrollPos: {x: 0, y: 0.49987793}
+      m_SelectedIDs: 66ac1f26
+      m_LastClickedID: 639609958
+      m_ExpandedIDs: ba8a27802076b780a9cd0a838c3b7d859daf2e88f1fe3b892a6fd689d69f388ccfebdc8facccf48f30e5d1901cc3719205cb62951744ab9541b6fd9726d2ca997a9792a0c5dc25a1b40f83a68ac4e9a62cecfda865d8b8a9d3e1a6ab2b3ed9ab23b810ac8b1b2eadac1b46b00158ebb09d1511b1a47a31beab3139c55d514cc681f0d7c6e881e0c7eaedb4c92ed928ca954229cac1c4ffcb7a4f13cc09fa37d4b342aad8113b2dd91e3b3cd9ddad9bd9db76b8d9751fc0d97d0786ddfc37dddd20fa82de599eacdf643d13e5f520f1ea5fb13feb9ba435ec50e340ed149096ed6ce072ee37ccc9f0728376f171f0baf5377d7dfd287c46fe581af0ffc9c8b60000025d026294700499ae370a97db500aa9b1200bca982f0c4f00300c4e9b0d0f7eed1c1098ab631146008a13fb761614905f0e18a37852188eff8719d406c61b41cf001c0031b01c8adeda20a1c1ba237cf7e72366ac1f26898d37261c5e6226870a6128be0da0295dedc92adc1d212bb804472c65bf832d6d272d3043b45a302e094933892b8534a65aa437ce55e9374c12d9399cccd23baec0843c8abb453df0ea4e3d9b09ca3e6745c23f97bca5410289c141818fec413526ff4b1af2164cfc2c484d5efce74ff9bc6151aa565c52d5130153b534de534b1ac05459e2e255b60302587d187c599695665cbc033a5d9b35a86078988866a286af66e586f075bcad74762be2c0786a8bb47c93d9ee7eb501497fffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 

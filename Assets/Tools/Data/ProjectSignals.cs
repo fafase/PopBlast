@@ -13,14 +13,17 @@ namespace Tools
         }
     }
 
-    public class MetaLanding : SignalData {  }
+    public class MetaLanding : SignalData { }
 
-    public class FlushOperation : SignalData
+    public class FlushOperation : SignalData { }
+
+    public class LevelCompleteSignal : SignalData 
     {
-        public Dictionary<string, string> Data { get; private set; }
-        public FlushOperation(Dictionary<string, string> data)
+        public int difficulty;
+        public LevelCompleteSignal(int difficulty) 
+        
         {
-            Data = data;
+            this.difficulty = difficulty;
         }
     }
 }

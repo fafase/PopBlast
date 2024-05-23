@@ -27,8 +27,6 @@ namespace Tools
 
         private async UniTask InitAsync() 
         {           
-           
-
             try
             {
                 await UnityServices.InitializeAsync();

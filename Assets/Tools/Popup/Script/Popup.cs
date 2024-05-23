@@ -9,7 +9,7 @@ namespace Tools
     [RequireComponent(typeof(Animation))]
     public abstract class Popup : MonoBehaviour, IPopup
     {
-        [SerializeField] private Button m_closeBtn;
+        [SerializeField] protected Button m_closeBtn;
         [SerializeField] private AnimationClip m_openAnimation;
         [SerializeField] private AnimationClip m_closeAnimation;
 

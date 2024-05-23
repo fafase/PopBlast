@@ -27,11 +27,6 @@ namespace PopBlast.AppControl
         private int width, height;
 
         /// <summary>
-        /// Event triggered when no more moves are possible
-        /// </summary>
-        public event Action<bool> RaiseEndOfGame;
-
-        /// <summary>
         /// Event raised when pop happens, parameter indicates how many items at once
         /// </summary>
         public event Action<int> RaiseItemPop;
@@ -39,7 +34,6 @@ namespace PopBlast.AppControl
         public Transform Top => m_top;
         public Transform Target => m_bottom;
 
-        #region PUBLIC_METHODS
 
         /// <summary>
         /// Initializes the ItemGenerator with column (width) and row (height)
@@ -113,14 +107,14 @@ namespace PopBlast.AppControl
                 SetNeighboursGrid();
                 if (CheckForRemainingMovement() == false)
                 {
-                    RaiseEndOfGame?.Invoke(false);
+                    //RaiseEndOfGame?.Invoke(false);
+                    Reshuffle();
                 }
                 onCompletion?.Invoke();
             }));
             return amount;
         }
-
-        #endregion
+        private void Reshuffle() { }
 
         private int ProcessItemToRemove(Item item)
         {
@@ -306,7 +300,6 @@ namespace PopBlast.AppControl
     public interface IItemGenerator 
     {
         Transform Target { get; }
-        event Action<bool> RaiseEndOfGame;
         event Action<int> RaiseItemPop;
 
         int CheckItemNeighbours(GameObject obj, Action value);
