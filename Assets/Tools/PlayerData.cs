@@ -20,6 +20,7 @@ namespace Tools
         public void Initialize()
         {
             Signal.Connect<LoginSignalData>(OnLoginSignal);
+            //Signal.Connect<LevelCompleteSignal>(UpdateOnLevelComplete);
         }
 
         private void OnLoginSignal(LoginSignalData data) 
@@ -45,6 +46,13 @@ namespace Tools
             ++CurrentLevel;
             m_userPrefs.SetValue(CURRENT_LEVEL, CurrentLevel);
         }
+
+        //public void UpdateOnLevelComplete(LevelCompleteSignal data) 
+        //{
+        //    //GameConfig config = m_servicesManager.GetConfig<GameConfig>();
+        //    //int coins = config.levelRewards[data.difficulty];
+        //    //m_inventory.AddCoins(coins);
+        //}
     }
 
     public interface IPlayerData

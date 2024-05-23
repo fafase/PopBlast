@@ -15,6 +15,7 @@ namespace Tools
         public string version;
         public int endContent;
         public InventoryConfig startInventory;
+        public int[] levelReward;
     }
 
     [Serializable]

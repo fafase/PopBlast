@@ -88,7 +88,6 @@ namespace PopBlast.AppControl
             }
             m_coreUI.SetMoveCount(m_moves);
 
-
             if (m_levelObjectives.IsLevelDone) 
             {
                 m_state = LevelState.Win;
@@ -96,6 +95,7 @@ namespace PopBlast.AppControl
                 IPopup popup = m_popupManager.Show<LevelCompletePopup>();
                 ((LevelCompletePopup)popup).InitWithLevel(m_playerData.CurrentLevel);
                 popup.AddToClose(_ => ResetToMeta());
+                Signal.Send(new LevelCompleteSignal(m_levelManager.CurrentLevel.difficulty));
                 return;
             }
             else if (m_moves <= 0)

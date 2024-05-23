@@ -17,6 +17,7 @@ public class ZenjectProjectContext : MonoInstaller
         Container.BindInterfacesTo<LevelManager>().FromNew().AsSingle().NonLazy();
         Container.BindInterfacesTo<PlayerData>().FromNew().AsSingle().NonLazy();
         Container.BindInterfacesTo<Inventory>().FromNew().AsSingle().NonLazy();
-        Container.BindInterfacesTo<LifeManager>().FromNew().AsSingle().NonLazy();   
+        Container.BindInterfacesTo<LifeManager>().FromNew().AsSingle().NonLazy();
+        Container.BindInterfacesTo<CoinManager>().FromNew().AsSingle().NonLazy();
     }
 }

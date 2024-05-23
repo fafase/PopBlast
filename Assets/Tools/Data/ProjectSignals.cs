@@ -16,4 +16,14 @@ namespace Tools
     public class MetaLanding : SignalData { }
 
     public class FlushOperation : SignalData { }
+
+    public class LevelCompleteSignal : SignalData 
+    {
+        public int difficulty;
+        public LevelCompleteSignal(int difficulty) 
+        
+        {
+            this.difficulty = difficulty;
+        }
+    }
 }

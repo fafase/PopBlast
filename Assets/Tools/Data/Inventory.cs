@@ -22,6 +22,10 @@ namespace Tools
             get => lives;
             set => lives = value;
         }
+        public void AddCoins(int coins) 
+        {
+            this.coins += coins;
+        }
 
         public void SetWithConfig(InventoryConfig config) 
         {
@@ -45,6 +49,7 @@ namespace Tools
         int Coins { get; }
         int Lives { get; }
 
+        void AddCoins(int coins);
         void SetWithConfig(InventoryConfig config);
     }
 }
