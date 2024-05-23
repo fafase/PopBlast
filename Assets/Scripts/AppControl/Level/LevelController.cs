@@ -81,10 +81,10 @@ namespace PopBlast.AppControl
             });
             --m_moves;
             IItem item = obj.GetComponent<IItem>();
-            Objective objective = m_levelObjectives.UpdateObjectives((int)item.ItemType, amount);
+            Objective objective = m_levelObjectives.UpdateObjectives(item.ItemType, amount);
             if(objective != null) 
             {
-                m_coreUI.UpdateObjectives((int)item.ItemType, objective.amount);
+                m_coreUI.UpdateObjectives(item.ItemType, objective.amount);
             }
             m_coreUI.SetMoveCount(m_moves);
 

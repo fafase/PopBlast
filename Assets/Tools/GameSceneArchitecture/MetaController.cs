@@ -15,6 +15,7 @@ namespace Tools
         [Inject] private IPlayerData m_playerData;
         [Inject] private ILevelManager m_levelManager;
         [Inject] private ILifeManager m_lifeManager;
+        [Inject] private ILevelItems m_levelItems;
 
         private void Awake()
         {
@@ -30,7 +31,7 @@ namespace Tools
                     currentLevel = m_levelManager.Levels.Count - 1;
                 }
                 ((PlayPopup)m_popupManager.Show<PlayPopup>())
-                .InitWithLevel(m_levelManager.Levels[currentLevel - 1], OnPressCallback);
+                .InitWithLevel(m_levelManager.Levels[currentLevel - 1], m_levelItems, OnPressCallback);
             });
 
             m_settings.onClick.AddListener(() => OpenSettings());
