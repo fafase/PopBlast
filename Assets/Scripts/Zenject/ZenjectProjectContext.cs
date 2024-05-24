@@ -6,6 +6,7 @@ public class ZenjectProjectContext : MonoInstaller
 {
     [SerializeField] private GameObject m_popupManager;
     [SerializeField] private Localization m_localization;
+    [SerializeField] private LevelItems m_levelItems;
 
     public override void InstallBindings()
     {
@@ -19,5 +20,6 @@ public class ZenjectProjectContext : MonoInstaller
         Container.BindInterfacesTo<Inventory>().FromNew().AsSingle().NonLazy();
         Container.BindInterfacesTo<LifeManager>().FromNew().AsSingle().NonLazy();
         Container.BindInterfacesTo<CoinManager>().FromNew().AsSingle().NonLazy();
+        Container.BindInterfacesTo<LevelItems>().FromNewScriptableObject(m_levelItems).AsSingle().NonLazy();
     }
 }

@@ -2,6 +2,7 @@
 using PopBlast.InputSystem;
 using PopBlast.Items;
 using PopBlast.UI;
+using System.Collections;
 using Tools;
 using UnityEditor;
 using UnityEngine;
@@ -23,6 +24,7 @@ namespace PopBlast.AppControl
         [Inject] private IPlayerData m_playerData;
         [Inject] private ICloudOperation m_cloudOperation;
         [Inject] private ILifeManager m_lifeManager;
+        [Inject] private ILevelItems m_lvlItems;
 
         private InputController input = null;
 
@@ -43,9 +45,12 @@ namespace PopBlast.AppControl
             }
         }
 
-        protected virtual void Start()
+        protected virtual IEnumerator Start()
         {
             input.enabled = false;
+            bool isOpen = true;
+            m_popupManager.GetPopup<LoadingPopup>().OnClose += _ => isOpen = false;
+            yield return new WaitWhile(() => isOpen);
 
             Level currentLevel = m_levelManager.CurrentLevel;
             generator.Init(currentLevel, () =>
@@ -58,6 +63,9 @@ namespace PopBlast.AppControl
             m_coreUI.SetMoveCount(m_moves);
             m_coreUI.SetObjectives(m_levelObjectives.Objectives);
             input.RaiseItemTapped += Input_RaiseItemTapped;
+
+            PreLevelPopup popup = (PreLevelPopup)m_popupManager.Show<PreLevelPopup>();
+            popup.InitWithLevel(m_levelManager.Levels[m_playerData.CurrentLevel - 1], m_lvlItems);
         }
 
         private void OnApplicationQuit()
@@ -81,10 +89,10 @@ namespace PopBlast.AppControl
             });
             --m_moves;
             IItem item = obj.GetComponent<IItem>();
-            Objective objective = m_levelObjectives.UpdateObjectives((int)item.ItemType, amount);
+            Objective objective = m_levelObjectives.UpdateObjectives(item.ItemType, amount);
             if(objective != null) 
             {
-                m_coreUI.UpdateObjectives((int)item.ItemType, objective.amount);
+                m_coreUI.UpdateObjectives(item.ItemType, objective.amount);
             }
             m_coreUI.SetMoveCount(m_moves);
 

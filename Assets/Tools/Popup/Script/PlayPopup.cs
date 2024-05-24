@@ -9,6 +9,7 @@ namespace Tools
     {
         [SerializeField] private LocalizeStringEvent m_locaString;
         [SerializeField] private Button m_playButton;
+        [SerializeField] private GameObject m_objectivePrefab;
 
         private void Awake()
         {
@@ -19,10 +20,13 @@ namespace Tools
             });
         }
 
-        public void InitWithLevel(Level lvl, Action onPress)
+        public void InitWithLevel(Level lvl, ILevelItems lvlItems, Action onPress)
         {
             m_locaString.SetArgument("level", lvl.level.ToString());
             m_playButton.onClick.AddListener(() => onPress?.Invoke());
+
+            Transform parentTr = m_objectivePrefab.transform.parent;
+            Popup.SetObjectives(lvl.Objectives, lvlItems, m_objectivePrefab);
         }
     }
 }

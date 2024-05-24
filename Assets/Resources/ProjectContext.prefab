@@ -77,3 +77,4 @@ MonoBehaviour:
   m_popupManager: {fileID: 3167489094908483523, guid: 3b0b6d54bc06f1e4b9835b68e8759718,
     type: 3}
   m_localization: {fileID: 11400000, guid: ceab107f696f3c54fbe946c4d22cd82b, type: 2}
+  m_levelItems: {fileID: 11400000, guid: 2fa235d6417cca544b77658cf010d49b, type: 2}

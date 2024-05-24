@@ -1,5 +1,7 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using State = Tools.IPopup.State;
@@ -18,7 +20,7 @@ namespace Tools
         private State m_state = State.Idle;
         public State PopupState => m_state;
 
-        public event Action<IPopup> OnClose;
+        public event Action <IPopup> OnClose;
         public event Action <IPopup> OnOpen;
         public bool IsOpen => m_state == State.Opening || m_state == State.Idle;
         public virtual void Init(IPopupManager popupManager)
@@ -31,11 +33,19 @@ namespace Tools
             }
             m_animation = GetComponent<Animation>();
             m_animation.wrapMode = WrapMode.Once;
-            m_animation.AddClip(m_openAnimation, m_openAnimation.name);
-            m_animation.AddClip(m_closeAnimation, m_closeAnimation.name);
+            AddAnimation(m_openAnimation);
+            AddAnimation(m_closeAnimation);
 
             m_state = State.Idle;
             StartCoroutine(OpenSequence());
+        }
+
+        private void AddAnimation(AnimationClip clip) 
+        {
+            if(clip != null) 
+            {
+                m_animation.AddClip(clip, clip.name);
+            }          
         }
 
         private IEnumerator OpenSequence() 
@@ -81,6 +91,22 @@ namespace Tools
         public void RemoveToClose(Action<IPopup> action) => OnClose -= action;
 
         private void SetButtons(bool value) => Array.ForEach(GetComponentsInChildren<Button>(), (btn => btn.enabled = value));
+
+        public static void SetObjectives(List<Objective> objectives, ILevelItems lvlItems, GameObject objectivePrefab)
+        {
+            Transform parentTr = objectivePrefab.transform.parent;
+            foreach (Objective objective in objectives)
+            {
+                GameObject obj = Instantiate(objectivePrefab);
+                obj.transform.SetParent(parentTr, false);
+                obj.SetActive(true);
+                Sprite sprite = lvlItems.GetCoreItem((int)objective.itemType);
+                Image img = obj.GetComponent<Image>();
+                img.sprite = sprite;
+                TextMeshProUGUI txt = obj.GetComponentInChildren<TextMeshProUGUI>();
+                txt.text = objective.amount.ToString();
+            }
+        }
     }
 
     public interface IPopup 

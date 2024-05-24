@@ -296,13 +296,4 @@ namespace PopBlast.AppControl
             }
         }
     }
-
-    public interface IItemGenerator 
-    {
-        Transform Target { get; }
-        event Action<int> RaiseItemPop;
-
-        int CheckItemNeighbours(GameObject obj, Action value);
-        void Init(Level currentLevel, Action value);
-    }
 }

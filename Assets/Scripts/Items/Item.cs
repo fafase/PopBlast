@@ -1,9 +1,8 @@
-﻿using PopBlast.AppControl;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Tools;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace PopBlast.Items
 {
@@ -17,7 +16,7 @@ namespace PopBlast.Items
         [Tooltip("Explosion prefab for this item")]
         [SerializeField] private GameObject explosion;
         [Tooltip("Type of the item")]
-        [SerializeField] private ItemType type = ItemType.None;
+        [SerializeField] private ItemType type = Items.ItemType.None;
         [Tooltip("Period for item movement")]
         [SerializeField] private float movementSeconds = 1f;
 
@@ -35,7 +34,7 @@ namespace PopBlast.Items
 
         private IItem left, right, top, bottom;
         private Transform m_target;
-        public ItemType ItemType => type;
+        public int ItemType => (int)type;
 
         #region PUBLIC_METHODS
 
@@ -150,26 +149,8 @@ namespace PopBlast.Items
 
         #endregion
     }
-    public enum ItemType : byte
+    public enum ItemType 
     {
         None, CakePiece, Candybar, Icecream, CakeFull, Heart, Lollipop
-    }
-
-    /// <summary>
-    /// Item object interface
-    /// </summary>
-    public interface IItem
-    {
-        int Row { get; }
-        int Column { get; }
-        IItem[] GetSameTypeNeighbours();
-        void StartMovement(Action onCompletion);
-        void SetNeighbors(IItem newleft, IItem newRight, IItem newTop, IItem newBottom);
-        void SetGrid(int newCol, int newRow, IItemGenerator item);
-        GameObject GameObject { get; }
-        void DestroyItem();
-        Sprite GetSprite();
-
-        ItemType ItemType { get; }
     }
 }
