@@ -64,6 +64,15 @@ namespace Tools
         {
             m_openPopups.Remove(popup);
         }
+
+        public bool IsOpen<T>() where T : IPopup => GetPopup<T>() != null;
+
+        public T GetPopup<T>() where T : IPopup 
+        {
+            Type t = typeof(T);
+            int index = m_openPopups.FindIndex(popup => popup.GetType().Equals(t));
+            return (T)m_openPopups[index];
+        }
     }
 
     public interface IPopupManager 
@@ -75,5 +84,7 @@ namespace Tools
         IPopup Show<T>() where T : IPopup;
 
         UniTask LoadSceneWithLoadingPopup(string scene);
+        bool IsOpen<T>() where T : IPopup;
+        T GetPopup<T>() where T : IPopup;
     }
 }
