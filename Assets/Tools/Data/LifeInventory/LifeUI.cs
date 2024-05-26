@@ -15,7 +15,7 @@ namespace Tools
         private void Start()
         {
             SetUI();
-            m_lifeManager.OnLifeChange += SetUI;
+            m_lifeManager.RegisterOnLifeChange(SetUI);
         }
         private void Update()
         {
